@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import Image from "next/image"
+import { CreateAgentDrawer } from "@/components/create-agent-drawer"
 
 export function Navbar() {
   return (
@@ -74,9 +75,7 @@ export function Navbar() {
       </div>
 
       <div className="flex items-center gap-2">
-        <Button variant="default" className="bg-white text-black hover:bg-zinc-200">
-          Create an agent
-        </Button>
+       <CreateAgentDrawer></CreateAgentDrawer>
         <Button variant="ghost" size="icon" className="text-zinc-400 hover:text-white">
           <Search className="h-5 w-5" />
         </Button>
