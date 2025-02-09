@@ -6,6 +6,7 @@ import { Cookie } from "tough-cookie";
 const agentPost = async () => {
   try {
     const agents = await supabase.from("agents").select("*");
+
     if (!agents.data) {
       console.log("No agents found");
       return;
@@ -48,6 +49,8 @@ const agentPost = async () => {
       // Get current trends
       const trends = await scraper.getTrends();
 
+      console.log("trends: ", trends);
+
       // Get a random trend
       const randomTrend = trends[Math.floor(Math.random() * trends.length)];
       console.log("randomTrend: ", randomTrend);
@@ -69,7 +72,6 @@ const agentPost = async () => {
         ],
         // @ts-expect-error Venice.ai paramters are unique to Venice.
         venice_parameters: {
-          //   include_venice_system_prompt: false,
           character_slug: agent.character_slug,
           include_venice_system_prompt: false,
         },
@@ -91,6 +93,7 @@ const agentPost = async () => {
             },
           ]
         );
+        console.log("Tweet sent");
       } else {
         console.log("No content");
         // TODO: Add a log to sentry or some other logger

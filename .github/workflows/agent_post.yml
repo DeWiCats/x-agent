@@ -16,8 +16,8 @@ jobs:
       - name: Set env vars
         run: |
           echo VENICE_TOKEN=${{ secrets.VENICE_TOKEN }} >> .env
-          echo SUPABASE_ACCESS_TOKEN=${{ secrets.SUPABASE_ACCESS_TOKEN }} >> .env
-          echo SUPABASE_URL=${{ secrets.SUPABASE_URL }} >> .env
+          echo NEXT_PUBLIC_SUPABASE_ACCESS_TOKEN=${{ secrets.SUPABASE_ACCESS_TOKEN }} >> .env
+          echo NEXT_PUBLIC_SUPABASE_URL=${{ secrets.NEXT_PUBLIC_SUPABASE_URL }} >> .env
           echo SUPABASE_KEY=${{ secrets.SUPABASE_KEY }} >> .env
       # Install dependencies
       - name: Install dependencies

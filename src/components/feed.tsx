@@ -1,62 +1,66 @@
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Badge } from "@/components/ui/badge"
-import { MessageSquare, Repeat2, Heart } from "lucide-react"
-import Link from "next/link"
+"use client";
 
-interface Post {
-  id: string
-  author: {
-    name: string
-    handle: string
-    avatar: string
-  }
-  content: string
-  timestamp: string
-  status: "Draft" | "Scheduled"
-  metrics: {
-    replies: number
-    reposts: number
-    likes: number
-  }
-}
+import { AgentsProvider, useAgents } from "@/app/hooks/useAgents";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
+import { Tables } from "@/types/database.types";
+import Image from "next/image";
+import { useEffect } from "react";
 
-function PostCard({ post }: { post: Post }) {
+function PostCard({
+  post,
+  agent,
+}: {
+  post: Tables<"posts">;
+  agent: Tables<"agents">;
+}) {
   return (
     <article className="border-b border-zinc-800 p-4">
       <div className="flex flex-col gap-3">
         <div className="flex items-start gap-3">
           <Avatar className="h-10 w-10">
-            <AvatarImage src={post.author.avatar} alt={post.author.name} />
-            <AvatarFallback>{post.author.name[0]}</AvatarFallback>
+            {agent.avatar && (
+              <AvatarImage src={agent.avatar} alt={agent.username} />
+            )}
+            <AvatarFallback>{agent.username}</AvatarFallback>
           </Avatar>
           <div className="flex-1 space-y-1">
             <div className="flex items-center gap-2">
-              <span className="font-semibold text-white">{post.author.name}</span>
-              <span className="text-zinc-500">{post.author.handle}</span>
+              <span className="font-semibold text-white">{agent.username}</span>
+              <span className="text-zinc-500">{agent.username}</span>
               <span className="text-zinc-500">·</span>
-              <span className="text-zinc-500">{post.timestamp}</span>
+              <span className="text-zinc-500">
+                {new Date(post.timestamp * 1000).toLocaleString()}
+              </span>
             </div>
             {post.status && (
-              <Badge variant="secondary" className="bg-amber-900/30 text-amber-500 hover:bg-amber-900/40 border-0">
+              <Badge
+                variant="secondary"
+                className="bg-amber-900/30 text-amber-500 hover:bg-amber-900/40 border-0"
+              >
                 {post.status}
               </Badge>
             )}
           </div>
         </div>
         <div className="text-white space-y-3">
-          <p>New dashboard to track your API usage is now live</p>
-          <p>
-            Access private, uncensored inference via our API by staking VVV or upgrading to Pro (rate limits apply to
-            Pro)
-          </p>
-          <p>
-            Dashboard here:{" "}
-            <Link href="http://venice.ai/settings/api" className="text-blue-400 hover:underline">
-              http://venice.ai/settings/api
-            </Link>
-          </p>
+          {/* TODO: Get HTML from webscraper */}
+          <p>{post.content}</p>
         </div>
-        <div className="flex gap-6 text-zinc-500">
+
+        {post.media_id && (
+          <div className="flex justify-center">
+            <Image
+              src={post.media_id}
+              alt={post.media_id || ""}
+              width={1080}
+              height={1080}
+            />
+          </div>
+        )}
+
+        {/* TODO: Get metrics from webscraper */}
+        {/* <div className="flex gap-6 text-zinc-500">
           <button className="flex items-center gap-2 hover:text-zinc-300">
             <MessageSquare className="h-4 w-4" />
             <span>{post.metrics.replies.toString().padStart(2, "0")}</span>
@@ -69,110 +73,42 @@ function PostCard({ post }: { post: Post }) {
             <Heart className="h-4 w-4" />
             <span>{post.metrics.likes.toString().padStart(2, "0")}</span>
           </button>
-        </div>
+        </div> */}
       </div>
     </article>
-  )
+  );
 }
 
-export function Feed() {
-  const posts: Post[] = [
-    {
-      id: "1",
-      author: {
-        name: "Luna",
-        handle: "@DeWiLuna",
-        avatar:
-          "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%202025-02-08%20at%201.45.53%E2%80%AFPM-KcMa4dtbqAQw2w0Aji1LIpyXe3bYJJ.png",
-      },
-      content: "New dashboard to track your API usage is now live",
-      timestamp: "Feb 7, 2024",
-      status: "Draft",
-      metrics: {
-        replies: 0,
-        reposts: 0,
-        likes: 0,
-      },
-    },
-    {
-      id: "2",
-      author: {
-        name: "Luna",
-        handle: "@DeWiLuna",
-        avatar:
-          "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%202025-02-08%20at%201.45.53%E2%80%AFPM-KcMa4dtbqAQw2w0Aji1LIpyXe3bYJJ.png",
-      },
-      content: "New dashboard to track your API usage is now live",
-      timestamp: "Feb 7, 2024",
-      status: "Scheduled",
-      metrics: {
-        replies: 0,
-        reposts: 0,
-        likes: 0,
-      },
-    },
-    {
-      id: "3",
-      author: {
-        name: "Luna",
-        handle: "@DeWiLuna",
-        avatar:
-          "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%202025-02-08%20at%201.45.53%E2%80%AFPM-KcMa4dtbqAQw2w0Aji1LIpyXe3bYJJ.png",
-      },
-      content: "New dashboard to track your API usage is now live",
-      timestamp: "Feb 7, 2024",
-      status: "Scheduled",
-      metrics: {
-        replies: 0,
-        reposts: 0,
-        likes: 0,
-      },
-    },
-    {
-      id: "4",
-      author: {
-        name: "Luna",
-        handle: "@DeWiLuna",
-        avatar:
-          "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%202025-02-08%20at%201.45.53%E2%80%AFPM-KcMa4dtbqAQw2w0Aji1LIpyXe3bYJJ.png",
-      },
-      content: "New dashboard to track your API usage is now live",
-      timestamp: "Feb 7, 2024",
-      status: "Scheduled",
-      metrics: {
-        replies: 0,
-        reposts: 0,
-        likes: 0,
-      },
-    },
-    {
-      id: "5",
-      author: {
-        name: "Luna",
-        handle: "@DeWiLuna",
-        avatar:
-          "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%202025-02-08%20at%201.45.53%E2%80%AFPM-KcMa4dtbqAQw2w0Aji1LIpyXe3bYJJ.png",
-      },
-      content: "New dashboard to track your API usage is now live",
-      timestamp: "Feb 7, 2024",
-      status: "Scheduled",
-      metrics: {
-        replies: 0,
-        reposts: 0,
-        likes: 0,
-      },
-    },
-    // Add more posts as needed
-  ]
+function Feed() {
+  const { agents, getTweets, postsByAgent } = useAgents();
+
+  console.log("agents: ", agents);
+
+  useEffect(() => {
+    if (agents?.length > 0) {
+      getTweets(agents[0]);
+    }
+  }, [agents, getTweets]);
 
   return (
     <div className="h-full mt-12 max-w-2xl mx-auto divide-zinc-800 bg-white bg-opacity-5 rounded-t-[2rem] overflow-hidden">
       <div className="h-full overflow-auto">
-      {posts.map((post) => (
-        <PostCard key={post.id} post={post} />
-      ))}
+        {agents?.length > 0 &&
+          postsByAgent[agents[0].id] &&
+          postsByAgent[agents[0].id].map((post) => (
+            <PostCard key={post.id} post={post} agent={agents[0]} />
+          ))}
       </div>
     </div>
-  )
+  );
 }
 
+const FeedWrapper = () => {
+  return (
+    <AgentsProvider>
+      <Feed />
+    </AgentsProvider>
+  );
+};
+
+export default FeedWrapper;

@@ -11,34 +11,31 @@ export type Database = {
     Tables: {
       agents: {
         Row: {
-          avatar: string | null
           character_slug: string | null
           cookies: string | null
           created_at: string
           id: number
-          password: string
+          password: string | null
           team: number | null
-          username: string
+          username: string | null
         }
         Insert: {
-          avatar?: string | null
           character_slug?: string | null
           cookies?: string | null
           created_at?: string
           id?: number
-          password: string
+          password?: string | null
           team?: number | null
-          username: string
+          username?: string | null
         }
         Update: {
-          avatar?: string | null
           character_slug?: string | null
           cookies?: string | null
           created_at?: string
           id?: number
-          password?: string
+          password?: string | null
           team?: number | null
-          username?: string
+          username?: string | null
         }
         Relationships: [
           {
@@ -54,29 +51,29 @@ export type Database = {
         Row: {
           agent: number | null
           content: string | null
+          created_at: string
           id: number
-          media_url: string | null
+          media_id: string | null
           status: Database["public"]["Enums"]["post_status"] | null
-          timestamp: number | null
-          x_url: string | null
+          x_id: string | null
         }
         Insert: {
           agent?: number | null
           content?: string | null
+          created_at?: string
           id?: number
-          media_url?: string | null
+          media_id?: string | null
           status?: Database["public"]["Enums"]["post_status"] | null
-          timestamp?: number | null
-          x_url?: string | null
+          x_id?: string | null
         }
         Update: {
           agent?: number | null
           content?: string | null
+          created_at?: string
           id?: number
-          media_url?: string | null
+          media_id?: string | null
           status?: Database["public"]["Enums"]["post_status"] | null
-          timestamp?: number | null
-          x_url?: string | null
+          x_id?: string | null
         }
         Relationships: [
           {

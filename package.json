@@ -12,6 +12,7 @@
     "add-agent": "node --loader ts-node/esm --experimental-specifier-resolution=node  tasks/add_agent.ts",
     "add-user": "node --loader ts-node/esm --experimental-specifier-resolution=node  tasks/add_user.ts",
     "add-team": "node --loader ts-node/esm --experimental-specifier-resolution=node  tasks/add_team.ts",
+    "get-posts": "node --loader ts-node/esm --experimental-specifier-resolution=node  tasks/get_posts.ts",
     "gen-types": "sh tasks/generate_types.sh"
   },
   "dependencies": {
@@ -22,6 +23,7 @@
     "@radix-ui/react-select": "^2.1.6",
     "@radix-ui/react-slot": "^1.1.2",
     "@radix-ui/react-tabs": "^1.1.3",
+    "@supabase/ssr": "^0.5.2",
     "@supabase/supabase-js": "^2.48.1",
     "agent-twitter-client": "^0.0.18",
     "class-variance-authority": "^0.7.1",

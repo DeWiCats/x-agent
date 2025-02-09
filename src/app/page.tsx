@@ -1,7 +1,5 @@
-import { Feed } from "@/components/feed";
+import FeedWrapper from "@/components/feed";
 
 export default function Home() {
-  return (
-    <Feed />
-  );
+  return <FeedWrapper />;
 }
