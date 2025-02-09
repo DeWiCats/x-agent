@@ -2,11 +2,17 @@
   "name": "social-agent",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "agent-post": "node --loader ts-node/esm --experimental-specifier-resolution=node  tasks/agent_post.ts",
+    "add-agent": "node --loader ts-node/esm --experimental-specifier-resolution=node  tasks/add_agent.ts",
+    "add-user": "node --loader ts-node/esm --experimental-specifier-resolution=node  tasks/add_user.ts",
+    "add-team": "node --loader ts-node/esm --experimental-specifier-resolution=node  tasks/add_team.ts",
+    "gen-types": "sh tasks/generate_types.sh"
   },
   "dependencies": {
     "@radix-ui/react-avatar": "^1.1.3",
@@ -16,14 +22,19 @@
     "@radix-ui/react-select": "^2.1.6",
     "@radix-ui/react-slot": "^1.1.2",
     "@radix-ui/react-tabs": "^1.1.3",
+    "@supabase/supabase-js": "^2.48.1",
+    "agent-twitter-client": "^0.0.18",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "dotenv": "^16.4.7",
     "lucide-react": "^0.475.0",
     "next": "15.1.6",
+    "openai": "^4.83.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "tailwind-merge": "^3.0.1",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "tough-cookie": "^5.1.1"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
@@ -33,7 +44,9 @@
     "eslint": "^9",
     "eslint-config-next": "15.1.6",
     "postcss": "^8",
+    "supabase": "^2.9.6",
     "tailwindcss": "^3.4.1",
+    "ts-node": "^10.9.2",
     "typescript": "^5"
   }
 }
