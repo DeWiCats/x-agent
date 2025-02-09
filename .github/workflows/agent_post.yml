@@ -1,10 +1,9 @@
 name: Agent Post 🤖
 
 on:
-  workflow_dispatch:
-  # # Triggers the workflow every day at 1:30PM CST
-  # schedule:
-  #   - cron: "30 19 * * *"
+  #  Triggers the workflow every day at 12:00PM PST
+  schedule:
+    - cron: "0 21 * * *"
 
 jobs:
   cron:
