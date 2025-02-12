@@ -18,6 +18,7 @@ export type Database = {
           password: string | null
           team: number | null
           username: string | null
+          avatar: string | undefined
         }
         Insert: {
           character_slug?: string | null
@@ -27,6 +28,7 @@ export type Database = {
           password?: string | null
           team?: number | null
           username?: string | null
+          avatar?: string | undefined
         }
         Update: {
           character_slug?: string | null
@@ -36,6 +38,7 @@ export type Database = {
           password?: string | null
           team?: number | null
           username?: string | null
+          avatar?: string | undefined
         }
         Relationships: [
           {
@@ -49,6 +52,7 @@ export type Database = {
       }
       posts: {
         Row: {
+          timestamp: number
           agent: number | null
           content: string | null
           created_at: string

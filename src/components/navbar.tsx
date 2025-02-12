@@ -1,18 +1,34 @@
-"use client"
+"use client";
 
-import Link from "next/link"
-import { Bell, ChevronDown, Search, Wallet2 } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import Image from "next/image"
-import { CreateAgentDrawer } from "@/components/create-agent-drawer"
+import Link from "next/link";
+import { Bell, ChevronDown, Search, Wallet2 } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import Image from "next/image";
+import { CreateAgentDrawer } from "@/components/create-agent-drawer";
+import { useUsers } from "@/hooks/useUsers";
 
 export function Navbar() {
+  const { user } = useUsers();
+
+  if (!user) {
+    return null;
+  }
+
   return (
     <nav className="flex h-14 items-center justify-between bg-zinc-950 px-4">
       <div className="flex items-center gap-2">
-        <Button variant="ghost" size="icon" className="text-zinc-400 hover:text-white">
+        <Button
+          variant="ghost"
+          size="icon"
+          className="text-zinc-400 hover:text-white"
+        >
           <Image src="/icon.svg" alt="logo" width={24} height={24} />
         </Button>
         <Image src="/line.svg" alt="line" width={16} height={16} />
@@ -31,7 +47,10 @@ export function Navbar() {
       </div>
 
       <div className="flex items-center gap-6">
-        <Link href="/feed" className="flex items-center gap-2 text-sm font-medium text-white hover:text-zinc-300">
+        <Link
+          href="/feed"
+          className="flex items-center gap-2 text-sm font-medium text-white hover:text-zinc-300"
+        >
           <svg
             className="h-5 w-5"
             fill="none"
@@ -50,7 +69,10 @@ export function Navbar() {
           </svg>
           Feed
         </Link>
-        <Link href="/agents" className="flex items-center gap-2 text-sm font-medium text-white hover:text-zinc-300">
+        <Link
+          href="/agents"
+          className="flex items-center gap-2 text-sm font-medium text-white hover:text-zinc-300"
+        >
           <svg
             className="h-5 w-5"
             fill="none"
@@ -68,18 +90,29 @@ export function Navbar() {
           </svg>
           Agents
         </Link>
-        <Link href="/wallets" className="flex items-center gap-2 text-sm font-medium text-white hover:text-zinc-300">
+        <Link
+          href="/wallets"
+          className="flex items-center gap-2 text-sm font-medium text-white hover:text-zinc-300"
+        >
           <Wallet2 className="h-5 w-5" />
           Wallets
         </Link>
       </div>
 
       <div className="flex items-center gap-2">
-       <CreateAgentDrawer></CreateAgentDrawer>
-        <Button variant="ghost" size="icon" className="text-zinc-400 hover:text-white">
+        <CreateAgentDrawer></CreateAgentDrawer>
+        <Button
+          variant="ghost"
+          size="icon"
+          className="text-zinc-400 hover:text-white"
+        >
           <Search className="h-5 w-5" />
         </Button>
-        <Button variant="ghost" size="icon" className="text-zinc-400 hover:text-white">
+        <Button
+          variant="ghost"
+          size="icon"
+          className="text-zinc-400 hover:text-white"
+        >
           <Bell className="h-5 w-5" />
         </Button>
         <Avatar className="h-8 w-8">
@@ -91,6 +124,5 @@ export function Navbar() {
         </Avatar>
       </div>
     </nav>
-  )
+  );
 }
-

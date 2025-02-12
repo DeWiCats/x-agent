@@ -117,31 +117,31 @@ export type Database = {
       }
       users: {
         Row: {
-          created_at: string
-          email: string | null
-          first_name: string | null
-          id: number
-          last_name: string | null
-          role: Database["public"]["Enums"]["role"]
+          avatar_url: string | null
+          full_name: string | null
+          id: string
           team: number | null
+          updated_at: string | null
+          username: string | null
+          website: string | null
         }
         Insert: {
-          created_at?: string
-          email?: string | null
-          first_name?: string | null
-          id?: number
-          last_name?: string | null
-          role?: Database["public"]["Enums"]["role"]
+          avatar_url?: string | null
+          full_name?: string | null
+          id: string
           team?: number | null
+          updated_at?: string | null
+          username?: string | null
+          website?: string | null
         }
         Update: {
-          created_at?: string
-          email?: string | null
-          first_name?: string | null
-          id?: number
-          last_name?: string | null
-          role?: Database["public"]["Enums"]["role"]
+          avatar_url?: string | null
+          full_name?: string | null
+          id?: string
           team?: number | null
+          updated_at?: string | null
+          username?: string | null
+          website?: string | null
         }
         Relationships: [
           {

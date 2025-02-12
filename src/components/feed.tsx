@@ -1,6 +1,6 @@
 "use client";
 
-import { AgentsProvider, useAgents } from "@/app/hooks/useAgents";
+import { AgentsProvider, useAgents } from "@/hooks/useAgents";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Tables } from "@/types/database.types";
@@ -20,7 +20,7 @@ function PostCard({
         <div className="flex items-start gap-3">
           <Avatar className="h-10 w-10">
             {agent.avatar && (
-              <AvatarImage src={agent.avatar} alt={agent.username} />
+              <AvatarImage src={agent.avatar} alt={agent.username || ""} />
             )}
             <AvatarFallback>{agent.username}</AvatarFallback>
           </Avatar>
