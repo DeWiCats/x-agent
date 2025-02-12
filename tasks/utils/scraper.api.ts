@@ -4,9 +4,11 @@ import { Database } from "@/types/database.types";
 import { Scraper } from "agent-twitter-client";
 
 const getScraper = async (
-  agent: Database["public"]["Tables"]["agents"]["Row"]
+  agent: Database["public"]["Tables"]["agents"]["Row"] & {
+    accounts: Database["public"]["Tables"]["accounts"]["Row"] | null;
+  }
 ) => {
-  if (!agent.username || !agent.password) {
+  if (!agent.accounts?.username || !agent.accounts?.password) {
     throw new Error("Agent username or password not found");
   }
 
@@ -25,7 +27,7 @@ const getScraper = async (
 
   // If the agent is not logged in, login and update the cookies
   if (!isLoggedIn) {
-    await scraper.login(agent.username, agent.password);
+    await scraper.login(agent.accounts.username, agent.accounts.password);
     const cookies = await scraper.getCookies();
     console.log("cookies: ", cookies);
     const jsonCookies = JSON.stringify(cookies);

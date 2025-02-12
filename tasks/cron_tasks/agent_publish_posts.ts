@@ -13,7 +13,7 @@ const agentPublishPosts = async () => {
     const today = new Date().toISOString().split("T")[0]; // Get current UTC date
     const agents = await supabase
       .from("agents")
-      .select("*, posts!inner(*)")
+      .select("*, posts!inner(*), accounts!inner(*)")
       .eq("posts.status", "scheduled")
       .or(
         `time_to_post.lte.${currentTime},and(time_to_post.gte.${currentTime},or(last_posted_date.neq.${today},last_posted_date.is.null))`
@@ -25,7 +25,7 @@ const agentPublishPosts = async () => {
     }
 
     for (const agent of agents.data) {
-      if (!agent.username || !agent.password) {
+      if (!agent.accounts?.username || !agent.accounts?.password) {
         console.log("No username or password found for agent");
         // TODO: Add a log to sentry or some other logger
         continue;

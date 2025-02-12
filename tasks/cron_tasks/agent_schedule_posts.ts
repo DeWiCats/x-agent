@@ -14,29 +14,35 @@ const agentSchedulePosts = async () => {
 
   try {
     // Get Agents that do not have a post scheduled for today and haven't posted today
-    const startOfDay = new Date();
+    const startOfDay = new Date(new Date().setDate(30));
     startOfDay.setHours(0, 0, 0, 0);
 
     const agents = await supabase
       .from("agents")
-      .select("*, posts(*)")
+      .select("*, posts!inner(*), accounts!inner(*)")
       .not("posts", "is", null)
       .not("posts.timestamp", "gte", new Date().getTime())
       .or(
         `last_posted_date.is.null,last_posted_date.lt.${startOfDay.toDateString()}`
       );
 
-    if (!agents.data || agents.data.length === 0) {
-      console.log("No agents found");
-      process.exit(0);
-    }
+      if (!agents.data || agents.data.length === 0) {
+        console.log("No agents found");
+        process.exit(0);
+      }
 
     for (const agent of agents.data) {
-      if (!agent.username || !agent.password) {
+      if (!agent.accounts) {
+        console.log("No accounts found for agent");
+        continue;
+      }
+
+      if (!agent.accounts.username || !agent.accounts.password) {
         console.log("No username or password found for agent");
         // TODO: Add a log to sentry or some other logger
         continue;
       }
+      
       const scraper = await getScraper(agent);
 
       // Get current trends

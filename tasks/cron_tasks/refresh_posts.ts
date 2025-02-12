@@ -3,7 +3,7 @@ import { getScraper } from "../utils/scraper.api";
 import { getTweetScore } from "../utils/twitter.api";
 
 const getPosts = async () => {
-  const agents = await supabase.from("agents").select("*");
+  const agents = await supabase.from("agents").select("*, accounts!inner(*)");
 
   if (!agents.data) {
     console.log("No agents found");
@@ -11,14 +11,19 @@ const getPosts = async () => {
   }
 
   for (const agent of agents.data) {
+    if (!agent.accounts) {
+      console.log("No accounts found for agent");
+      continue;
+    }
+
     const scraper = await getScraper(agent);
 
-    if (!agent.username || !agent.password) {
+    if (!agent.accounts?.username || !agent.accounts?.password) {
       console.log("No username or password found for agent");
       continue;
     }
 
-    const posts = await scraper.getTweets(agent.username, 20);
+    const posts = await scraper.getTweets(agent.accounts.username, 20);
 
     let tweets = await posts.next();
     while (!tweets.done) {
