@@ -11,10 +11,10 @@ import React, {
 } from "react";
 import { createClient } from "../utils/supabase/client";
 import { Tables } from "@/types/database.types";
-
-const teamId = 1;
+import { useUsers } from "@/hooks/useUsers";
 
 export const useAgentsHook = () => {
+  const { user } = useUsers();
   const [agents, setAgents] = useState<Tables<"agents">[]>([]);
   const [postsByAgent, setPostsByAgent] = useState<{
     [key: number]: Tables<"posts">[];
@@ -23,10 +23,15 @@ export const useAgentsHook = () => {
   const supabase = useMemo(() => createClient(), []);
 
   const getAgents = useCallback(async () => {
+    if (!user?.team) {
+      setAgents([]);
+      return;
+    }
+
     const { data, error } = await supabase
       .from("agents")
       .select("*")
-      .eq("team", teamId);
+      .eq("team", user.team);
 
     if (error) {
       console.error(error);
@@ -36,7 +41,7 @@ export const useAgentsHook = () => {
     console.log("data: ", data);
 
     setAgents(data);
-  }, [supabase]);
+  }, [supabase, user]);
 
   const getTweets = useCallback(
     async (agent: Tables<"agents">) => {

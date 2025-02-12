@@ -38,5 +38,10 @@ export async function updateSession(request: NextRequest) {
     return NextResponse.redirect(new URL('/login', request.url))
   }
 
+  if (data.user && request.url.includes('/login')) {
+    console.log('redirecting to home');
+    return NextResponse.redirect(new URL('/', request.url))
+  }
+
   return supabaseResponse
 }

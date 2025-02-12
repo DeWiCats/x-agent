@@ -1,11 +1,13 @@
 "use client";
 
-import { AgentsProvider, useAgents } from "@/hooks/useAgents";
+import { useAgents } from "@/hooks/useAgents";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Tables } from "@/types/database.types";
 import Image from "next/image";
 import { useEffect } from "react";
+import { useUsers } from "@/hooks/useUsers";
+import TeamSelection from "@/components/team-selection";
 
 function PostCard({
   post,
@@ -104,11 +106,13 @@ function Feed() {
 }
 
 const FeedWrapper = () => {
-  return (
-    <AgentsProvider>
-      <Feed />
-    </AgentsProvider>
-  );
+  const { user } = useUsers();
+
+  if (!user?.team) {
+    return <TeamSelection />;
+  }
+
+  return <Feed />;
 };
 
 export default FeedWrapper;
