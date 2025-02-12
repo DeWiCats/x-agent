@@ -22,12 +22,69 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Switch } from "@/components/ui/switch";
 import { Slider } from "@/components/ui/slider";
-import { X, Info, FileText, Globe, Trash2, PenLine } from "lucide-react";
+import { X, Info } from "lucide-react";
 import { useState } from "react";
 import Image from "next/image";
-
+import { createAgent } from "@/actions/create-agent";
+import { AgentFormData } from "@/lib/types";
 export function CreateAgentDrawer() {
   const [open, setOpen] = useState(false);
+
+  const [formData, setFormData] = useState<AgentFormData>({
+    // General tab
+    image: '',
+    name: '',
+    handle: '',
+    description: '',
+    category: '',
+    tags: '',
+
+    // Instructions tab
+    engagementHooks: '• Always pair charts with cat memes\n• End threads with "GM or GN?" question\n• Use 🐈 emoji every 42 words',
+    engagementRules: 'Replies:\n• Clapback with cat puns to FUD comments\n\nConflict Protocol:\n• Delete replies with harmful language\n• Block accounts spreading scam token links',
+    ethicalBoundaries: 'Never discuss dog-themed coins\nAlways tag @CryptoCatsDaily in cat-related alpha',
+    factCheckThreshold: 50,
+    tone: 50,
+    style: 50,
+    stance: 50,
+
+    // Context tab
+    context: 'Enter any extra information you want to include in the context of replies for the agent',
+
+    // Settings tab
+    isPublic: false,
+    model: 'Llama 3.3'
+  });
+
+  const handleInputChange = (field: string, value: string | number | boolean) => {
+    console.log(field, value);
+    console.log(formData);
+    setFormData(prev => ({
+      ...prev,
+      [field]: value
+    }));
+  };
+
+  // Update the input handlers in General tab
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        if (e.target?.result) {
+          handleInputChange('image', e.target.result as string);
+          const img = document.getElementById("preview") as HTMLImageElement;
+          const placeholder = document.getElementById("placeholder");
+          if (img) {
+            img.src = e.target.result as string;
+            img.style.display = "block";
+          }
+          if (placeholder) placeholder.style.display = "none";
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
@@ -79,26 +136,7 @@ export function CreateAgentDrawer() {
                       type="file"
                       accept="image/*"
                       className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-                      onChange={(e) => {
-                        const file = e.target.files?.[0];
-                        if (file) {
-                          const reader = new FileReader();
-                          reader.onload = (e) => {
-                            const img = document.getElementById(
-                              "preview"
-                            ) as HTMLImageElement;
-                            if (img && e.target?.result) {
-                              img.src = e.target.result as string;
-                              img.style.display = "block";
-                              const placeholder =
-                                document.getElementById("placeholder");
-                              if (placeholder)
-                                placeholder.style.display = "none";
-                            }
-                          };
-                          reader.readAsDataURL(file);
-                        }
-                      }}
+                      onChange={handleImageChange}
                     />
                     <Image
                       id="preview"
@@ -137,6 +175,8 @@ export function CreateAgentDrawer() {
                         </Label>
                         <Input
                           id={field}
+                          value={formData[field as keyof typeof formData] as string}
+                          onChange={(e) => handleInputChange(field, e.target.value)}
                           placeholder="Text"
                           className="bg-zinc-800 border-transparent text-white placeholder:text-zinc-600"
                         />
@@ -148,6 +188,8 @@ export function CreateAgentDrawer() {
                       </Label>
                       <Textarea
                         id="description"
+                        value={formData.description}
+                        onChange={(e) => handleInputChange('description', e.target.value)}
                         placeholder="Text"
                         className="bg-zinc-800 border-transparent text-white placeholder:text-zinc-600 min-h-[120px]"
                       />
@@ -172,6 +214,8 @@ export function CreateAgentDrawer() {
                       </Label>
                       <Input
                         id="tags"
+                        value={formData.tags}
+                        onChange={(e) => handleInputChange('tags', e.target.value)}
                         placeholder="Text"
                         className="bg-zinc-800 border-transparent text-white placeholder:text-zinc-600"
                       />
@@ -191,37 +235,42 @@ export function CreateAgentDrawer() {
                       <Label className="text-white">Engagement Hooks</Label>
                       <Textarea
                         className="bg-zinc-800 border-transparent text-white placeholder:text-zinc-600 min-h-[100px]"
+                        value={formData.engagementHooks}
+                        onChange={(e) => handleInputChange('engagementHooks', e.target.value)}
                         placeholder="Enter engagement hooks..."
-                        defaultValue='• Always pair charts with cat memes&#13;• End threads with "GM or GN?" question&#13;• Use 🐈 emoji every 42 words'
                       />
                     </div>
                     <div className="space-y-2">
                       <Label className="text-white">Engagement rules</Label>
                       <Textarea
                         className="bg-zinc-800 border-transparent text-white placeholder:text-zinc-600 min-h-[100px]"
-                        defaultValue="Replies:&#13;• Clapback with cat puns to FUD comments&#13;&#13;Conflict Protocol:&#13;• Delete replies with harmful language&#13;• Block accounts spreading scam token links"
+                        value={formData.engagementRules}
+                        onChange={(e) => handleInputChange('engagementRules', e.target.value)}
                       />
                     </div>
                     <div className="space-y-2">
                       <Label className="text-white">Ethical Boundaries</Label>
                       <Textarea
                         className="bg-zinc-800 border-transparent text-white placeholder:text-zinc-600 min-h-[100px]"
-                        defaultValue="Never discuss dog-themed coins&#13;Always tag @CryptoCatsDaily in cat-related alpha"
+                        value={formData.ethicalBoundaries}
+                        onChange={(e) => handleInputChange('ethicalBoundaries', e.target.value)}
                       />
                     </div>
 
                     {[
-                      { label: "Fact check threshold", left: "", right: "" },
-                      { label: "Tone", left: "Formal", right: "Casual" },
+                      { label: "Fact check threshold", left: "", right: "", key: "factCheckThreshold" },
+                      { label: "Tone", left: "Formal", right: "Casual", key: "tone" },
                       {
                         label: "Style",
                         left: "Analytical",
                         right: "Shitposting",
+                        key: "style"
                       },
                       {
                         label: "Stance",
                         left: "Neutral",
                         right: "Controversial",
+                        key: "stance"
                       },
                     ].map((slider) => (
                       <div key={slider.label} className="space-y-1">
@@ -240,10 +289,12 @@ export function CreateAgentDrawer() {
                             )}
                           </div>
                           <Slider
-                            defaultValue={[50]}
+                            defaultValue={[formData.factCheckThreshold]}
                             max={100}
                             step={25}
                             className="flex-1"
+                            value={[Number(formData[slider.key as keyof typeof formData])]}
+                            onValueChange={(value) => handleInputChange(slider.key, value[0])}
                           />
                         </div>
                       </div>
@@ -276,28 +327,10 @@ export function CreateAgentDrawer() {
                     <Label className="text-white">Engagement rules</Label>
                     <Textarea
                       className="bg-zinc-800 border-transparent text-white placeholder:text-zinc-600 min-h-[100px]"
-                      defaultValue="Enter any extra information you want to include in the context of replies for the agent"
+                      value={formData.context}
+                      onChange={(e) => handleInputChange('context', e.target.value)}
                     />
                   </div>
-                  {/* <div className="space-y-2">
-                    {[
-                      { icon: FileText, label: "Document 1" },
-                      { icon: Globe, label: "Website 1" },
-                    ].map((item, i) => (
-                      <div key={i} className="flex items-center gap-3 rounded-lg bg-zinc-800 p-3">
-                        <item.icon className="h-5 w-5 text-zinc-400" />
-                        <span className="text-white">{item.label}</span>
-                        <div className="ml-auto flex gap-2">
-                          <Button variant="ghost" size="icon" className="h-8 w-8">
-                            <Trash2 className="h-4 w-4 text-zinc-400" />
-                          </Button>
-                          <Button variant="ghost" size="icon" className="h-8 w-8">
-                            <PenLine className="h-4 w-4 text-zinc-400" />
-                          </Button>
-                        </div>
-                      </div>
-                    ))}
-                  </div> */}
                 </div>
               </TabsContent>
 
@@ -319,33 +352,22 @@ export function CreateAgentDrawer() {
                             <span className="text-white">{setting}</span>
                             <Info className="h-4 w-4 text-zinc-400" />
                           </div>
-                          <Switch />
+                          <Switch
+                            checked={formData.isPublic}
+                            onCheckedChange={(value) => handleInputChange('isPublic', value)}
+                          />
                         </div>
                       ))}
                     </div>
-                    {/* <div className="space-y-4">
-                      <h3 className="text-white">Monetization</h3>
-                      {["Public", "Allow cloning", "Web enabled"].map(
-                        (setting) => (
-                          <div
-                            key={setting}
-                            className="flex items-center justify-between"
-                          >
-                            <div className="flex items-center gap-2">
-                              <span className="text-white">{setting}</span>
-                              <Info className="h-4 w-4 text-zinc-400" />
-                            </div>
-                            <Switch />
-                          </div>
-                        )
-                      )}
-                    </div> */}
                     <div className="space-y-4">
                       <div className="flex items-center gap-2">
                         <h3 className="text-white">Model</h3>
                         <Info className="h-4 w-4 text-zinc-400" />
                       </div>
-                      <Select defaultValue="Llama 3.3">
+                      <Select
+                        value={formData.model}
+                        onValueChange={(value) => handleInputChange('model', value)}
+                      >
                         <SelectTrigger className="bg-zinc-800 border-transparent text-white">
                           <SelectValue placeholder="Select model" />
                         </SelectTrigger>
@@ -358,21 +380,6 @@ export function CreateAgentDrawer() {
                         </SelectContent>
                       </Select>
                     </div>
-                    {/* <div className="space-y-4">
-                      <h3 className="text-white">Advanced settings</h3>
-                      <div className="flex items-center gap-2">
-                        <span className="text-white">Model</span>
-                        <Info className="h-4 w-4 text-zinc-400" />
-                      </div>
-                      <Select defaultValue="llama">
-                        <SelectTrigger className="bg-zinc-800 border-transparent text-white">
-                          <SelectValue placeholder="Select model" />
-                        </SelectTrigger>
-                        <SelectContent className="bg-zinc-800 border-zinc-700">
-                          <SelectItem value="llama">LlaMa 3.3</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div> */}
                   </div>
                 </div>
               </TabsContent>
@@ -380,13 +387,24 @@ export function CreateAgentDrawer() {
           </SheetHeader>
           <div className="flex items-center justify-end border-t border-zinc-800 p-4 mt-auto">
             <div className="flex gap-2">
-              <Button
+              {/* <Button
                 variant="outline"
                 className="bg-sline-alpha-dark-050 border-transparent rounded-xl text-sline-text-dark-secondary hover:bg-sline-alpha-dark-100"
+                onClick={() => {
+                  // Handle draft saving
+                  console.log('Saving draft:', formData);
+                }}
               >
                 Save draft
-              </Button>
-              <Button className="bg-sline-state-brand-active text-sline-text-light-primary rounded-xl hover:bg-sline-state-brand-active/90">
+              </Button> */}
+              <Button 
+                className="bg-sline-state-brand-active text-sline-text-light-primary rounded-xl hover:bg-sline-state-brand-active/90"
+                onClick={() => {
+                  // Handle form submission
+                  createAgent(formData);
+                  console.log('Publishing:', formData);
+                }}
+              >
                 Publish
               </Button>
             </div>
