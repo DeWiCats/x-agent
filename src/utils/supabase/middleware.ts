@@ -1,34 +1,49 @@
-import { createServerClient } from '@supabase/ssr'
-import { NextResponse, NextRequest } from 'next/server'
+import { createServerClient } from "@supabase/ssr";
+import { type NextRequest, NextResponse } from "next/server";
 
-export async function updateSession(request: NextRequest) {
-  let supabaseResponse = NextResponse.next({
-    request,
-  })
-
-  const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    {
-      cookies: {
-        getAll() {
-          return request.cookies.getAll()
-        },
-        setAll(cookiesToSet) {
-          cookiesToSet.forEach(({ name, value }) => request.cookies.set(name, value))
-          supabaseResponse = NextResponse.next({
-            request,
-          })
-          cookiesToSet.forEach(({ name, value, options }) =>
-            supabaseResponse.cookies.set(name, value, options)
-          )
-        },
+export const updateSession = async (request: NextRequest) => {
+  try {
+    let response = NextResponse.next({
+      request: {
+        headers: request.headers,
       },
-    }
-  )
+    });
 
-  // refreshing the auth token
-  const { data } = await supabase.auth.getUser()
+    const supabase = createServerClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+      {
+        cookies: {
+          getAll() {
+            return request.cookies.getAll();
+          },
+          setAll(cookiesToSet) {
+            cookiesToSet.forEach(({ name, value }) =>
+              request.cookies.set(name, value)
+            );
+            response = NextResponse.next({
+              request,
+            });
+            cookiesToSet.forEach(({ name, value, options }) =>
+              response.cookies.set(name, value, options)
+            );
+          },
+        },
+      }
+    );
+
+    // This will refresh session if expired - required for Server Components
+    // https://supabase.com/docs/guides/auth/server-side/nextjs
+    const user = await supabase.auth.getUser();
+
+    // protected routes
+    if (request.nextUrl.pathname.startsWith("/protected") && user.error) {
+      return NextResponse.redirect(new URL("/sign-in", request.url));
+    }
+
+    if (request.nextUrl.pathname === "/" && !user.error) {
+      return NextResponse.redirect(new URL("/protected", request.url));
+    }
 
   console.log(request.url);
   // console.log(data.user);
@@ -37,11 +52,4 @@ export async function updateSession(request: NextRequest) {
     console.log('redirecting to login');
     return NextResponse.redirect(new URL('/login', request.url))
   }
-
-  if (data.user && request.url.includes('/login')) {
-    console.log('redirecting to home');
-    return NextResponse.redirect(new URL('/', request.url))
-  }
-
-  return supabaseResponse
-}
+};
