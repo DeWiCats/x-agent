@@ -32,13 +32,13 @@ export default function Page() {
             <PlusCircle className="size-6" />
           </Button>
         </DialogTrigger>
-        <DialogContent className="sm:max-w-[425px] bg-gray-800 text-white border-gray-700">
+        <DialogContent className="sm:max-w-[425px] bg-sline-base-surface-1 text-sline-text-dark-primary border-sline-base-border-alpha">
           <DialogHeader>
             <DialogTitle>Create Post</DialogTitle>
           </DialogHeader>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="text-prompt" className="text-sm font-medium text-gray-200">
+              <Label htmlFor="text-prompt" className="text-sm font-medium text-sline-text-dark-secondary">
                 What is the post about?
               </Label>
               <Textarea
@@ -46,7 +46,7 @@ export default function Page() {
                 placeholder="Enter your text prompt here..."
                 value={textPrompt}
                 onChange={(e) => setTextPrompt(e.target.value)}
-                className="w-full bg-gray-700 border-gray-600 text-white placeholder:text-gray-400"
+                className="w-full bg-sline-base-surface-2 border-sline-base-border text-sline-text-dark-primary placeholder:text-sline-text-dark-secondary"
               />
             </div>
             <div className="flex items-center space-x-2">
@@ -54,18 +54,18 @@ export default function Page() {
                 id="include-image"
                 checked={includeImage}
                 onCheckedChange={(checked) => setIncludeImage(checked as boolean)}
-                className="border-white data-[state=checked]:bg-white data-[state=checked]:text-gray-900"
+                className="border-sline-base-border data-[state=checked]:bg-sline-base-surface-2 data-[state=checked]:text-sline-text-dark-primary"
               />
               <Label
                 htmlFor="include-image"
-                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-gray-200"
+                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-sline-text-dark-secondary"
               >
                 Include an image?
               </Label>
             </div>
             {includeImage && (
               <div className="space-y-2">
-                <Label htmlFor="image-prompt" className="text-sm font-medium text-gray-200">
+                <Label htmlFor="image-prompt" className="text-sm font-medium text-sline-text-dark-secondary">
                   Image Prompt
                 </Label>
                 <Textarea
@@ -73,11 +73,11 @@ export default function Page() {
                   placeholder="Describe the image you want to generate..."
                   value={imagePrompt}
                   onChange={(e) => setImagePrompt(e.target.value)}
-                  className="w-full bg-gray-700 border-gray-600 text-white placeholder:text-gray-400"
+                  className="w-full bg-sline-base-surface-2 border-sline-base-border text-sline-text-dark-primary placeholder:text-sline-text-dark-secondary"
                 />
               </div>
             )}
-            <Button type="submit" className="w-full bg-white hover:bg-gray-200 text-gray-900">
+            <Button type="submit" className="w-full text-sline-text-dark-primary">
               Submit
             </Button>
           </form>

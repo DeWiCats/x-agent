@@ -33,34 +33,34 @@ export function CreateAgentDrawer() {
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
         <Button
-          variant="default"
-          className="bg-white text-black hover:bg-zinc-200"
+          variant="ghost"
+          className="text-sline-text-dark-secondary hover:text-sline-text-dark-primary hover:bg-sline-alpha-dark-050 rounded-xl"
         >
           Create an agent
         </Button>
       </SheetTrigger>
       <SheetContent
         side="right"
-        className="w-[400px] border-l border-zinc-800 bg-zinc-900 p-0"
+        className="w-[400px] border bg-sline-base-surface-1 p-0 rounded-xl border-sline-base-border-alpha"
       >
         <div className="flex h-full flex-col">
-          <SheetHeader className="border-b border-zinc-800 px-4 py-4">
+          <SheetHeader className="border-b border-sline-base-border-alpha px-4 py-4">
             <div className="flex items-center justify-between">
-              <SheetTitle className="text-lg font-semibold text-white">
+              <SheetTitle className="text-lg font-semibold text-sline-text-dark-primary">
                 Create agent
               </SheetTitle>
-              <SheetClose className="rounded-full p-2 hover:bg-zinc-800">
-                <X className="h-4 w-4 text-zinc-400" />
+              <SheetClose className="rounded-full p-2 hover:bg-sline-alpha-dark-050">
+                <X className="h-4 w-4 text-sline-text-dark-secondary" />
               </SheetClose>
             </div>
             <Tabs defaultValue="general" className="w-full">
-              <TabsList className="bg-transparent border-b border-zinc-800 w-full justify-start gap-6 h-auto pb-3">
+              <TabsList className="w-full justify-start gap-6 h-auto p-0 rounded-none border-b border-sline-base-border-alpha">
                 {["general", "instructions", "context", "settings"].map(
                   (tab) => (
                     <TabsTrigger
                       key={tab}
                       value={tab}
-                      className="bg-transparent text-zinc-400 data-[state=active]:text-white data-[state=active]:bg-transparent data-[state=active]:shadow-none px-0 rounded-none data-[state=active]:border-b-2 data-[state=active]:border-white capitalize"
+                      className="bg-transparent relative pb-4 text-sline-text-dark-secondary data-[state=active]:text-sline-text-dark-primary data-[state=active]:bg-transparent data-[state=active]:shadow-none px-0 rounded-none capitalize data-[state=active]:after:absolute data-[state=active]:after:bottom-0 data-[state=active]:after:left-0 data-[state=active]:after:right-0 data-[state=active]:after:h-0.5 data-[state=active]:after:bg-sline-state-brand-active"
                     >
                       {tab}
                     </TabsTrigger>
@@ -74,7 +74,7 @@ export function CreateAgentDrawer() {
                 className="mt-4 focus-visible:outline-none focus-visible:ring-0"
               >
                 <div className="space-y-6 px-4">
-                  <div className="mx-auto w-32 h-32 bg-zinc-800 rounded-lg flex items-center justify-center relative">
+                  <div className="mx-auto w-32 h-32 bg-sline-alpha-dark-050 border border-border rounded-lg flex items-center justify-center relative">
                     <input
                       type="file"
                       accept="image/*"
@@ -355,7 +355,7 @@ export function CreateAgentDrawer() {
                               {model}
                             </SelectItem>
                           ))}
-                          </SelectContent>
+                        </SelectContent>
                       </Select>
                     </div>
                     {/* <div className="space-y-4">

@@ -53,7 +53,7 @@ function PostCard({
           {post.media_url && (
             <div className="flex justify-center">
               <Image
-                className="rounded-3xl"
+                className="rounded-3xl border border-sline-base-border-alpha"
                 src={post.media_url}
                 alt={post.media_url || ""}
                 width={200}
@@ -81,7 +81,7 @@ function PostCard({
         <div className="mt-2 flex justify-end">
           {post.score !== null && (
             <div
-              className={`inline-flex items-center px-2 py-1 rounded-md text-sm ${
+              className={`inline-flex items-center px-2 py-1 rounded-lg text-sm ${
                 post.score < 50
                   ? "bg-red-900/30 text-red-500"
                   : post.score < 75
