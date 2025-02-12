@@ -53,7 +53,8 @@ export const useAgentsHook = () => {
       const { data, error } = await supabase
         .from("posts")
         .select("*")
-        .eq("agent", agent.id);
+        .eq("agent", agent.id)
+        .order("timestamp", { ascending: false });
 
       if (error) {
         console.error(error);

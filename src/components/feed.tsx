@@ -66,10 +66,10 @@ function PostCard({
             </div>
           )}
 
-          {post.media_base64 && !post.media_url && (
+          {post?.media_base64 && !post?.media_url && (
             <div className="flex justify-center">
               <Image
-                src={post.media_base64}
+                src={`data:image/jpeg;base64,${post.media_base64}`}
                 alt={post.media_base64 || ""}
                 width={200}
                 height={200}
