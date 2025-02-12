@@ -15,6 +15,7 @@ import { CreateAgentDrawer } from "@/components/create-agent-drawer";
 import { useUsers } from "@/hooks/useUsers";
 import { createClient } from "@/utils/supabase/client";
 import { useRouter, usePathname } from "next/navigation";
+import CreatingProgressLoader from "./creating-progress-loader";
 
 export function Navbar() {
   const { user } = useUsers();
@@ -128,6 +129,7 @@ export function Navbar() {
 
       <div className="flex items-center gap-2">
         <CreateAgentDrawer></CreateAgentDrawer>
+        <CreatingProgressLoader />
         {/* <Button
           variant="ghost"
           size="icon"
