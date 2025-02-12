@@ -32,14 +32,8 @@ import { Tables } from "@/types/database.types";
 
 export default function AgentsPage({ agents }: { agents: Tables<"agents">[] }) {
   return (
-<<<<<<< Updated upstream
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold text-white mb-6">Agents</h1>
-=======
-    <div className="from-gray-900 to-black">
-      <div className="container mx-auto px-4 py-8">
-        <h1 className="text-3xl font-bold text-white mb-6">Agents</h1>
->>>>>>> Stashed changes
 
       <Tabs defaultValue="my-agents" className="mb-8">
         <TabsList className="bg-sline-base-surface-1 text-gray-400">

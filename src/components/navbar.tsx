@@ -14,11 +14,14 @@ import Image from "next/image";
 import { CreateAgentDrawer } from "@/components/create-agent-drawer";
 import { useUsers } from "@/hooks/useUsers";
 import { createClient } from "@/utils/supabase/client";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
+
 export function Navbar() {
   const { user } = useUsers();
   const supabase = createClient();
   const router = useRouter();
+  const pathname = usePathname();
+
   if (!user) {
     return null;
   }
@@ -32,7 +35,7 @@ export function Navbar() {
     <nav className="flex h-14 items-center justify-between px-4">
       <div className="flex items-center gap-2">
         <Button variant="ghost" size="icon">
-          <Image src="/icon.svg" alt="logo" width={24} height={24} />
+          <Image src={"/icon.svg"} alt="logo" width={24} height={24} />
         </Button>
         <Image src="/line.svg" alt="line" width={16} height={16} />
         <DropdownMenu>
@@ -55,7 +58,11 @@ export function Navbar() {
       <div className="flex items-center gap-6">
         <Link
           href="/feed"
-          className="flex items-center gap-2 text-sm font-medium text-sline-text-dark-secondary hover:text-sline-text-dark-primary"
+          className={`flex items-center gap-2 text-sm font-medium ${
+            pathname === "/feed"
+              ? "text-white"
+              : "text-sline-text-dark-secondary hover:text-sline-text-dark-primary"
+          }`}
         >
           <svg
             className="h-5 w-5"
@@ -77,7 +84,11 @@ export function Navbar() {
         </Link>
         <Link
           href="/agents"
-          className="flex items-center gap-2 text-sm font-medium text-white hover:text-zinc-300"
+          className={`flex items-center gap-2 text-sm font-medium ${
+            pathname === "/agents"
+              ? "text-white"
+              : "text-sline-text-dark-secondary hover:text-sline-text-dark-primary"
+          }`}
         >
           <svg
             className="h-5 w-5"
@@ -123,7 +134,7 @@ export function Navbar() {
         </Button> */}
         <Avatar className="h-8 w-8">
           <AvatarImage
-            src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%202025-02-08%20at%201.19.01%E2%80%AFPM-QRFYauyQLW1SzDGm0V3ddEYuUmrtig.png"
+            src={user.avatar_url || "/default-avatar.png"}
             alt="User avatar"
           />
           <AvatarFallback>U</AvatarFallback>

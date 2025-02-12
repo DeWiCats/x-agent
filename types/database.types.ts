@@ -129,6 +129,7 @@ export type Database = {
       };
       users: {
         Row: {
+<<<<<<< Updated upstream
           avatar_url: string | null;
           full_name: string | null;
           id: string;
@@ -155,6 +156,37 @@ export type Database = {
           username?: string | null;
           website?: string | null;
         };
+=======
+          updated_at: string
+          email: string | null
+          full_name: string | null
+          avatar_url: string | null
+          about: string | null
+          id: number
+          role: Database["public"]["Enums"]["role"]
+          team: number | null
+        }
+        Insert: {
+          updated_at?: string
+          email?: string | null
+          full_name?: string | null
+          avatar_url?: string | null
+          about?: string | null
+          id?: number
+          role?: Database["public"]["Enums"]["role"]
+          team?: number | null
+        }
+        Update: {
+          updated_at?: string
+          email?: string | null
+          full_name?: string | null
+          avatar_url?: string | null
+          about?: string | null
+          id?: number
+          role?: Database["public"]["Enums"]["role"]
+          team?: number | null
+        }
+>>>>>>> Stashed changes
         Relationships: [
           {
             foreignKeyName: "users_team_fkey";
