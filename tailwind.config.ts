@@ -14,7 +14,7 @@ const colors = {
     5: "hsl(var(--chart-5))",
   },
 
-  border: "hsl(var(--sline-base-border-alpha))",
+  border: "var(--sline-base-border-alpha)",
 
   // Sline colors
   sline: {

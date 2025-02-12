@@ -307,9 +307,11 @@ body::after {
   /* Semantic Colors */
   --sline-base-disabled: hsla(var(--sline-colors-alpha-dark-200));
   --sline-base-border: hsl(var(--sline-colors-bronze-200));
-  --sline-base-border-alpha: hsl(var(--sline-colors-alpha-light-300));
+  --sline-base-border-alpha: hsl(var(--sline-colors-alpha-dark-050));
+
   --sline-base-surface-1: hsl(var(--sline-colors-alpha-light-900));
   --sline-base-surface-2: hsl(var(--sline-colors-bronze-50));
+
   --sline-base-fill-1: hsl(var(--sline-colors-bronze-100));
   --sline-base-fill-2: hsl(var(--sline-colors-bronze-200));
   --sline-base-fill-3: hsl(var(--sline-colors-bronze-300));
@@ -381,16 +383,16 @@ body::after {
   --sline-colors-gray-900: 240, 6%, 12%;
 
   /* Green */
-  --sline-colors-green-50: 138, 75%, 97%;
-  --sline-colors-green-100: 141, 84%, 93%;
-  --sline-colors-green-200: 141, 79%, 85%;
-  --sline-colors-green-300: 142, 84%, 65%;
-  --sline-colors-green-400: 142, 69%, 52%;
-  --sline-colors-green-500: 142, 75%, 40%;
-  --sline-colors-green-600: 142, 75%, 32%;
-  --sline-colors-green-700: 142, 68%, 26%;
-  --sline-colors-green-800: 142, 64%, 25%;
-  --sline-colors-green-900: 142, 63%, 15%;
+  --sline-colors-green-50: 136, 59%, 12%;
+  --sline-colors-green-100: 144, 61%, 20%;
+  --sline-colors-green-200: 143, 64%, 24%;
+  --sline-colors-green-300: 142, 80%, 33%;
+  --sline-colors-green-400: 142, 71%, 45%;
+  --sline-colors-green-500: 142, 69%, 58%;
+  --sline-colors-green-600: 142, 77%, 73%;
+  --sline-colors-green-700: 141, 79%, 85%;
+  --sline-colors-green-800: 142, 83%, 93%;
+  --sline-colors-green-900: 136, 73%, 97%;
 
   /* Red */
   --sline-colors-red-50: 0, 82%, 97%;
@@ -524,4 +526,35 @@ body::after {
   --text-dark-primary: hsl(var(--sline-colors-alpha-dark-900));
   --text-dark-secondary: hsl(var(--sline-colors-alpha-dark-700));
   --text-dark-tertiary: hsl(var(--sline-colors-alpha-dark-400));
+}
+
+/* --- Scrollbar --- */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: hsla(var(--sline-colors-alpha-dark-200)) transparent;
+}
+
+/* Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  @apply bg-sline-alpha-dark-200;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  @apply bg-sline-alpha-dark-300;
+}
+
+/* For Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: hsla(var(--sline-colors-alpha-dark-200)) transparent;
 }

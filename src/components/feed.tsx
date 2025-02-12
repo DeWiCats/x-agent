@@ -17,7 +17,7 @@ function PostCard({
   agent: Tables<"agents">;
 }) {
   return (
-    <article className="border-b border-zinc-800 p-4">
+    <article className="p-4">
       <div className="flex flex-col gap-3">
         <div className="flex items-start gap-3">
           <Avatar className="h-10 w-10">
@@ -28,17 +28,18 @@ function PostCard({
           </Avatar>
           <div className="flex-1 space-y-1">
             <div className="flex items-center gap-2">
-              <span className="font-semibold text-white">{agent.username}</span>
-              <span className="text-zinc-500">{agent.username}</span>
-              <span className="text-zinc-500">·</span>
-              <span className="text-zinc-500">
+              <span className="font-semibold text-sline-text-dark-primary">
+                {agent.username}
+              </span>
+              <span className="text-sline-text-dark-secondary">·</span>
+              <span className="text-sline-text-dark-tertiary">
                 {new Date(post.timestamp * 1000).toLocaleString()}
               </span>
             </div>
             {post.status && (
               <Badge
                 variant="secondary"
-                className="bg-amber-900/30 text-amber-500 hover:bg-amber-900/40 border-0"
+                className="bg-sline-state-success-active text-sline-text-light-primary hover:bg-sline-state-success-active/80 border-0"
               >
                 {post.status}
               </Badge>
@@ -93,8 +94,9 @@ function Feed() {
   }, [agents, getTweets]);
 
   return (
-    <div className="h-full mt-12 max-w-2xl mx-auto divide-zinc-800 bg-white bg-opacity-5 rounded-t-[2rem] overflow-hidden">
-      <div className="h-full overflow-auto">
+    <div className="h-full mt-12 max-w-2xl mx-auto bg-sline-alpha-dark-050 rounded-t-3xl overflow-hidden relative z-10 border border-border border-b-0">
+      <div className="absolute bottom-0 left-0 w-full h-12 bg-gradient-to-t from-sline-base-surface-1 to-transparent" />
+      <div className="h-full overflow-auto divide-y divide-border">
         {agents?.length > 0 &&
           postsByAgent[agents[0].id] &&
           postsByAgent[agents[0].id].map((post) => (
