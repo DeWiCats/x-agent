@@ -9,12 +9,16 @@ export async function GET(request: NextRequest) {
 
   if (code) {
     const supabase = await createClient();
-    const { error } = await supabase.auth.verifyOtp({ token_hash: code, type: "email" });
+    const { error } = await supabase.auth.verifyOtp({
+      token_hash: code,
+      type: "email",
+    });
 
     if (error) {
       console.error(error);
     }
 
+    await supabase.auth.getUser();
     return NextResponse.redirect(requestUrl.origin);
   }
 
