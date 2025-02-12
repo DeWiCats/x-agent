@@ -4,18 +4,10 @@ const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: "https",
-        hostname: "pbs.twimg.com",
-      },
-    ],
-  },
-  /* config options here */
-  images: {
-    remotePatterns: [
-      {
         hostname: "www.dewicats.xyz",
       },
       {
+        protocol: "https",
         hostname: "pbs.twimg.com",
       },
     ],

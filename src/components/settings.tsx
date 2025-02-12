@@ -25,13 +25,15 @@ export default function Settings() {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const { data: { user } } = await supabase.auth.getUser();
+        const {
+          data: { user },
+        } = await supabase.auth.getUser();
         if (!user) return;
 
         const { data, error } = await supabase
-          .from('users')
-          .select('*')
-          .eq('id', user.id)
+          .from("users")
+          .select("*")
+          .eq("id", user.id)
           .single();
 
         if (error) throw error;
@@ -44,7 +46,7 @@ export default function Settings() {
           });
         }
       } catch (error) {
-        console.error('Error fetching user data:', error);
+        console.error("Error fetching user data:", error);
       }
     };
 
@@ -54,23 +56,25 @@ export default function Settings() {
   const handleSave = async () => {
     try {
       setLoading(true);
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) throw new Error('No user found');
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) throw new Error("No user found");
 
       const { error } = await supabase
-        .from('users')
+        .from("users")
         .update({
           username: userData.username,
           about: userData.about,
           avatar_url: userData.avatar_url,
         })
-        .eq('id', user.id);
+        .eq("id", user.id);
 
       if (error) throw error;
       router.refresh();
     } catch (error) {
-      console.error('Error updating profile:', error);
-      alert('Error updating profile');
+      console.error("Error updating profile:", error);
+      alert("Error updating profile");
     } finally {
       setLoading(false);
     }
@@ -106,10 +110,9 @@ export default function Settings() {
             <CardContent className="space-y-6">
               <div className="flex items-start gap-4 p-4 bg-sline-alpha-dark-050 border border-border rounded-2xl">
                 <Avatar className="h-16 w-16 relative">
-                  
-                  <AvatarImage 
+                  <AvatarImage
                     id="avatar-preview"
-                    src={userData.avatar_url || "/default-avatar.png"} 
+                    src={userData.avatar_url || "/default-avatar.png"}
                   />
                   <AvatarFallback>CN</AvatarFallback>
                 </Avatar>
@@ -142,9 +145,9 @@ export default function Settings() {
                         const reader = new FileReader();
                         reader.onload = (e) => {
                           if (e.target?.result) {
-                            setUserData(prev => ({
+                            setUserData((prev) => ({
                               ...prev,
-                              avatar_url: e.target.result as string
+                              avatar_url: e.target.result as string,
                             }));
                           }
                         };
@@ -164,7 +167,9 @@ export default function Settings() {
                     id="username"
                     placeholder="Username"
                     value={userData.username}
-                    onChange={(e) => setUserData({ ...userData, username: e.target.value })}
+                    onChange={(e) =>
+                      setUserData({ ...userData, username: e.target.value })
+                    }
                     className="bg-zinc-800 border-transparent text-white placeholder:text-zinc-600"
                   />
                 </div>
@@ -191,13 +196,15 @@ export default function Settings() {
                   id="about"
                   placeholder="Tell us about yourself"
                   value={userData.about}
-                  onChange={(e) => setUserData({ ...userData, about: e.target.value })}
+                  onChange={(e) =>
+                    setUserData({ ...userData, about: e.target.value })
+                  }
                   className="bg-zinc-800 border-transparent text-white placeholder:text-zinc-600 min-h-[120px]"
                 />
               </div>
 
               <div className="flex justify-end">
-                <Button 
+                <Button
                   className="bg-zinc-800 text-white hover:bg-zinc-700"
                   onClick={handleSave}
                   disabled={loading}

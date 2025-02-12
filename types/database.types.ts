@@ -39,7 +39,6 @@ export type Database = {
           created_at: string
           id: number
           last_posted_date: string | null
-          password: string
           team: number | null
           time_to_post: string | null
           username: string
@@ -52,7 +51,6 @@ export type Database = {
           created_at?: string
           id?: number
           last_posted_date?: string | null
-          password: string
           team?: number | null
           time_to_post?: string | null
           username: string
@@ -65,7 +63,6 @@ export type Database = {
           created_at?: string
           id?: number
           last_posted_date?: string | null
-          password?: string
           team?: number | null
           time_to_post?: string | null
           username?: string

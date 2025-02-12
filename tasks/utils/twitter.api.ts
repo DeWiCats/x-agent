@@ -1,6 +1,6 @@
 import { AxiosError } from "axios";
 import { generateVeniceText } from "./venice.api";
-import { Tweet } from "agent-twitter-client";
+import { Tweet } from "@dewicats/agent-twitter-client";
 
 export const generateMemeWorthyTweet = async (
   characterSlug: string,

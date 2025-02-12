@@ -1,7 +1,7 @@
 import { supabase } from "./supabase.api";
 import { Cookie } from "tough-cookie";
 import { Database } from "@/types/database.types";
-import { Scraper } from "agent-twitter-client";
+import { Scraper } from "@dewicats/agent-twitter-client";
 
 const getScraper = async (
   agent: Database["public"]["Tables"]["agents"]["Row"] & {
@@ -29,7 +29,6 @@ const getScraper = async (
   if (!isLoggedIn) {
     await scraper.login(agent.accounts.username, agent.accounts.password);
     const cookies = await scraper.getCookies();
-    console.log("cookies: ", cookies);
     const jsonCookies = JSON.stringify(cookies);
 
     // Update cookies in the database

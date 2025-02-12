@@ -18,13 +18,15 @@
     }
   ],
   "scripts": {
-    "dev": "next dev --turbopack",
+    "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "patch": "patch-package",
     "publish-posts": "node --loader ts-node/esm --experimental-specifier-resolution=node  tasks/cron_tasks/agent_publish_posts.ts",
     "refresh-posts": "node --loader ts-node/esm --experimental-specifier-resolution=node  tasks/cron_tasks/refresh_posts.ts",
     "schedule-posts": "node --loader ts-node/esm --experimental-specifier-resolution=node  tasks/cron_tasks/agent_schedule_posts.ts",
+    "update-profile": "node --loader ts-node/esm --experimental-specifier-resolution=node  tasks/update_profile.ts",
     "gen-types": "sh tasks/generate_types.sh"
   },
   "dependencies": {
@@ -40,7 +42,7 @@
     "@radix-ui/react-tabs": "^1.1.3",
     "@supabase/ssr": "^0.5.2",
     "@supabase/supabase-js": "^2.48.1",
-    "agent-twitter-client": "^0.0.18",
+    "@dewicats/agent-twitter-client": "0.0.19",
     "axios": "^1.7.9",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
@@ -51,6 +53,7 @@
     "openai": "^4.83.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "sharp": "^0.33.5",
     "tailwind-merge": "^3.0.1",
     "tailwindcss-animate": "^1.0.7",
     "tough-cookie": "^5.1.1"

@@ -1,0 +1,711 @@
+diff --git a/node_modules/agent-twitter-client/dist/default/cjs/index.js b/node_modules/agent-twitter-client/dist/default/cjs/index.js
+index 3fa0906..1fae909 100644
+--- a/node_modules/agent-twitter-client/dist/default/cjs/index.js
++++ b/node_modules/agent-twitter-client/dist/default/cjs/index.js
+@@ -10,7 +10,7 @@ var OTPAuth = require('otpauth');
+ var stringify = require('json-stable-stringify');
+ var events = require('events');
+ var WebSocket = require('ws');
+-var wrtc = require('@roamhq/wrtc');
++// var wrtc = require('@roamhq/wrtc');
+ var fs = require('fs');
+ var path = require('path');
+ var child_process = require('child_process');
+@@ -881,7 +881,7 @@ async function* getTweetTimeline(query, maxTweets, fetchFunc) {
+ }
+ 
+ function isFieldDefined(key) {
+-  return function(value) {
++  return function (value) {
+     return isDefined(value[key]);
+   };
+ }
+@@ -977,7 +977,7 @@ function linkUsernameHtml(username) {
+   )}">${username}</a>`;
+ }
+ function unwrapTcoUrlHtml(tweet, foundedMedia) {
+-  return function(tco) {
++  return function (tco) {
+     for (const entity of tweet.entities?.urls ?? []) {
+       if (tco === entity.url && entity.expanded_url != null) {
+         return `<a href="${entity.expanded_url}">${tco}</a>`;
+@@ -4078,13 +4078,13 @@ function safeJson(text) {
+   }
+ }
+ 
+-const { nonstandard } = wrtc;
+-const { RTCAudioSource, RTCAudioSink } = nonstandard;
++// const { nonstandard } = wrtc;
++// const { RTCAudioSource, RTCAudioSink } = nonstandard;
+ class JanusAudioSource extends events.EventEmitter {
+   constructor() {
+     super();
+-    this.source = new RTCAudioSource();
+-    this.track = this.source.createTrack();
++    // this.source = new RTCAudioSource();
++    // this.track = this.source.createTrack();
+   }
+   getTrack() {
+     return this.track;
+@@ -4117,7 +4117,7 @@ class JanusAudioSink extends events.EventEmitter {
+   }
+ }
+ 
+-const { RTCPeerConnection, MediaStream } = wrtc;
++// const { RTCPeerConnection, MediaStream } = wrtc;
+ class JanusClient extends events.EventEmitter {
+   constructor(config) {
+     super();
+@@ -4133,19 +4133,19 @@ class JanusClient extends events.EventEmitter {
+     this.startPolling();
+     await this.createRoom();
+     this.publisherId = await this.joinRoom();
+-    this.pc = new RTCPeerConnection({
+-      iceServers: [
+-        {
+-          urls: this.config.turnServers.uris,
+-          username: this.config.turnServers.username,
+-          credential: this.config.turnServers.password
+-        }
+-      ]
+-    });
+-    this.setupPeerEvents();
+-    this.enableLocalAudio();
+-    await this.configurePublisher();
+-    console.log("[JanusClient] Initialization complete");
++    // this.pc = new RTCPeerConnection({
++    //   iceServers: [
++    //     {
++    //       urls: this.config.turnServers.uris,
++    //       username: this.config.turnServers.username,
++    //       credential: this.config.turnServers.password
++    //     }
++    //   ]
++    // });
++    // this.setupPeerEvents();
++    // this.enableLocalAudio();
++    // await this.configurePublisher();
++    // console.log("[JanusClient] Initialization complete");
+   }
+   async subscribeSpeaker(userId) {
+     console.log("[JanusClient] subscribeSpeaker => userId=", userId);
+@@ -4189,43 +4189,43 @@ class JanusClient extends events.EventEmitter {
+     );
+     console.log('[JanusClient] subscriber => "attached" with offer');
+     const offer = attachedEvt.jsep;
+-    const subPc = new RTCPeerConnection({
+-      iceServers: [
+-        {
+-          urls: this.config.turnServers.uris,
+-          username: this.config.turnServers.username,
+-          credential: this.config.turnServers.password
+-        }
+-      ]
+-    });
+-    subPc.ontrack = (evt) => {
+-      console.log("[JanusClient] subscriber track =>", evt.track.kind);
+-      const sink = new JanusAudioSink(evt.track);
+-      sink.on("audioData", (frame) => {
+-        this.emit("audioDataFromSpeaker", {
+-          userId,
+-          bitsPerSample: frame.bitsPerSample,
+-          sampleRate: frame.sampleRate,
+-          numberOfFrames: frame.numberOfFrames,
+-          channelCount: frame.channelCount,
+-          samples: frame.samples
+-        });
+-      });
+-    };
+-    await subPc.setRemoteDescription(offer);
+-    const answer = await subPc.createAnswer();
+-    await subPc.setLocalDescription(answer);
+-    await this.sendJanusMessage(
+-      subscriberHandleId,
+-      {
+-        request: "start",
+-        room: this.config.roomId,
+-        periscope_user_id: this.config.userId
+-      },
+-      answer
+-    );
+-    console.log("[JanusClient] subscriber => done (user=", userId, ")");
+-    this.subscribers.set(userId, { handleId: subscriberHandleId, pc: subPc });
++    // const subPc = new RTCPeerConnection({
++    //   iceServers: [
++    //     {
++    //       urls: this.config.turnServers.uris,
++    //       username: this.config.turnServers.username,
++    //       credential: this.config.turnServers.password
++    //     }
++    //   ]
++    // });
++    // subPc.ontrack = (evt) => {
++    //   console.log("[JanusClient] subscriber track =>", evt.track.kind);
++    //   const sink = new JanusAudioSink(evt.track);
++    //   sink.on("audioData", (frame) => {
++    //     this.emit("audioDataFromSpeaker", {
++    //       userId,
++    //       bitsPerSample: frame.bitsPerSample,
++    //       sampleRate: frame.sampleRate,
++    //       numberOfFrames: frame.numberOfFrames,
++    //       channelCount: frame.channelCount,
++    //       samples: frame.samples
++    //     });
++    //   });
++    // };
++    // await subPc.setRemoteDescription(offer);
++    // const answer = await subPc.createAnswer();
++    // await subPc.setLocalDescription(answer);
++    // await this.sendJanusMessage(
++    //   subscriberHandleId,
++    //   {
++    //     request: "start",
++    //     room: this.config.roomId,
++    //     periscope_user_id: this.config.userId
++    //   },
++    //   answer
++    // );
++    // console.log("[JanusClient] subscriber => done (user=", userId, ")");
++    // this.subscribers.set(userId, { handleId: subscriberHandleId, pc: subPc });
+   }
+   pushLocalAudio(samples, sampleRate, channels = 1) {
+     if (!this.localAudioSource) {
+@@ -4245,9 +4245,9 @@ class JanusClient extends events.EventEmitter {
+     }
+     this.localAudioSource = new JanusAudioSource();
+     const track = this.localAudioSource.getTrack();
+-    const localStream = new MediaStream();
+-    localStream.addTrack(track);
+-    this.pc.addTrack(track, localStream);
++    // const localStream = new MediaStream();
++    // localStream.addTrack(track);
++    // this.pc.addTrack(track, localStream);
+   }
+   async stop() {
+     console.log("[JanusClient] Stopping...");
+diff --git a/node_modules/agent-twitter-client/dist/default/esm/index.mjs b/node_modules/agent-twitter-client/dist/default/esm/index.mjs
+index a1b95a1..1f65d75 100644
+--- a/node_modules/agent-twitter-client/dist/default/esm/index.mjs
++++ b/node_modules/agent-twitter-client/dist/default/esm/index.mjs
+@@ -8,7 +8,7 @@ import * as OTPAuth from 'otpauth';
+ import stringify from 'json-stable-stringify';
+ import { EventEmitter } from 'events';
+ import WebSocket from 'ws';
+-import wrtc from '@roamhq/wrtc';
++// import wrtc from '@roamhq/wrtc';
+ import * as fs from 'fs';
+ import fs__default from 'fs';
+ import path from 'path';
+@@ -860,7 +860,7 @@ async function* getTweetTimeline(query, maxTweets, fetchFunc) {
+ }
+ 
+ function isFieldDefined(key) {
+-  return function(value) {
++  return function (value) {
+     return isDefined(value[key]);
+   };
+ }
+@@ -956,7 +956,7 @@ function linkUsernameHtml(username) {
+   )}">${username}</a>`;
+ }
+ function unwrapTcoUrlHtml(tweet, foundedMedia) {
+-  return function(tco) {
++  return function (tco) {
+     for (const entity of tweet.entities?.urls ?? []) {
+       if (tco === entity.url && entity.expanded_url != null) {
+         return `<a href="${entity.expanded_url}">${tco}</a>`;
+@@ -4057,13 +4057,13 @@ function safeJson(text) {
+   }
+ }
+ 
+-const { nonstandard } = wrtc;
+-const { RTCAudioSource, RTCAudioSink } = nonstandard;
++// const { nonstandard } = wrtc;
++// const { RTCAudioSource, RTCAudioSink } = nonstandard;
+ class JanusAudioSource extends EventEmitter {
+   constructor() {
+     super();
+-    this.source = new RTCAudioSource();
+-    this.track = this.source.createTrack();
++    // this.source = new RTCAudioSource();
++    // this.track = this.source.createTrack();
+   }
+   getTrack() {
+     return this.track;
+@@ -4084,11 +4084,11 @@ class JanusAudioSink extends EventEmitter {
+     this.active = true;
+     if (track.kind !== "audio")
+       throw new Error("JanusAudioSink must be an audio track");
+-    this.sink = new RTCAudioSink(track);
+-    this.sink.ondata = (frame) => {
+-      if (!this.active) return;
+-      this.emit("audioData", frame);
+-    };
++    // this.sink = new RTCAudioSink(track);
++    // this.sink.ondata = (frame) => {
++    //   if (!this.active) return;
++    //   this.emit("audioData", frame);
++    // };
+   }
+   stop() {
+     this.active = false;
+@@ -4096,7 +4096,7 @@ class JanusAudioSink extends EventEmitter {
+   }
+ }
+ 
+-const { RTCPeerConnection, MediaStream } = wrtc;
++// const { RTCPeerConnection, MediaStream } = wrtc;
+ class JanusClient extends EventEmitter {
+   constructor(config) {
+     super();
+@@ -4112,19 +4112,19 @@ class JanusClient extends EventEmitter {
+     this.startPolling();
+     await this.createRoom();
+     this.publisherId = await this.joinRoom();
+-    this.pc = new RTCPeerConnection({
+-      iceServers: [
+-        {
+-          urls: this.config.turnServers.uris,
+-          username: this.config.turnServers.username,
+-          credential: this.config.turnServers.password
+-        }
+-      ]
+-    });
+-    this.setupPeerEvents();
+-    this.enableLocalAudio();
+-    await this.configurePublisher();
+-    console.log("[JanusClient] Initialization complete");
++    // this.pc = new RTCPeerConnection({
++    //   iceServers: [
++    //     {
++    //       urls: this.config.turnServers.uris,
++    //       username: this.config.turnServers.username,
++    //       credential: this.config.turnServers.password
++    //     }
++    //   ]
++    // });
++    // this.setupPeerEvents();
++    // this.enableLocalAudio();
++    // await this.configurePublisher();
++    // console.log("[JanusClient] Initialization complete");
+   }
+   async subscribeSpeaker(userId) {
+     console.log("[JanusClient] subscribeSpeaker => userId=", userId);
+@@ -4168,43 +4168,43 @@ class JanusClient extends EventEmitter {
+     );
+     console.log('[JanusClient] subscriber => "attached" with offer');
+     const offer = attachedEvt.jsep;
+-    const subPc = new RTCPeerConnection({
+-      iceServers: [
+-        {
+-          urls: this.config.turnServers.uris,
+-          username: this.config.turnServers.username,
+-          credential: this.config.turnServers.password
+-        }
+-      ]
+-    });
+-    subPc.ontrack = (evt) => {
+-      console.log("[JanusClient] subscriber track =>", evt.track.kind);
+-      const sink = new JanusAudioSink(evt.track);
+-      sink.on("audioData", (frame) => {
+-        this.emit("audioDataFromSpeaker", {
+-          userId,
+-          bitsPerSample: frame.bitsPerSample,
+-          sampleRate: frame.sampleRate,
+-          numberOfFrames: frame.numberOfFrames,
+-          channelCount: frame.channelCount,
+-          samples: frame.samples
+-        });
+-      });
+-    };
+-    await subPc.setRemoteDescription(offer);
+-    const answer = await subPc.createAnswer();
+-    await subPc.setLocalDescription(answer);
+-    await this.sendJanusMessage(
+-      subscriberHandleId,
+-      {
+-        request: "start",
+-        room: this.config.roomId,
+-        periscope_user_id: this.config.userId
+-      },
+-      answer
+-    );
+-    console.log("[JanusClient] subscriber => done (user=", userId, ")");
+-    this.subscribers.set(userId, { handleId: subscriberHandleId, pc: subPc });
++    // const subPc = new RTCPeerConnection({
++    //   iceServers: [
++    //     {
++    //       urls: this.config.turnServers.uris,
++    //       username: this.config.turnServers.username,
++    //       credential: this.config.turnServers.password
++    //     }
++    //   ]
++    // });
++    // subPc.ontrack = (evt) => {
++    //   console.log("[JanusClient] subscriber track =>", evt.track.kind);
++    //   const sink = new JanusAudioSink(evt.track);
++    //   sink.on("audioData", (frame) => {
++    //     this.emit("audioDataFromSpeaker", {
++    //       userId,
++    //       bitsPerSample: frame.bitsPerSample,
++    //       sampleRate: frame.sampleRate,
++    //       numberOfFrames: frame.numberOfFrames,
++    //       channelCount: frame.channelCount,
++    //       samples: frame.samples
++    //     });
++    //   });
++    // };
++    // await subPc.setRemoteDescription(offer);
++    // const answer = await subPc.createAnswer();
++    // await subPc.setLocalDescription(answer);
++    // await this.sendJanusMessage(
++    //   subscriberHandleId,
++    //   {
++    //     request: "start",
++    //     room: this.config.roomId,
++    //     periscope_user_id: this.config.userId
++    //   },
++    //   answer
++    // );
++    // console.log("[JanusClient] subscriber => done (user=", userId, ")");
++    // this.subscribers.set(userId, { handleId: subscriberHandleId, pc: subPc });
+   }
+   pushLocalAudio(samples, sampleRate, channels = 1) {
+     if (!this.localAudioSource) {
+@@ -4223,10 +4223,10 @@ class JanusClient extends EventEmitter {
+       return;
+     }
+     this.localAudioSource = new JanusAudioSource();
+-    const track = this.localAudioSource.getTrack();
+-    const localStream = new MediaStream();
+-    localStream.addTrack(track);
+-    this.pc.addTrack(track, localStream);
++    // const track = this.localAudioSource.getTrack();
++    // const localStream = new MediaStream();
++    // localStream.addTrack(track);
++    // this.pc.addTrack(track, localStream);
+   }
+   async stop() {
+     console.log("[JanusClient] Stopping...");
+diff --git a/node_modules/agent-twitter-client/dist/node/cjs/index.cjs b/node_modules/agent-twitter-client/dist/node/cjs/index.cjs
+index 8e413c4..2323547 100644
+--- a/node_modules/agent-twitter-client/dist/node/cjs/index.cjs
++++ b/node_modules/agent-twitter-client/dist/node/cjs/index.cjs
+@@ -10,7 +10,7 @@ var OTPAuth = require('otpauth');
+ var stringify = require('json-stable-stringify');
+ var events = require('events');
+ var WebSocket = require('ws');
+-var wrtc = require('@roamhq/wrtc');
++// var wrtc = require('@roamhq/wrtc');
+ var fs = require('fs');
+ var path = require('path');
+ var child_process = require('child_process');
+@@ -880,7 +880,7 @@ async function* getTweetTimeline(query, maxTweets, fetchFunc) {
+ }
+ 
+ function isFieldDefined(key) {
+-  return function(value) {
++  return function (value) {
+     return isDefined(value[key]);
+   };
+ }
+@@ -976,7 +976,7 @@ function linkUsernameHtml(username) {
+   )}">${username}</a>`;
+ }
+ function unwrapTcoUrlHtml(tweet, foundedMedia) {
+-  return function(tco) {
++  return function (tco) {
+     for (const entity of tweet.entities?.urls ?? []) {
+       if (tco === entity.url && entity.expanded_url != null) {
+         return `<a href="${entity.expanded_url}">${tco}</a>`;
+@@ -4077,13 +4077,13 @@ function safeJson(text) {
+   }
+ }
+ 
+-const { nonstandard } = wrtc;
+-const { RTCAudioSource, RTCAudioSink } = nonstandard;
++// const { nonstandard } = wrtc;
++// const { RTCAudioSource, RTCAudioSink } = nonstandard;
+ class JanusAudioSource extends events.EventEmitter {
+   constructor() {
+     super();
+-    this.source = new RTCAudioSource();
+-    this.track = this.source.createTrack();
++    // this.source = new RTCAudioSource();
++    // this.track = this.source.createTrack();
+   }
+   getTrack() {
+     return this.track;
+@@ -4104,11 +4104,11 @@ class JanusAudioSink extends events.EventEmitter {
+     this.active = true;
+     if (track.kind !== "audio")
+       throw new Error("JanusAudioSink must be an audio track");
+-    this.sink = new RTCAudioSink(track);
+-    this.sink.ondata = (frame) => {
+-      if (!this.active) return;
+-      this.emit("audioData", frame);
+-    };
++    // this.sink = new RTCAudioSink(track);
++    // this.sink.ondata = (frame) => {
++    //   if (!this.active) return;
++    //   this.emit("audioData", frame);
++    // };
+   }
+   stop() {
+     this.active = false;
+@@ -4116,7 +4116,7 @@ class JanusAudioSink extends events.EventEmitter {
+   }
+ }
+ 
+-const { RTCPeerConnection, MediaStream } = wrtc;
++// const { RTCPeerConnection, MediaStream } = wrtc;
+ class JanusClient extends events.EventEmitter {
+   constructor(config) {
+     super();
+@@ -4132,15 +4132,15 @@ class JanusClient extends events.EventEmitter {
+     this.startPolling();
+     await this.createRoom();
+     this.publisherId = await this.joinRoom();
+-    this.pc = new RTCPeerConnection({
+-      iceServers: [
+-        {
+-          urls: this.config.turnServers.uris,
+-          username: this.config.turnServers.username,
+-          credential: this.config.turnServers.password
+-        }
+-      ]
+-    });
++    // this.pc = new RTCPeerConnection({
++    //   iceServers: [
++    //     {
++    //       urls: this.config.turnServers.uris,
++    //       username: this.config.turnServers.username,
++    //       credential: this.config.turnServers.password
++    //     }
++    //   ]
++    // });
+     this.setupPeerEvents();
+     this.enableLocalAudio();
+     await this.configurePublisher();
+@@ -4188,43 +4188,43 @@ class JanusClient extends events.EventEmitter {
+     );
+     console.log('[JanusClient] subscriber => "attached" with offer');
+     const offer = attachedEvt.jsep;
+-    const subPc = new RTCPeerConnection({
+-      iceServers: [
+-        {
+-          urls: this.config.turnServers.uris,
+-          username: this.config.turnServers.username,
+-          credential: this.config.turnServers.password
+-        }
+-      ]
+-    });
+-    subPc.ontrack = (evt) => {
+-      console.log("[JanusClient] subscriber track =>", evt.track.kind);
+-      const sink = new JanusAudioSink(evt.track);
+-      sink.on("audioData", (frame) => {
+-        this.emit("audioDataFromSpeaker", {
+-          userId,
+-          bitsPerSample: frame.bitsPerSample,
+-          sampleRate: frame.sampleRate,
+-          numberOfFrames: frame.numberOfFrames,
+-          channelCount: frame.channelCount,
+-          samples: frame.samples
+-        });
+-      });
+-    };
+-    await subPc.setRemoteDescription(offer);
+-    const answer = await subPc.createAnswer();
+-    await subPc.setLocalDescription(answer);
+-    await this.sendJanusMessage(
+-      subscriberHandleId,
+-      {
+-        request: "start",
+-        room: this.config.roomId,
+-        periscope_user_id: this.config.userId
+-      },
+-      answer
+-    );
+-    console.log("[JanusClient] subscriber => done (user=", userId, ")");
+-    this.subscribers.set(userId, { handleId: subscriberHandleId, pc: subPc });
++    // const subPc = new RTCPeerConnection({
++    //   iceServers: [
++    //     {
++    //       urls: this.config.turnServers.uris,
++    //       username: this.config.turnServers.username,
++    //       credential: this.config.turnServers.password
++    //     }
++    //   ]
++    // });
++    // subPc.ontrack = (evt) => {
++    //   console.log("[JanusClient] subscriber track =>", evt.track.kind);
++    //   const sink = new JanusAudioSink(evt.track);
++    //   sink.on("audioData", (frame) => {
++    //     this.emit("audioDataFromSpeaker", {
++    //       userId,
++    //       bitsPerSample: frame.bitsPerSample,
++    //       sampleRate: frame.sampleRate,
++    //       numberOfFrames: frame.numberOfFrames,
++    //       channelCount: frame.channelCount,
++    //       samples: frame.samples
++    //     });
++    //   });
++    // };
++    // await subPc.setRemoteDescription(offer);
++    // const answer = await subPc.createAnswer();
++    // await subPc.setLocalDescription(answer);
++    // await this.sendJanusMessage(
++    //   subscriberHandleId,
++    //   {
++    //     request: "start",
++    //     room: this.config.roomId,
++    //     periscope_user_id: this.config.userId
++    //   },
++    //   answer
++    // );
++    // console.log("[JanusClient] subscriber => done (user=", userId, ")");
++    // this.subscribers.set(userId, { handleId: subscriberHandleId, pc: subPc });
+   }
+   pushLocalAudio(samples, sampleRate, channels = 1) {
+     if (!this.localAudioSource) {
+@@ -4244,9 +4244,9 @@ class JanusClient extends events.EventEmitter {
+     }
+     this.localAudioSource = new JanusAudioSource();
+     const track = this.localAudioSource.getTrack();
+-    const localStream = new MediaStream();
+-    localStream.addTrack(track);
+-    this.pc.addTrack(track, localStream);
++    // const localStream = new MediaStream();
++    // localStream.addTrack(track);
++    // this.pc.addTrack(track, localStream);
+   }
+   async stop() {
+     console.log("[JanusClient] Stopping...");
+diff --git a/node_modules/agent-twitter-client/dist/node/esm/index.mjs b/node_modules/agent-twitter-client/dist/node/esm/index.mjs
+index 32cc61c..66295b5 100644
+--- a/node_modules/agent-twitter-client/dist/node/esm/index.mjs
++++ b/node_modules/agent-twitter-client/dist/node/esm/index.mjs
+@@ -8,7 +8,7 @@ import * as OTPAuth from 'otpauth';
+ import stringify from 'json-stable-stringify';
+ import { EventEmitter } from 'events';
+ import WebSocket from 'ws';
+-import wrtc from '@roamhq/wrtc';
++// import wrtc from '@roamhq/wrtc';
+ import * as fs from 'fs';
+ import fs__default from 'fs';
+ import path from 'path';
+@@ -859,7 +859,7 @@ async function* getTweetTimeline(query, maxTweets, fetchFunc) {
+ }
+ 
+ function isFieldDefined(key) {
+-  return function(value) {
++  return function (value) {
+     return isDefined(value[key]);
+   };
+ }
+@@ -955,7 +955,7 @@ function linkUsernameHtml(username) {
+   )}">${username}</a>`;
+ }
+ function unwrapTcoUrlHtml(tweet, foundedMedia) {
+-  return function(tco) {
++  return function (tco) {
+     for (const entity of tweet.entities?.urls ?? []) {
+       if (tco === entity.url && entity.expanded_url != null) {
+         return `<a href="${entity.expanded_url}">${tco}</a>`;
+@@ -4056,12 +4056,12 @@ function safeJson(text) {
+   }
+ }
+ 
+-const { nonstandard } = wrtc;
+-const { RTCAudioSource, RTCAudioSink } = nonstandard;
++// const { nonstandard } = wrtc;
++// const { RTCAudioSource, RTCAudioSink } = nonstandard;
+ class JanusAudioSource extends EventEmitter {
+   constructor() {
+     super();
+-    this.source = new RTCAudioSource();
++    // this.source = new RTCAudioSource();
+     this.track = this.source.createTrack();
+   }
+   getTrack() {
+@@ -4083,7 +4083,7 @@ class JanusAudioSink extends EventEmitter {
+     this.active = true;
+     if (track.kind !== "audio")
+       throw new Error("JanusAudioSink must be an audio track");
+-    this.sink = new RTCAudioSink(track);
++    // this.sink = new RTCAudioSink(track);
+     this.sink.ondata = (frame) => {
+       if (!this.active) return;
+       this.emit("audioData", frame);
+@@ -4095,7 +4095,7 @@ class JanusAudioSink extends EventEmitter {
+   }
+ }
+ 
+-const { RTCPeerConnection, MediaStream } = wrtc;
++// const { RTCPeerConnection, MediaStream } = wrtc;
+ class JanusClient extends EventEmitter {
+   constructor(config) {
+     super();
+@@ -4111,15 +4111,15 @@ class JanusClient extends EventEmitter {
+     this.startPolling();
+     await this.createRoom();
+     this.publisherId = await this.joinRoom();
+-    this.pc = new RTCPeerConnection({
+-      iceServers: [
+-        {
+-          urls: this.config.turnServers.uris,
+-          username: this.config.turnServers.username,
+-          credential: this.config.turnServers.password
+-        }
+-      ]
+-    });
++    // this.pc = new RTCPeerConnection({
++    //   iceServers: [
++    //     {
++    //       urls: this.config.turnServers.uris,
++    //       username: this.config.turnServers.username,
++    //       credential: this.config.turnServers.password
++    //     }
++    //   ]
++    // });
+     this.setupPeerEvents();
+     this.enableLocalAudio();
+     await this.configurePublisher();
+@@ -4167,15 +4167,15 @@ class JanusClient extends EventEmitter {
+     );
+     console.log('[JanusClient] subscriber => "attached" with offer');
+     const offer = attachedEvt.jsep;
+-    const subPc = new RTCPeerConnection({
+-      iceServers: [
+-        {
+-          urls: this.config.turnServers.uris,
+-          username: this.config.turnServers.username,
+-          credential: this.config.turnServers.password
+-        }
+-      ]
+-    });
++    // const subPc = new RTCPeerConnection({
++    //   iceServers: [
++    //     {
++    //       urls: this.config.turnServers.uris,
++    //       username: this.config.turnServers.username,
++    //       credential: this.config.turnServers.password
++    //     }
++    //   ]
++    // });
+     subPc.ontrack = (evt) => {
+       console.log("[JanusClient] subscriber track =>", evt.track.kind);
+       const sink = new JanusAudioSink(evt.track);
+@@ -4223,9 +4223,9 @@ class JanusClient extends EventEmitter {
+     }
+     this.localAudioSource = new JanusAudioSource();
+     const track = this.localAudioSource.getTrack();
+-    const localStream = new MediaStream();
+-    localStream.addTrack(track);
+-    this.pc.addTrack(track, localStream);
++    // const localStream = new MediaStream();
++    // localStream.addTrack(track);
++    // this.pc.addTrack(track, localStream);
+   }
+   async stop() {
+     console.log("[JanusClient] Stopping...");

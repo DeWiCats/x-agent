@@ -1,4 +1,4 @@
-import { SearchMode } from "agent-twitter-client";
+import { SearchMode } from "@dewicats/agent-twitter-client";
 import { getScraper } from "../utils/scraper.api";
 import { supabase } from "../utils/supabase.api";
 import {
@@ -26,10 +26,10 @@ const agentSchedulePosts = async () => {
         `last_posted_date.is.null,last_posted_date.lt.${startOfDay.toDateString()}`
       );
 
-      if (!agents.data || agents.data.length === 0) {
-        console.log("No agents found");
-        process.exit(0);
-      }
+    if (!agents.data || agents.data.length === 0) {
+      console.log("No agents found");
+      process.exit(0);
+    }
 
     for (const agent of agents.data) {
       if (!agent.accounts) {
@@ -42,7 +42,7 @@ const agentSchedulePosts = async () => {
         // TODO: Add a log to sentry or some other logger
         continue;
       }
-      
+
       const scraper = await getScraper(agent);
 
       // Get current trends

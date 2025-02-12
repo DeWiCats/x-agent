@@ -5,10 +5,9 @@ import { useEffect } from "react";
 import { useUsers } from "@/hooks/useUsers";
 import TeamSelection from "@/components/team-selection";
 import PostCard from "@/components/post-card";
+
 function Feed() {
   const { agents, getTweets, postsByAgent } = useAgents();
-
-  console.log("agents: ", agents);
 
   useEffect(() => {
     if (agents?.length > 0) {
