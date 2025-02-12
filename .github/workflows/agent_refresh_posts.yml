@@ -1,9 +1,9 @@
-name: Agent Post 🤖
+name: Agent Refresh Posts 🤖
 
 on:
-  #  Triggers the workflow every day at 12:00PM PST
+  #  Triggers workflow every 24 hours
   schedule:
-    - cron: "0 21 * * *"
+    - cron: "0 0 * * *"
 
 jobs:
   cron:
@@ -24,4 +24,4 @@ jobs:
         run: yarn install
       # Run agent post script
       - name: Run script
-        run: yarn agent-post
+        run: yarn refresh-posts

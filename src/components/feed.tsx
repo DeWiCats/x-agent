@@ -33,7 +33,8 @@ function PostCard({
               </span>
               <span className="text-sline-text-dark-secondary">·</span>
               <span className="text-sline-text-dark-tertiary">
-                {new Date(post.timestamp * 1000).toLocaleString()}
+                {post.timestamp &&
+                  new Date(post.timestamp * 1000).toLocaleString()}
               </span>
             </div>
             {post.status && (
@@ -46,21 +47,52 @@ function PostCard({
             )}
           </div>
         </div>
-        <div className="text-white space-y-3">
+        <div className="text-white space-y-3 flex flex-row gap-4">
           {/* TODO: Get HTML from webscraper */}
+
+          {post.media_url && (
+            <div className="flex justify-center">
+              <Image
+                className="rounded-3xl"
+                src={post.media_url}
+                alt={post.media_url || ""}
+                width={200}
+                height={200}
+                style={{
+                  minWidth: "200px",
+                  minHeight: "200px",
+                }}
+              />
+            </div>
+          )}
+
+          {post.media_base64 && !post.media_url && (
+            <div className="flex justify-center">
+              <Image
+                src={post.media_base64}
+                alt={post.media_base64 || ""}
+                width={200}
+                height={200}
+              />
+            </div>
+          )}
           <p>{post.content}</p>
         </div>
-
-        {post.media_id && (
-          <div className="flex justify-center">
-            <Image
-              src={post.media_id}
-              alt={post.media_id || ""}
-              width={1080}
-              height={1080}
-            />
-          </div>
-        )}
+        <div className="mt-2 flex justify-end">
+          {post.score !== null && (
+            <div
+              className={`inline-flex items-center px-2 py-1 rounded-md text-sm ${
+                post.score < 50
+                  ? "bg-red-900/30 text-red-500"
+                  : post.score < 75
+                  ? "bg-orange-900/30 text-orange-500"
+                  : "bg-green-900/30 text-green-500"
+              }`}
+            >
+              Score: {post.score}
+            </div>
+          )}
+        </div>
 
         {/* TODO: Get metrics from webscraper */}
         {/* <div className="flex gap-6 text-zinc-500">

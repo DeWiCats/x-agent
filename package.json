@@ -22,11 +22,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "agent-post": "node --loader ts-node/esm --experimental-specifier-resolution=node  tasks/agent_post.ts",
-    "add-agent": "node --loader ts-node/esm --experimental-specifier-resolution=node  tasks/add_agent.ts",
-    "add-user": "node --loader ts-node/esm --experimental-specifier-resolution=node  tasks/add_user.ts",
-    "add-team": "node --loader ts-node/esm --experimental-specifier-resolution=node  tasks/add_team.ts",
-    "get-posts": "node --loader ts-node/esm --experimental-specifier-resolution=node  tasks/get_posts.ts",
+    "publish-posts": "node --loader ts-node/esm --experimental-specifier-resolution=node  tasks/cron_tasks/agent_publish_posts.ts",
+    "refresh-posts": "node --loader ts-node/esm --experimental-specifier-resolution=node  tasks/cron_tasks/refresh_posts.ts",
+    "schedule-posts": "node --loader ts-node/esm --experimental-specifier-resolution=node  tasks/cron_tasks/agent_schedule_posts.ts",
     "gen-types": "sh tasks/generate_types.sh"
   },
   "dependencies": {
@@ -43,6 +41,7 @@
     "@supabase/ssr": "^0.5.2",
     "@supabase/supabase-js": "^2.48.1",
     "agent-twitter-client": "^0.0.18",
+    "axios": "^1.7.9",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "dotenv": "^16.4.7",
@@ -63,7 +62,7 @@
     "eslint": "^9",
     "eslint-config-next": "15.1.6",
     "postcss": "^8",
-    "supabase": "^2.9.6",
+    "supabase": "^2.12.0",
     "tailwindcss": "^3.4.1",
     "ts-node": "^10.9.2",
     "typescript": "^5"
