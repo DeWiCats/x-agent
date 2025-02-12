@@ -89,13 +89,13 @@ export function Navbar() {
           </svg>
           Agents
         </Link>
-        <Link
+        {/* <Link
           href="/wallets"
           className="flex items-center gap-2 text-sm font-medium text-white hover:text-zinc-300"
         >
           <Wallet2 className="h-5 w-5" />
           Wallets
-        </Link>
+        </Link> */}
       </div>
 
       <div className="flex items-center gap-2">

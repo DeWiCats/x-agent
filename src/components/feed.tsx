@@ -109,6 +109,7 @@ const FeedWrapper = () => {
   const { user } = useUsers();
 
   if (!user?.team) {
+    console.log("No team found");
     return <TeamSelection />;
   }
 

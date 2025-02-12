@@ -7,6 +7,9 @@ const nextConfig: NextConfig = {
       {
         hostname: "www.dewicats.xyz",
       },
+      {
+        hostname: "pbs.twimg.com",
+      },
     ],
   },
 };
