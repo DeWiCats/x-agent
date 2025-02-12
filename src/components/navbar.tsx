@@ -46,7 +46,7 @@ export function Navbar() {
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent className="bg-white">
-            <DropdownMenuItem className="hover:bg-slate-100 cursor-pointer">Profile</DropdownMenuItem>
+            <DropdownMenuItem onClick={() => router.push("/settings")} className="hover:bg-slate-100 cursor-pointer">Profile</DropdownMenuItem>
             <DropdownMenuItem onClick={() => signOut()} className="hover:bg-slate-100 cursor-pointer">Sign Out</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
