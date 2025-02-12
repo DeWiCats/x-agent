@@ -224,7 +224,7 @@ export function CreateAgentDrawer() {
                         right: "Controversial",
                       },
                     ].map((slider) => (
-                      <div key={slider.label} className="space-y-3">
+                      <div key={slider.label} className="space-y-1">
                         <Label className="text-zinc-400">{slider.label}</Label>
                         <div className="flex items-center gap-2 flex-col">
                           <div className="flex items-center gap-2 justify-between w-full">
@@ -260,12 +260,6 @@ export function CreateAgentDrawer() {
                 <div className="space-y-6 px-4">
                   <div className="flex items-center justify-between">
                     <h3 className="text-white">Context</h3>
-                    <Button
-                      variant="secondary"
-                      className="bg-zinc-800 text-white hover:bg-zinc-700"
-                    >
-                      Add new context
-                    </Button>
                   </div>
                   <p className="text-sm text-zinc-400">
                     The context provides the agent with details to better
@@ -316,22 +310,20 @@ export function CreateAgentDrawer() {
                   <div className="space-y-4">
                     <div className="space-y-4">
                       <h3 className="text-white">Access Controls</h3>
-                      {["Public", "Allow cloning", "Web enabled"].map(
-                        (setting) => (
-                          <div
-                            key={setting}
-                            className="flex items-center justify-between"
-                          >
-                            <div className="flex items-center gap-2">
-                              <span className="text-white">{setting}</span>
-                              <Info className="h-4 w-4 text-zinc-400" />
-                            </div>
-                            <Switch />
+                      {["Public"].map((setting) => (
+                        <div
+                          key={setting}
+                          className="flex items-center justify-between"
+                        >
+                          <div className="flex items-center gap-2">
+                            <span className="text-white">{setting}</span>
+                            <Info className="h-4 w-4 text-zinc-400" />
                           </div>
-                        )
-                      )}
+                          <Switch />
+                        </div>
+                      ))}
                     </div>
-                    <div className="space-y-4">
+                    {/* <div className="space-y-4">
                       <h3 className="text-white">Monetization</h3>
                       {["Public", "Allow cloning", "Web enabled"].map(
                         (setting) => (
@@ -347,22 +339,26 @@ export function CreateAgentDrawer() {
                           </div>
                         )
                       )}
-                    </div>
+                    </div> */}
                     <div className="space-y-4">
                       <div className="flex items-center gap-2">
                         <h3 className="text-white">Model</h3>
                         <Info className="h-4 w-4 text-zinc-400" />
                       </div>
-                      <Select defaultValue="llama">
+                      <Select defaultValue="Llama 3.3">
                         <SelectTrigger className="bg-zinc-800 border-transparent text-white">
                           <SelectValue placeholder="Select model" />
                         </SelectTrigger>
                         <SelectContent className="bg-zinc-800 border-zinc-700">
-                          <SelectItem value="llama">LlaMa 3.3</SelectItem>
-                        </SelectContent>
+                          {["Llama 3.3", "GPT-4o"].map((model) => (
+                            <SelectItem key={model} value={model}>
+                              {model}
+                            </SelectItem>
+                          ))}
+                          </SelectContent>
                       </Select>
                     </div>
-                    <div className="space-y-4">
+                    {/* <div className="space-y-4">
                       <h3 className="text-white">Advanced settings</h3>
                       <div className="flex items-center gap-2">
                         <span className="text-white">Model</span>
@@ -376,7 +372,7 @@ export function CreateAgentDrawer() {
                           <SelectItem value="llama">LlaMa 3.3</SelectItem>
                         </SelectContent>
                       </Select>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               </TabsContent>

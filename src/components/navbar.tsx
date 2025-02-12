@@ -107,7 +107,7 @@ export function Navbar() {
 
       <div className="flex items-center gap-2">
         <CreateAgentDrawer></CreateAgentDrawer>
-        <Button
+        {/* <Button
           variant="ghost"
           size="icon"
           className="text-zinc-400 hover:text-white"
@@ -120,7 +120,7 @@ export function Navbar() {
           className="text-zinc-400 hover:text-white"
         >
           <Bell className="h-5 w-5" />
-        </Button>
+        </Button> */}
         <Avatar className="h-8 w-8">
           <AvatarImage
             src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%202025-02-08%20at%201.19.01%E2%80%AFPM-QRFYauyQLW1SzDGm0V3ddEYuUmrtig.png"
