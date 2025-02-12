@@ -13,12 +13,19 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Image from "next/image";
 import { CreateAgentDrawer } from "@/components/create-agent-drawer";
 import { useUsers } from "@/hooks/useUsers";
-
+import { createClient } from "@/utils/supabase/client";
+import { useRouter } from "next/navigation";
 export function Navbar() {
   const { user } = useUsers();
-
+  const supabase = createClient();
+  const router = useRouter();
   if (!user) {
     return null;
+  }
+
+  async function signOut(): Promise<void> {
+    await supabase.auth.signOut();
+    router.push("/login");
   }
 
   return (
@@ -38,9 +45,9 @@ export function Navbar() {
               <ChevronDown className="h-4 w-4" />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent>
-            <DropdownMenuItem>Profile</DropdownMenuItem>
-            <DropdownMenuItem>Settings</DropdownMenuItem>
+          <DropdownMenuContent className="bg-white">
+            <DropdownMenuItem className="hover:bg-slate-100 cursor-pointer">Profile</DropdownMenuItem>
+            <DropdownMenuItem onClick={() => signOut()} className="hover:bg-slate-100 cursor-pointer">Sign Out</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
