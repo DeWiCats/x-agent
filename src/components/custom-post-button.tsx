@@ -32,7 +32,7 @@ export default function Page() {
             <PlusCircle className="size-6" />
           </Button>
         </DialogTrigger>
-        <DialogContent className="sm:max-w-[425px] bg-sline-base-surface-1 text-sline-text-dark-primary border-sline-base-border-alpha">
+        <DialogContent className="sm:max-w-[425px] bg-sline-base-surface-1 text-sline-text-dark-primary border-sline-base-border-alpha rounded-3xl">
           <DialogHeader>
             <DialogTitle>Create Post</DialogTitle>
           </DialogHeader>
@@ -46,7 +46,7 @@ export default function Page() {
                 placeholder="Enter your text prompt here..."
                 value={textPrompt}
                 onChange={(e) => setTextPrompt(e.target.value)}
-                className="w-full bg-sline-base-surface-2 border-sline-base-border text-sline-text-dark-primary placeholder:text-sline-text-dark-secondary"
+                className="w-full bg-sline-alpha-dark-050 border-sline-alpha-dark-050 text-sline-text-dark-primary placeholder:text-sline-text-dark-secondary"
               />
             </div>
             <div className="flex items-center space-x-2">
@@ -54,7 +54,7 @@ export default function Page() {
                 id="include-image"
                 checked={includeImage}
                 onCheckedChange={(checked) => setIncludeImage(checked as boolean)}
-                className="border-sline-base-border data-[state=checked]:bg-sline-base-surface-2 data-[state=checked]:text-sline-text-dark-primary"
+                className="border-sline-base-border rounded-md border data-[state=checked]:bg-sline-state-brand-selected data-[state=checked]:text-sline-text-dark-primary"
               />
               <Label
                 htmlFor="include-image"
@@ -73,11 +73,11 @@ export default function Page() {
                   placeholder="Describe the image you want to generate..."
                   value={imagePrompt}
                   onChange={(e) => setImagePrompt(e.target.value)}
-                  className="w-full bg-sline-base-surface-2 border-sline-base-border text-sline-text-dark-primary placeholder:text-sline-text-dark-secondary"
+                  className="w-full bg-sline-alpha-dark-050 border-sline-alpha-dark-050 text-sline-text-dark-primary placeholder:text-sline-text-dark-secondary"
                 />
               </div>
             )}
-            <Button type="submit" className="w-full text-sline-text-dark-primary">
+            <Button type="submit" className="w-full text-sline-text-dark-primary bg-sline-state-brand-active hover:bg-sline-state-brand-active/90 rounded-xl">
               Submit
             </Button>
           </form>

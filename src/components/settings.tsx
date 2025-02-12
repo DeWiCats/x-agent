@@ -99,12 +99,12 @@ export default function Settings() {
         </TabsList>
 
         <TabsContent value="account" className="space-y-6">
-          <Card className="border-zinc-800 bg-zinc-900/50">
+          <Card className="border-border bg-sline-alpha-dark-050 rounded-2xl">
             <CardHeader>
               <CardTitle className="text-white">Personal information</CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
-              <div className="flex items-start gap-4 p-4 bg-white/5">
+              <div className="flex items-start gap-4 p-4 bg-sline-alpha-dark-050 border border-border rounded-2xl">
                 <Avatar className="h-16 w-16 relative">
                   
                   <AvatarImage 
@@ -116,7 +116,7 @@ export default function Settings() {
                 <div className="space-y-1 flex self-center w-full justify-between relative">
                   <div>
                     <p className="text-sm font-medium text-white">
-                      Personal information
+                      Avatar image
                     </p>
                     <p className="text-sm text-zinc-400">
                       JPG or PNG - 1MB max

@@ -42,22 +42,22 @@ export function Navbar() {
           <DropdownMenuTrigger asChild>
             <Button
               variant="ghost"
-              className="gap-2 text-sline-text-dark-secondary hover:text-sline-text-dark-primary"
+              className="text-sline-text-dark-secondary hover:text-sline-text-dark-primary hover:bg-sline-alpha-dark-050 rounded-xl"
             >
               <span className="font-semibold">DeWiCats</span>
               <ChevronDown className="h-4 w-4" />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent className="bg-sline-alpha-dark-050">
+          <DropdownMenuContent className="bg-sline-alpha-dark-050 border-border text-sline-text-dark-primary rounded-xl">
             <DropdownMenuItem
               onClick={() => router.push("/settings")}
-              className="hover:bg-sline-alpha-dark-100 cursor-pointer"
+              className="hover:bg-sline-alpha-dark-050 cursor-pointer rounded-lg"
             >
               Profile
             </DropdownMenuItem>
             <DropdownMenuItem
               onClick={() => signOut()}
-              className="hover:bg-sline-alpha-dark-100 cursor-pointer"
+              className="hover:bg-sline-alpha-dark-050 cursor-pointer rounded-lg"
             >
               Sign Out
             </DropdownMenuItem>
@@ -156,13 +156,13 @@ export function Navbar() {
           <DropdownMenuContent className="bg-sline-alpha-dark-050 border-border text-sline-text-dark-primary rounded-xl">
             <DropdownMenuItem
               onClick={() => router.push("/settings")}
-              className="hover:bg-sline-alpha-dark-100 cursor-pointer rounded-lg"
+              className="hover:bg-sline-alpha-dark-050 cursor-pointer rounded-lg"
             >
               Profile
             </DropdownMenuItem>
             <DropdownMenuItem
               onClick={() => signOut()}
-              className="hover:bg-sline-alpha-dark-100 cursor-pointer rounded-lg"
+              className="hover:bg-sline-alpha-dark-050 cursor-pointer rounded-lg"
             >
               Sign Out
             </DropdownMenuItem>
