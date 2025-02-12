@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Bell, ChevronDown, Search, Wallet2 } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -48,9 +48,19 @@ export function Navbar() {
               <ChevronDown className="h-4 w-4" />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent className="bg-white">
-            <DropdownMenuItem onClick={() => router.push("/settings")} className="hover:bg-slate-100 cursor-pointer">Profile</DropdownMenuItem>
-            <DropdownMenuItem onClick={() => signOut()} className="hover:bg-slate-100 cursor-pointer">Sign Out</DropdownMenuItem>
+          <DropdownMenuContent className="bg-sline-alpha-dark-050">
+            <DropdownMenuItem
+              onClick={() => router.push("/settings")}
+              className="hover:bg-sline-alpha-dark-100 cursor-pointer"
+            >
+              Profile
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={() => signOut()}
+              className="hover:bg-sline-alpha-dark-100 cursor-pointer"
+            >
+              Sign Out
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
@@ -132,13 +142,32 @@ export function Navbar() {
         >
           <Bell className="h-5 w-5" />
         </Button> */}
-        <Avatar className="h-8 w-8">
-          <AvatarImage
-            src={user.avatar_url || "/default-avatar.png"}
-            alt="User avatar"
-          />
-          <AvatarFallback>U</AvatarFallback>
-        </Avatar>
+
+        <DropdownMenu>
+          <DropdownMenuTrigger>
+            <Avatar className="h-8 w-8">
+              <AvatarImage
+                src={user.avatar_url || "/default-avatar.png"}
+                alt="User avatar"
+              />
+              <AvatarFallback>U</AvatarFallback>
+            </Avatar>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="bg-sline-alpha-dark-050 border-border text-sline-text-dark-primary rounded-xl">
+            <DropdownMenuItem
+              onClick={() => router.push("/settings")}
+              className="hover:bg-sline-alpha-dark-100 cursor-pointer rounded-lg"
+            >
+              Profile
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={() => signOut()}
+              className="hover:bg-sline-alpha-dark-100 cursor-pointer rounded-lg"
+            >
+              Sign Out
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
     </nav>
   );

@@ -378,19 +378,15 @@ export function CreateAgentDrawer() {
               </TabsContent>
             </Tabs>
           </SheetHeader>
-          <div className="flex items-center justify-between border-t border-zinc-800 p-4 mt-auto">
-            <div className="flex gap-4 text-sm text-zinc-400">
-              <span>Posts</span>
-              <span>Recurrence</span>
-            </div>
+          <div className="flex items-center justify-end border-t border-zinc-800 p-4 mt-auto">
             <div className="flex gap-2">
               <Button
                 variant="outline"
-                className="bg-zinc-800 border-transparent text-white hover:bg-zinc-700"
+                className="bg-sline-alpha-dark-050 border-transparent rounded-xl text-sline-text-dark-secondary hover:bg-sline-alpha-dark-100"
               >
                 Save draft
               </Button>
-              <Button className="bg-blue-600 text-white hover:bg-blue-700">
+              <Button className="bg-sline-state-brand-active text-sline-text-light-primary rounded-xl hover:bg-sline-state-brand-active/90">
                 Publish
               </Button>
             </div>

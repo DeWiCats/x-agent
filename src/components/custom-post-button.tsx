@@ -26,7 +26,7 @@ export default function Page() {
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogTrigger asChild>
           <Button
-            className="fixed bottom-4 right-4 rounded-full w-12 h-12 bg-white hover:bg-gray-200 text-gray-900 shadow-lg"
+            className="fixed bottom-4 right-4 rounded-2xl w-12 h-12 bg-sline-alpha-dark-050 hover:bg-sline-alpha-dark-100 text-sline-text-dark-primary shadow-lg"
             onClick={() => setIsOpen(true)}
           >
             <PlusCircle className="size-6" />

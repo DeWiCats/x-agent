@@ -47,17 +47,17 @@ function PostCard({
             )}
           </div>
         </div>
+        <p className="text-sline-text-dark-primary">{post.content}</p>
         <div className="text-white space-y-3 flex flex-row gap-4">
           {/* TODO: Get HTML from webscraper */}
 
           {post.media_url && (
-            <div className="flex justify-center">
+            <div className="flex justify-center relative rounded-3xl border border-sline-base-border-alpha aspect-square w-full overflow-hidden">
               <Image
-                className="rounded-3xl border border-sline-base-border-alpha"
+                className="object-cover"
                 src={post.media_url}
+                layout="fill"
                 alt={post.media_url || ""}
-                width={200}
-                height={200}
                 style={{
                   minWidth: "200px",
                   minHeight: "200px",
@@ -67,16 +67,15 @@ function PostCard({
           )}
 
           {post?.media_base64 && !post?.media_url && (
-            <div className="flex justify-center">
+            <div className="flex justify-center relative rounded-3xl border border-sline-base-border-alpha aspect-square w-full overflow-hidden">
               <Image
+                className="object-cover"
                 src={`data:image/jpeg;base64,${post.media_base64}`}
                 alt={post.media_base64 || ""}
-                width={200}
-                height={200}
+                layout="fill"
               />
             </div>
           )}
-          <p>{post.content}</p>
         </div>
         <div className="mt-2 flex justify-end">
           {post.score !== null && (
@@ -126,8 +125,8 @@ function Feed() {
   }, [agents, getTweets]);
 
   return (
-    <div className="h-full mt-12 max-w-2xl mx-auto bg-sline-alpha-dark-050 rounded-t-3xl overflow-hidden relative z-10 border border-border border-b-0">
-      <div className="absolute bottom-0 left-0 w-full h-12 bg-gradient-to-t from-sline-base-surface-1 to-transparent" />
+    <div className="h-full mt-12 max-w-2xl min-w-[480px] mx-auto bg-sline-alpha-dark-050 rounded-t-3xl overflow-hidden relative z-10 border border-border border-b-0">
+      <div className="absolute bottom-0 left-0 w-full h-12 z-10 bg-gradient-to-t from-sline-base-surface-1 to-transparent pointer-events-none" />
       <div className="h-full overflow-auto divide-y divide-border">
         {agents?.length > 0 &&
           postsByAgent[agents[0].id] &&
