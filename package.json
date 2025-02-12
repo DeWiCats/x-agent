@@ -3,6 +3,20 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
+  "contributors": [
+    {
+      "name": "Agnel Nieves",
+      "url": "https://github.com/agnelnieves"
+    },
+    {
+      "name": "Luis Perone",
+      "url": "https://github.com/peronef5"
+    },
+    {
+      "name": "Rafael Leal",
+      "url": "https://github.com/rafael-leal-mccormack"
+    }
+  ],
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",

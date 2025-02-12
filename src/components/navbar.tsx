@@ -22,19 +22,18 @@ export function Navbar() {
   }
 
   return (
-    <nav className="flex h-14 items-center justify-between bg-zinc-950 px-4">
+    <nav className="flex h-14 items-center justify-between px-4">
       <div className="flex items-center gap-2">
-        <Button
-          variant="ghost"
-          size="icon"
-          className="text-zinc-400 hover:text-white"
-        >
+        <Button variant="ghost" size="icon">
           <Image src="/icon.svg" alt="logo" width={24} height={24} />
         </Button>
         <Image src="/line.svg" alt="line" width={16} height={16} />
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="gap-2 text-white">
+            <Button
+              variant="ghost"
+              className="gap-2 text-sline-text-dark-secondary hover:text-sline-text-dark-primary"
+            >
               <span className="font-semibold">DeWiCats</span>
               <ChevronDown className="h-4 w-4" />
             </Button>
@@ -49,7 +48,7 @@ export function Navbar() {
       <div className="flex items-center gap-6">
         <Link
           href="/feed"
-          className="flex items-center gap-2 text-sm font-medium text-white hover:text-zinc-300"
+          className="flex items-center gap-2 text-sm font-medium text-sline-text-dark-secondary hover:text-sline-text-dark-primary"
         >
           <svg
             className="h-5 w-5"

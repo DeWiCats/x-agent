@@ -2,20 +2,526 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* ---- BASE COLORS ---- */
+
+body {
+  @apply bg-sline-base-surface-1 text-sline-text-light-primary;
 }
 
-@media (prefers-color-scheme: dark) {
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 60%;
+  @apply bg-gradient-to-b from-sline-blue-300 to-sline-base-surface-1 z-[-1] opacity-10;
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  left: 0;
+  width: 70%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  @apply bg-sline-state-brand-active blur-3xl h-32 -top-16 opacity-30 z-[-1];
+}
+
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 221.2 83.2% 53.3%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 221.2 83.2% 53.3%;
+    --radius: 1rem;
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 217.2 91.2% 59.8%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 224.3 76.3% 48%;
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
   }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+/* ---- CUSTOM COLORS ---- */
+/* DARK MODE */
+:root,
+.dark {
+  --sline-colors-alpha-dark-000: 0, 0%, 100%, 0;
+  --sline-colors-alpha-dark-050: 0, 0%, 100%, 0.08;
+  --sline-colors-alpha-dark-100: 0, 0%, 100%, 0.12;
+  --sline-colors-alpha-dark-200: 0, 0%, 100%, 0.18;
+  --sline-colors-alpha-dark-300: 0, 0%, 100%, 0.26;
+  --sline-colors-alpha-dark-400: 0, 0%, 100%, 0.36;
+  --sline-colors-alpha-dark-500: 0, 0%, 100%, 0.48;
+  --sline-colors-alpha-dark-600: 0, 0%, 100%, 0.6;
+  --sline-colors-alpha-dark-700: 0, 0%, 100%, 0.7;
+  --sline-colors-alpha-dark-900: 0, 0%, 100%, 1;
+
+  --sline-colors-alpha-light-000: 0, 0%, 8%, 0;
+  --sline-colors-alpha-light-050: 0, 0%, 8%, 0.08;
+  --sline-colors-alpha-light-100: 0, 0%, 8%, 0.12;
+  --sline-colors-alpha-light-200: 0, 0%, 8%, 0.18;
+  --sline-colors-alpha-light-300: 0, 0%, 8%, 0.26;
+  --sline-colors-alpha-light-400: 0, 0%, 8%, 0.36;
+  --sline-colors-alpha-light-500: 0, 0%, 8%, 0.48;
+  --sline-colors-alpha-light-600: 0, 0%, 8%, 0.6;
+  --sline-colors-alpha-light-700: 0, 0%, 8%, 0.7;
+  --sline-colors-alpha-light-900: 0, 0%, 8%, 1;
+
+  /* Blue */
+  --sline-colors-blue-50: 218, 100%, 97%;
+  --sline-colors-blue-100: 217, 100%, 93%;
+  --sline-colors-blue-200: 217, 100%, 87%;
+  --sline-colors-blue-300: 216, 98%, 78%;
+  --sline-colors-blue-400: 217, 94%, 68%;
+  --sline-colors-blue-500: 224, 82%, 56%;
+  --sline-colors-blue-600: 212, 100%, 66%;
+  --sline-colors-blue-700: 225, 73%, 38%;
+  --sline-colors-blue-800: 223, 64%, 13%;
+  --sline-colors-blue-900: 223, 64%, 33%;
+
+  /* Purple */ /* Purple */
+  --sline-colors-purple-50: 270, 100%, 98%;
+  --sline-colors-purple-100: 270, 100%, 95%;
+  --sline-colors-purple-200: 270, 100%, 92%;
+  --sline-colors-purple-300: 272, 98%, 83%;
+  --sline-colors-purple-400: 273, 95%, 72%;
+  --sline-colors-purple-500: 273, 89%, 62%;
+  --sline-colors-purple-600: 275, 83%, 50%;
+  --sline-colors-purple-700: 275, 69%, 44%;
+  --sline-colors-purple-800: 275, 66%, 35%;
+  --sline-colors-purple-900: 275, 64%, 20%;
+
+  /* Gray */
+  --sline-colors-gray-50: 0, 0%, 99%;
+  --sline-colors-gray-100: 240, 5%, 96%;
+  --sline-colors-gray-200: 240, 4%, 89%;
+  --sline-colors-gray-300: 240, 5%, 82%;
+  --sline-colors-gray-400: 240, 5%, 65%;
+  --sline-colors-gray-500: 240, 4%, 49%;
+  --sline-colors-gray-600: 240, 5%, 34%;
+  --sline-colors-gray-700: 240, 5%, 26%;
+  --sline-colors-gray-800: 240, 6%, 16%;
+  --sline-colors-gray-900: 240, 6%, 12%;
+
+  /* Green */
+  --sline-colors-green-50: 138, 75%, 97%;
+  --sline-colors-green-100: 141, 84%, 93%;
+  --sline-colors-green-200: 141, 79%, 85%;
+  --sline-colors-green-300: 142, 84%, 65%;
+  --sline-colors-green-400: 142, 69%, 52%;
+  --sline-colors-green-500: 142, 75%, 40%;
+  --sline-colors-green-600: 142, 75%, 32%;
+  --sline-colors-green-700: 142, 68%, 26%;
+  --sline-colors-green-800: 142, 64%, 25%;
+  --sline-colors-green-900: 142, 63%, 15%;
+
+  /* Red */
+  --sline-colors-red-50: 0, 82%, 97%;
+  --sline-colors-red-100: 0, 100%, 93%;
+  --sline-colors-red-200: 0, 100%, 89%;
+  --sline-colors-red-300: 0, 100%, 81%;
+  --sline-colors-red-400: 0, 100%, 70%;
+  --sline-colors-red-500: 0, 83%, 60%;
+  --sline-colors-red-600: 0, 84%, 51%;
+  --sline-colors-red-700: 0, 73%, 40%;
+  --sline-colors-red-800: 0, 71%, 30%;
+  --sline-colors-red-900: 0, 63%, 20%;
+
+  /* Yellow */
+  --sline-colors-yellow-50: 55, 100%, 95%;
+  --sline-colors-yellow-100: 55, 93%, 88%;
+  --sline-colors-yellow-200: 52, 96%, 77%;
+  --sline-colors-yellow-300: 50, 100%, 63%;
+  --sline-colors-yellow-400: 46, 98%, 50%;
+  --sline-colors-yellow-500: 42, 93%, 44%;
+  --sline-colors-yellow-600: 35, 84%, 40%;
+  --sline-colors-yellow-700: 32, 88%, 30%;
+  --sline-colors-yellow-800: 32, 75%, 25%;
+  --sline-colors-yellow-900: 32, 63%, 18%;
+
+  /* Bronze */
+  --sline-colors-bronze-50: 60, 9%, 98%;
+  --sline-colors-bronze-100: 60, 6%, 96%;
+  --sline-colors-bronze-200: 20, 3%, 90%;
+  --sline-colors-bronze-300: 24, 4%, 83%;
+  --sline-colors-bronze-400: 25, 4%, 64%;
+  --sline-colors-bronze-500: 25, 5%, 45%;
+  --sline-colors-bronze-600: 24, 6%, 32%;
+  --sline-colors-bronze-700: 24, 4%, 25%;
+  --sline-colors-bronze-800: 20, 4%, 16%;
+  --sline-colors-bronze-900: 24, 7%, 10%;
+
+  /* Cyan */
+  --sline-colors-cyan-50: 186, 100%, 96%;
+  --sline-colors-cyan-100: 187, 94%, 82%;
+  --sline-colors-cyan-200: 187, 91%, 70%;
+  --sline-colors-cyan-300: 187, 91%, 57%;
+  --sline-colors-cyan-400: 187, 85%, 44%;
+  --sline-colors-cyan-500: 187, 90%, 32%;
+  --sline-colors-cyan-600: 187, 86%, 27%;
+  --sline-colors-cyan-700: 187, 75%, 21%;
+  --sline-colors-cyan-800: 187, 63%, 16%;
+  --sline-colors-cyan-900: 187, 58%, 12%;
+
+  /* Emerald */
+  --sline-colors-emerald-50: 152, 81%, 96%;
+  --sline-colors-emerald-100: 149, 80%, 90%;
+  --sline-colors-emerald-200: 152, 76%, 80%;
+  --sline-colors-emerald-300: 156, 72%, 67%;
+  --sline-colors-emerald-400: 157, 69%, 52%;
+  --sline-colors-emerald-500: 160, 84%, 39%;
+  --sline-colors-emerald-600: 161, 94%, 24%;
+  --sline-colors-emerald-700: 163, 93%, 20%;
+  --sline-colors-emerald-800: 163, 88%, 15%;
+  --sline-colors-emerald-900: 164, 86%, 10%;
+
+  /* Fuchsia */
+  --sline-colors-fuchsia-50: 300, 100%, 98%;
+  --sline-colors-fuchsia-100: 300, 100%, 95%;
+  --sline-colors-fuchsia-200: 296, 93%, 89%;
+  --sline-colors-fuchsia-300: 295, 90%, 80%;
+  --sline-colors-fuchsia-400: 292, 91%, 70%;
+  --sline-colors-fuchsia-500: 292, 84%, 59%;
+  --sline-colors-fuchsia-600: 298, 82%, 47%;
+  --sline-colors-fuchsia-700: 299, 71%, 34%;
+  --sline-colors-fuchsia-800: 299, 70%, 23%;
+  --sline-colors-fuchsia-900: 297, 64%, 16%;
+
+  /* Metal */
+  --sline-colors-metal-50: 195, 40%, 97%;
+  --sline-colors-metal-100: 210, 10%, 95%;
+  --sline-colors-metal-200: 214, 11%, 89%;
+  --sline-colors-metal-300: 211, 12%, 80%;
+  --sline-colors-metal-400: 215, 13%, 62%;
+  --sline-colors-metal-500: 214, 8%, 45%;
+  --sline-colors-metal-600: 214, 12%, 27%;
+  --sline-colors-metal-700: 216, 17%, 21%;
+  --sline-colors-metal-800: 215, 25%, 17%;
+  --sline-colors-metal-900: 217, 33%, 12%;
+
+  /* Orange */
+  --sline-colors-orange-50: 33, 100%, 96%;
+  --sline-colors-orange-100: 34, 100%, 92%;
+  --sline-colors-orange-200: 32, 98%, 83%;
+  --sline-colors-orange-300: 31, 98%, 72%;
+  --sline-colors-orange-400: 24, 96%, 61%;
+  --sline-colors-orange-500: 21, 93%, 53%;
+  --sline-colors-orange-600: 17, 90%, 47%;
+  --sline-colors-orange-700: 15, 85%, 38%;
+  --sline-colors-orange-800: 14, 73%, 28%;
+  --sline-colors-orange-900: 14, 75%, 16%;
+
+  /* Pink */
+  --sline-colors-pink-50: 327, 73%, 97%;
+  --sline-colors-pink-100: 326, 78%, 95%;
+  --sline-colors-pink-200: 326, 85%, 90%;
+  --sline-colors-pink-300: 327, 87%, 82%;
+  --sline-colors-pink-400: 328, 85%, 70%;
+  --sline-colors-pink-500: 330, 81%, 60%;
+  --sline-colors-pink-600: 333, 86%, 50%;
+  --sline-colors-pink-700: 335, 77%, 35%;
+  --sline-colors-pink-800: 335, 74%, 23%;
+  --sline-colors-pink-900: 335, 69%, 19%;
+
+  /* Rose */
+  --sline-colors-rose-50: 0, 100%, 97%;
+  --sline-colors-rose-100: 357, 100%, 95%;
+  --sline-colors-rose-200: 353, 96%, 88%;
+  --sline-colors-rose-300: 352, 96%, 80%;
+  --sline-colors-rose-400: 351, 95%, 69%;
+  --sline-colors-rose-500: 349, 89%, 58%;
+  --sline-colors-rose-600: 343, 83%, 45%;
+  --sline-colors-rose-700: 343, 80%, 32%;
+  --sline-colors-rose-800: 343, 80%, 22%;
+  --sline-colors-rose-900: 343, 69%, 18%;
+
+  /* Teal */
+  --sline-colors-teal-50: 166, 100%, 95%;
+  --sline-colors-teal-100: 167, 85%, 89%;
+  --sline-colors-teal-200: 168, 84%, 77%;
+  --sline-colors-teal-300: 171, 77%, 64%;
+  --sline-colors-teal-400: 172, 66%, 50%;
+  --sline-colors-teal-500: 173, 80%, 40%;
+  --sline-colors-teal-600: 174, 83%, 32%;
+  --sline-colors-teal-700: 175, 77%, 26%;
+  --sline-colors-teal-800: 176, 69%, 16%;
+  --sline-colors-teal-900: 176, 61%, 12%;
+
+  /* Violet */
+  --sline-colors-violet-50: 255, 100%, 98%;
+  --sline-colors-violet-100: 252, 95%, 95%;
+  --sline-colors-violet-200: 252, 95%, 92%;
+  --sline-colors-violet-300: 256, 94%, 82%;
+  --sline-colors-violet-400: 258, 90%, 72%;
+  --sline-colors-violet-500: 258, 90%, 65%;
+  --sline-colors-violet-600: 262, 83%, 58%;
+  --sline-colors-violet-700: 263, 70%, 45%;
+  --sline-colors-violet-800: 263, 70%, 25%;
+  --sline-colors-violet-900: 264, 67%, 16%;
+
+  /* Semantic Colors */
+  --sline-base-disabled: hsla(var(--sline-colors-alpha-dark-200));
+  --sline-base-border: hsl(var(--sline-colors-bronze-200));
+  --sline-base-border-alpha: hsl(var(--sline-colors-alpha-light-300));
+  --sline-base-surface-1: hsl(var(--sline-colors-alpha-light-900));
+  --sline-base-surface-2: hsl(var(--sline-colors-bronze-50));
+  --sline-base-fill-1: hsl(var(--sline-colors-bronze-100));
+  --sline-base-fill-2: hsl(var(--sline-colors-bronze-200));
+  --sline-base-fill-3: hsl(var(--sline-colors-bronze-300));
+  --sline-base-fill-4: hsl(var(--sline-colors-bronze-400));
+  --sline-base-fill-5: hsl(var(--sline-colors-bronze-600));
+
+  /* State Colors */
+  --sline-state-brand-active: hsl(var(--sline-colors-blue-600));
+  --sline-state-brand-hover: hsl(var(--sline-colors-blue-500));
+  --sline-state-brand-selected: hsl(var(--sline-colors-blue-400));
+
+  --sline-state-highlight-active: hsl(var(--sline-colors-purple-600));
+  --sline-state-highlight-hover: hsl(var(--sline-colors-purple-300));
+  --sline-state-highlight-selected: hsl(var(--sline-colors-purple-200));
+
+  --sline-state-danger-active: hsl(var(--sline-colors-rose-600));
+  --sline-state-danger-hover: hsl(var(--sline-colors-rose-400));
+  --sline-state-danger-selected: hsl(var(--sline-colors-rose-200));
+
+  --sline-state-success-active: hsl(var(--sline-colors-teal-600));
+  --sline-state-success-hover: hsl(var(--sline-colors-teal-400));
+  --sline-state-success-selected: hsl(var(--sline-colors-teal-300));
+
+  /* Text Colors */
+  --text-light-primary: hsla(var(--sline-colors-alpha-light-900));
+  --text-light-secondary: hsla(var(--sline-colors-alpha-light-700));
+  --text-light-tertiary: hsla(var(--sline-colors-alpha-light-400));
+
+  --text-dark-primary: hsla(var(--sline-colors-alpha-dark-900));
+  --text-dark-secondary: hsla(var(--sline-colors-alpha-dark-700));
+  --text-dark-tertiary: hsla(var(--sline-colors-alpha-dark-400));
+}
+
+.light {
+  /* Blue */
+  --sline-colors-blue-50: 218, 100%, 97%;
+  --sline-colors-blue-100: 217, 100%, 93%;
+  --sline-colors-blue-200: 217, 100%, 87%;
+  --sline-colors-blue-300: 216, 98%, 78%;
+  --sline-colors-blue-400: 217, 94%, 68%;
+  --sline-colors-blue-500: 224, 82%, 56%;
+  --sline-colors-blue-600: 225, 85%, 50%;
+  --sline-colors-blue-700: 225, 73%, 38%;
+  --sline-colors-blue-800: 223, 64%, 13%;
+  --sline-colors-blue-900: 223, 64%, 33%;
+
+  /* Purple */
+  --sline-colors-purple-50: 270, 100%, 98%;
+  --sline-colors-purple-100: 270, 100%, 95%;
+  --sline-colors-purple-200: 270, 100%, 92%;
+  --sline-colors-purple-300: 272, 98%, 83%;
+  --sline-colors-purple-400: 273, 95%, 72%;
+  --sline-colors-purple-500: 273, 89%, 62%;
+  --sline-colors-purple-600: 275, 83%, 50%;
+  --sline-colors-purple-700: 275, 69%, 44%;
+  --sline-colors-purple-800: 275, 66%, 35%;
+  --sline-colors-purple-900: 275, 64%, 20%;
+
+  /* Gray */
+  --sline-colors-gray-50: 0, 0%, 99%;
+  --sline-colors-gray-100: 240, 5%, 96%;
+  --sline-colors-gray-200: 240, 4%, 89%;
+  --sline-colors-gray-300: 240, 5%, 82%;
+  --sline-colors-gray-400: 240, 5%, 65%;
+  --sline-colors-gray-500: 240, 4%, 49%;
+  --sline-colors-gray-600: 240, 5%, 34%;
+  --sline-colors-gray-700: 240, 5%, 26%;
+  --sline-colors-gray-800: 240, 6%, 16%;
+  --sline-colors-gray-900: 240, 6%, 12%;
+
+  /* Green */
+  --sline-colors-green-50: 138, 75%, 97%;
+  --sline-colors-green-100: 141, 84%, 93%;
+  --sline-colors-green-200: 141, 79%, 85%;
+  --sline-colors-green-300: 142, 84%, 65%;
+  --sline-colors-green-400: 142, 69%, 52%;
+  --sline-colors-green-500: 142, 75%, 40%;
+  --sline-colors-green-600: 142, 75%, 32%;
+  --sline-colors-green-700: 142, 68%, 26%;
+  --sline-colors-green-800: 142, 64%, 25%;
+  --sline-colors-green-900: 142, 63%, 15%;
+
+  /* Red */
+  --sline-colors-red-50: 0, 82%, 97%;
+  --sline-colors-red-100: 0, 100%, 93%;
+  --sline-colors-red-200: 0, 100%, 89%;
+  --sline-colors-red-300: 0, 100%, 81%;
+  --sline-colors-red-400: 0, 100%, 70%;
+  --sline-colors-red-500: 0, 83%, 60%;
+  --sline-colors-red-600: 0, 84%, 51%;
+  --sline-colors-red-700: 0, 73%, 40%;
+  --sline-colors-red-800: 0, 71%, 30%;
+  --sline-colors-red-900: 0, 63%, 20%;
+
+  /* Yellow */
+  --sline-colors-yellow-50: 55, 100%, 95%;
+  --sline-colors-yellow-100: 55, 93%, 88%;
+  --sline-colors-yellow-200: 52, 96%, 77%;
+  --sline-colors-yellow-300: 50, 100%, 63%;
+  --sline-colors-yellow-400: 46, 98%, 50%;
+  --sline-colors-yellow-500: 42, 93%, 44%;
+  --sline-colors-yellow-600: 35, 84%, 40%;
+  --sline-colors-yellow-700: 32, 88%, 30%;
+  --sline-colors-yellow-800: 32, 75%, 25%;
+  --sline-colors-yellow-900: 32, 63%, 18%;
+
+  /* Bronze */
+  --sline-colors-bronze-50: 60, 9%, 98%;
+  --sline-colors-bronze-100: 60, 6%, 96%;
+  --sline-colors-bronze-200: 20, 3%, 90%;
+  --sline-colors-bronze-300: 24, 4%, 83%;
+  --sline-colors-bronze-400: 25, 4%, 64%;
+  --sline-colors-bronze-500: 25, 5%, 45%;
+  --sline-colors-bronze-600: 24, 6%, 32%;
+  --sline-colors-bronze-700: 24, 4%, 25%;
+  --sline-colors-bronze-800: 20, 4%, 16%;
+  --sline-colors-bronze-900: 24, 7%, 10%;
+
+  /* Rose */
+  --sline-colors-rose-50: 0, 100%, 97%;
+  --sline-colors-rose-100: 357, 100%, 95%;
+  --sline-colors-rose-200: 353, 96%, 88%;
+  --sline-colors-rose-300: 352, 96%, 80%;
+  --sline-colors-rose-400: 351, 95%, 69%;
+  --sline-colors-rose-500: 349, 89%, 58%;
+  --sline-colors-rose-600: 343, 83%, 45%;
+  --sline-colors-rose-700: 343, 80%, 32%;
+  --sline-colors-rose-800: 343, 80%, 22%;
+  --sline-colors-rose-900: 343, 69%, 18%;
+
+  /* Teal */
+  --sline-colors-teal-50: 166, 100%, 95%;
+  --sline-colors-teal-100: 167, 85%, 89%;
+  --sline-colors-teal-200: 168, 84%, 77%;
+  --sline-colors-teal-300: 171, 77%, 64%;
+  --sline-colors-teal-400: 172, 66%, 50%;
+  --sline-colors-teal-500: 173, 80%, 40%;
+  --sline-colors-teal-600: 174, 83%, 32%;
+  --sline-colors-teal-700: 175, 77%, 26%;
+  --sline-colors-teal-800: 176, 69%, 16%;
+  --sline-colors-teal-900: 176, 61%, 12%;
+
+  /* Orange */
+  --sline-colors-orange-50: 33, 100%, 96%;
+  --sline-colors-orange-100: 34, 100%, 92%;
+  --sline-colors-orange-200: 32, 98%, 83%;
+  --sline-colors-orange-300: 31, 98%, 72%;
+  --sline-colors-orange-400: 24, 96%, 61%;
+  --sline-colors-orange-500: 21, 93%, 53%;
+  --sline-colors-orange-600: 17, 90%, 47%;
+  --sline-colors-orange-700: 15, 85%, 38%;
+  --sline-colors-orange-800: 14, 73%, 28%;
+  --sline-colors-orange-900: 14, 75%, 16%;
+
+  /* Semantic Color Overrides for Light Theme */
+  --sline-base-disabled: hsla(var(--sline-colors-alpha-light-200));
+  --sline-base-border: hsl(var(--sline-colors-bronze-200));
+  --sline-base-surface-1: hsl(var(--sline-colors-alpha-light-900));
+  --sline-base-surface-2: hsl(var(--sline-colors-bronze-50));
+  --sline-base-fill-1: hsl(var(--sline-colors-bronze-100));
+  --sline-base-fill-2: hsl(var(--sline-colors-bronze-200));
+  --sline-base-fill-3: hsl(var(--sline-colors-bronze-300));
+  --sline-base-fill-4: hsl(var(--sline-colors-bronze-400));
+  --sline-base-fill-5: hsl(var(--sline-colors-bronze-600));
+
+  /* State Color Overrides for Light Theme */
+  --sline-state-brand-active: hsl(var(--sline-colors-orange-600));
+  --sline-state-brand-hover: hsl(var(--sline-colors-orange-500));
+  --sline-state-brand-selected: hsl(var(--sline-colors-orange-400));
+
+  --sline-state-highlight-active: hsl(var(--sline-colors-purple-600));
+  --sline-state-highlight-hover: hsl(var(--sline-colors-purple-300));
+  --sline-state-highlight-selected: hsl(var(--sline-colors-purple-200));
+
+  --sline-state-danger-active: hsl(var(--sline-colors-rose-600));
+  --sline-state-danger-hover: hsl(var(--sline-colors-rose-400));
+  --sline-state-danger-selected: hsl(var(--sline-colors-rose-200));
+
+  --sline-state-success-active: hsl(var(--sline-colors-teal-600));
+  --sline-state-success-hover: hsl(var(--sline-colors-teal-400));
+  --sline-state-success-selected: hsl(var(--sline-colors-teal-300));
+
+  /* Alpha Colors */
+
+  --sline-colors-alpha-dark-000: 0, 0%, 10%, 0;
+  --sline-colors-alpha-dark-050: 0, 0%, 10%, 0.08;
+  --sline-colors-alpha-dark-100: 0, 0%, 10%, 0.12;
+  --sline-colors-alpha-dark-200: 0, 0%, 10%, 0.18;
+  --sline-colors-alpha-dark-300: 0, 0%, 10%, 0.26;
+  --sline-colors-alpha-dark-400: 0, 0%, 10%, 0.36;
+  --sline-colors-alpha-dark-500: 0, 0%, 10%, 0.48;
+  --sline-colors-alpha-dark-600: 0, 0%, 10%, 0.6;
+  --sline-colors-alpha-dark-700: 0, 0%, 10%, 0.7;
+  --sline-colors-alpha-dark-900: 0, 0%, 10%, 1;
+
+  --sline-colors-alpha-light-000: 0, 0%, 100%, 0;
+  --sline-colors-alpha-light-050: 0, 0%, 100%, 0.08;
+  --sline-colors-alpha-light-100: 0, 0%, 100%, 0.12;
+  --sline-colors-alpha-light-200: 0, 0%, 100%, 0.18;
+  --sline-colors-alpha-light-300: 0, 0%, 100%, 0.26;
+  --sline-colors-alpha-light-400: 0, 0%, 100%, 0.36;
+  --sline-colors-alpha-light-500: 0, 0%, 100%, 0.48;
+  --sline-colors-alpha-light-600: 0, 0%, 100%, 0.6;
+  --sline-colors-alpha-light-700: 0, 0%, 100%, 0.7;
+  --sline-colors-alpha-light-900: 0, 0%, 100%, 1;
+
+  /* Text Colors */
+  --text-light-primary: hsl(var(--sline-colors-alpha-light-900));
+  --text-light-secondary: hsl(var(--sline-colors-alpha-light-700));
+  --text-light-tertiary: hsl(var(--sline-colors-alpha-light-400));
+
+  --text-dark-primary: hsl(var(--sline-colors-alpha-dark-900));
+  --text-dark-secondary: hsl(var(--sline-colors-alpha-dark-700));
+  --text-dark-tertiary: hsl(var(--sline-colors-alpha-dark-400));
 }

@@ -4,7 +4,6 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import Image from "next/image"
 import Link from "next/link"
-// import { Github } from "lucide-react"
 import { createClient } from "@/utils/supabase/client"
 import { useRef, useState } from "react"
 
@@ -13,7 +12,7 @@ export default function AuthPage() {
   const inputEl = useRef<HTMLInputElement>(null);
   const [loading, setLoading] = useState(false);
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-gray-900 to-black p-4">
+    <div className="min-h-screen flex items-center justify-center">
       <div className="w-full max-w-[400px] space-y-6">
         <div className="text-center space-y-2">
           <Image
