@@ -45,11 +45,14 @@ export const updateSession = async (request: NextRequest) => {
       return NextResponse.redirect(new URL("/feed", request.url));
     }
 
-  console.log(request.url);
-  // console.log(data.user);
-
-  if (!data.user && (!request.url.includes('/login') && !request.url.includes('/api/auth/confirm'))) {
-    console.log('redirecting to login');
-    return NextResponse.redirect(new URL('/login', request.url))
+    return response;
+  } catch (e: any) {
+    /* eslint-disable @typescript-eslint/no-explicit-any */
+    // Supabase client could not be created!
+    return NextResponse.next({
+      request: {
+        headers: request.headers,
+      },
+    });
   }
 };
