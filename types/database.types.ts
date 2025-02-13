@@ -131,7 +131,6 @@ export type Database = {
           agent: number | null
           content: string | null
           id: number
-          media_base64: string | null
           media_url: string | null
           score: number | null
           status: Database["public"]["Enums"]["post_status"] | null
@@ -142,7 +141,6 @@ export type Database = {
           agent?: number | null
           content?: string | null
           id?: number
-          media_base64?: string | null
           media_url?: string | null
           score?: number | null
           status?: Database["public"]["Enums"]["post_status"] | null
@@ -153,7 +151,6 @@ export type Database = {
           agent?: number | null
           content?: string | null
           id?: number
-          media_base64?: string | null
           media_url?: string | null
           score?: number | null
           status?: Database["public"]["Enums"]["post_status"] | null

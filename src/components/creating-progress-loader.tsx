@@ -137,7 +137,6 @@ const steps = [
             content: "Ausar silencing doubters one dunk at a time 🤫",
             status: "scheduled",
             agent: 1,
-            media_base64: null,
             media_url: null,
             score: null,
             timestamp: 1718371200,

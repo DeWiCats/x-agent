@@ -68,6 +68,33 @@ const agentSchedulePosts = async () => {
         stylePreset: agent.image_style as ImageStyle,
       });
 
+      const imageBuffer = Buffer.from(imageResponse.images[0], "base64");
+
+      const uploadPath = `posts/${
+        agent.id
+      }/${randomTrend}+${new Date().getTime()}.png`;
+
+      const imageFile = new File([imageBuffer], "post.png", {
+        type: "image/png",
+      });
+
+      const { error } = await supabase.storage
+        .from("avatars")
+        .upload(uploadPath, imageFile, {
+          cacheControl: "3600",
+          upsert: false,
+        });
+
+      if (error) {
+        console.log("Error uploading image: ", error);
+        // TODO: Add a log to sentry or some other logger
+        continue;
+      }
+
+      const {
+        data: { publicUrl },
+      } = supabase.storage.from("avatars").getPublicUrl(uploadPath);
+
       const response = await generateMemeWorthyTweet({
         agent,
         tweetContext: randomTrend,
@@ -82,7 +109,7 @@ const agentSchedulePosts = async () => {
           await supabase.from("posts").insert({
             agent: agent.id,
             content: response.content,
-            media_base64: imageResponse.images[0],
+            media_url: publicUrl,
             status: "scheduled",
             score: response.score,
           });

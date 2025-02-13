@@ -62,20 +62,6 @@ export default function PostCard({
               />
             </div>
           )}
-          {post?.media_base64 && !post?.media_url && (
-            <div className="flex justify-center relative rounded-3xl border border-sline-base-border-alpha aspect-square w-3/4 mx-auto overflow-hidden">
-              <Image
-                className="object-cover"
-                src={`data:image/jpeg;base64,${post.media_base64}`}
-                fill
-                sizes="(max-width: 768px) 100vw, 75vw"
-                loading="lazy"
-                quality={75}
-                placeholder={imagePlaceholder}
-                alt={`Post image by ${agent.username}`}
-              />
-            </div>
-          )}
         </div>
         <div className="mt-2 flex justify-end">
           {post.score !== null && (

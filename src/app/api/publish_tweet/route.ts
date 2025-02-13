@@ -8,7 +8,19 @@ import { generateMemeWorthyTweet } from "@/utils/twitter.api";
 export const revalidate = 0;
 
 export async function POST(req: NextRequest) {
-  const { agentId, tweetPrompt, imagePrompt } = await req.json();
+  const {
+    agentId,
+    tweetPrompt,
+    imagePrompt,
+    tweetId,
+    imageStyle,
+  }: {
+    agentId: number;
+    tweetPrompt: string;
+    imagePrompt: string;
+    tweetId: string;
+    imageStyle: ImageStyle;
+  } = await req.json();
 
   if (!agentId || !tweetPrompt) {
     return NextResponse.json(
@@ -23,8 +35,7 @@ export async function POST(req: NextRequest) {
   const agent = await supabase
     .from("agents")
     .select("*, accounts!inner(*)")
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    .eq("id", agentId as any)
+    .eq("id", agentId)
     .single();
 
   if (!agent?.data) {
@@ -38,13 +49,14 @@ export async function POST(req: NextRequest) {
 
   const scraper = await getScraper(agent.data);
 
+  let imageUrl: string | undefined;
   let imageBuffer: Buffer | undefined;
 
   if (imagePrompt) {
     const imageResponse = await createImage({
       trend: tweetPrompt,
       scrapedTweets: [],
-      stylePreset: agent.data.image_style as ImageStyle,
+      stylePreset: imageStyle,
     });
     const image = imageResponse.images[0];
     if (!image) {
@@ -57,6 +69,36 @@ export async function POST(req: NextRequest) {
     }
 
     imageBuffer = Buffer.from(image, "base64");
+
+    const uploadPath = `posts/${agentId}/${crypto.randomUUID()}+${new Date().getTime()}.png`;
+
+    const imageFile = new File([imageBuffer], "post.png", {
+      type: "image/png",
+    });
+
+    const { error } = await supabase.storage
+      .from("images")
+      .upload(uploadPath, imageFile, {
+        cacheControl: "3600",
+        upsert: false,
+      });
+
+    if (error) {
+      console.log("Error uploading image: ", error);
+      // TODO: Add a log to sentry or some other logger
+      return NextResponse.json(
+        {
+          message: "Error uploading image",
+        },
+        { status: 500 }
+      );
+    }
+
+    const {
+      data: { publicUrl },
+    } = supabase.storage.from("images").getPublicUrl(uploadPath);
+
+    imageUrl = publicUrl;
   }
 
   const tweet = await generateMemeWorthyTweet({
@@ -76,7 +118,7 @@ export async function POST(req: NextRequest) {
 
   const tweetResponse = await scraper.sendTweet(
     tweet.content,
-    undefined,
+    tweetId,
     imageBuffer
       ? [
           {
@@ -96,12 +138,26 @@ export async function POST(req: NextRequest) {
     );
   }
 
+  const res = await tweetResponse.json();
+  const {
+    data: {
+      create_tweet: {
+        tweet_results: { result },
+      },
+    },
+  } = res;
+
+  const { rest_id } = result;
+  const xUrl = `https://x.com/${agent.data.accounts.username}/status/${rest_id}`;
+
   await supabase.from("posts").insert({
+    id: rest_id,
     agent: agent.data.id,
     content: tweet.content,
-    media_base64: imageBuffer ? imageBuffer.toString("base64") : undefined,
+    media_url: imageUrl,
     status: "published",
     score: tweet.score,
+    x_url: xUrl,
   });
   // update last posted date
   await supabase

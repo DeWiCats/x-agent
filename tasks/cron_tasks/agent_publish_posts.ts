@@ -32,19 +32,32 @@ const agentPublishPosts = async () => {
       }
       const scraper = await getScraper(agent);
 
-      if (!agent.posts[0].media_base64) {
+      if (!agent.posts[0].media_url) {
         console.log("No media found for post");
         // TODO: Add a log to sentry or some other logger
         continue;
       }
 
-      const imageBuffer = Buffer.from(agent.posts[0].media_base64, "base64");
+      // donwload image from url
+      const mediaResponse = await fetch(agent.posts[0].media_url);
+      const media = await mediaResponse.json();
+      const { data, error }: { data: Blob; error: Error } = media;
+
+      if (!data || error) {
+        console.log("Error downloading image");
+        // TODO: Add a log to sentry or some other logger
+        continue;
+      }
 
       if (!agent.posts[0].content) {
         console.log("No content found for post");
         // TODO: Add a log to sentry or some other logger
         continue;
       }
+
+      const arrayBuffer = await data.arrayBuffer();
+
+      const imageBuffer = Buffer.from(arrayBuffer);
 
       // We should only have one post. If not something went wrong.
       const response = await scraper.sendTweet(

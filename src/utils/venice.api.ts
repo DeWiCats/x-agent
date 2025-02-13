@@ -61,7 +61,7 @@ export const createImage = async ({
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      model: "fluently-xl",
+      model: "flux-dev",
       prompt: `Create a viral, attention-grabbing meme image inspired by the trend "${trend}".${
         scrapedTweets
           ? ` Use these tweets for context and inspiration: ${scrapedTweets
