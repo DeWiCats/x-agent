@@ -1,12 +1,7 @@
-import { AgentsProvider } from "@/hooks/useAgents";
-
-export default function FeedLayout({ children }: { children: React.ReactNode }) {
-
-  return (
-    <>
-      <AgentsProvider>
-        {children}
-      </AgentsProvider>
-    </>
-  );
+export default async function FeedLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return <main className="h-full flex overflow-hidden">{children}</main>;
 }

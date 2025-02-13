@@ -46,27 +46,23 @@ export default function PostCard({
           {/* TODO: Get HTML from webscraper */}
 
           {post.media_url && (
-            <div className="flex justify-center relative rounded-3xl border border-sline-base-border-alpha aspect-square w-full overflow-hidden">
+            <div className="flex justify-center relative rounded-3xl border border-sline-base-border-alpha aspect-square w-3/4 mx-auto overflow-hidden">
               <Image
                 className="object-cover"
                 src={post.media_url}
-                layout="fill"
+                fill
                 alt={post.media_url || ""}
-                style={{
-                  minWidth: "200px",
-                  minHeight: "200px",
-                }}
               />
             </div>
           )}
 
           {post?.media_base64 && !post?.media_url && (
-            <div className="flex justify-center relative rounded-3xl border border-sline-base-border-alpha aspect-square w-full overflow-hidden">
+            <div className="flex justify-center relative rounded-3xl border border-sline-base-border-alpha aspect-square w-3/4 mx-auto overflow-hidden">
               <Image
                 className="object-cover"
                 src={`data:image/jpeg;base64,${post.media_base64}`}
                 alt={post.media_base64 || ""}
-                layout="fill"
+                fill
               />
             </div>
           )}

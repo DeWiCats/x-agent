@@ -13,10 +13,13 @@ import {
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { PlusCircle } from "lucide-react";
-import { useAgents } from "@/hooks/useAgents";
+import { Database } from "@/types/database.types";
 
-export default function Page() {
-  const { agents } = useAgents();
+export default function CustomPostButton({
+  agents,
+}: {
+  agents: Database["public"]["Tables"]["agents"]["Row"][];
+}) {
   const [isOpen, setIsOpen] = useState(false);
   const [includeImage, setIncludeImage] = useState(false);
   const [textPrompt, setTextPrompt] = useState("");

@@ -123,7 +123,7 @@ export function CreateAgentDrawer() {
               <Image
                 src="/SlineLogo.svg"
                 alt="Loading"
-                layout="fill"
+                fill
                 className="opacity-30"
               />
             </div>
@@ -137,7 +137,7 @@ export function CreateAgentDrawer() {
               <Image
                 src="/SlineLogo.svg"
                 alt="No Agents Available"
-                layout="fill"
+                fill
                 className="opacity-30"
               />
             </div>
