@@ -32,7 +32,7 @@ export function CreateAgentDrawer() {
 
   const [formData, setFormData] = useState<AgentFormData>({
     // General tab
-    image: '',
+    image: null,
     name: '',
     handle: '',
     description: '',
@@ -56,7 +56,7 @@ export function CreateAgentDrawer() {
     model: 'Llama 3.3'
   });
 
-  const handleInputChange = (field: string, value: string | number | boolean) => {
+  const handleInputChange = (field: string, value: string | number | boolean | File) => {
     console.log(field, value);
     console.log(formData);
     setFormData(prev => ({
@@ -69,10 +69,11 @@ export function CreateAgentDrawer() {
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
+      handleInputChange('image', file);
+      
       const reader = new FileReader();
       reader.onload = (e) => {
         if (e.target?.result) {
-          handleInputChange('image', e.target.result as string);
           const img = document.getElementById("preview") as HTMLImageElement;
           const placeholder = document.getElementById("placeholder");
           if (img) {

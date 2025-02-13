@@ -1,6 +1,6 @@
 export type AgentFormData = {
   // General tab
-  image: string;
+  image: File | null;
   name: string;
   handle: string;
   description: string;
