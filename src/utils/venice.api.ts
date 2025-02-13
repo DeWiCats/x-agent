@@ -1,5 +1,5 @@
 import OpenAI from "openai";
-import { config } from "./config";
+import { config } from "../../tasks/utils/config";
 import { ImageStyle } from "@/lib/types";
 
 const BASE_URL = "https://api.venice.ai/api/v1";
@@ -51,7 +51,7 @@ export const createImage = async ({
   stylePreset,
 }: {
   trend: string;
-  scrapedTweets: string[];
+  scrapedTweets?: string[];
   stylePreset: ImageStyle;
 }) => {
   const options = {
@@ -62,11 +62,13 @@ export const createImage = async ({
     },
     body: JSON.stringify({
       model: "fluently-xl",
-      prompt: `Create a viral, attention-grabbing meme image inspired by the trend "${trend}". Use these tweets for context and inspiration: ${scrapedTweets
-        .slice(0, 3)
-        .join(
-          " "
-        )}. The image should be highly shareable, visually striking, and resonate with Twitter culture. Focus on humor, relevance, and maximum engagement potential. Make it memorable and meme-worthy while maintaining a professional quality.`,
+      prompt: `Create a viral, attention-grabbing meme image inspired by the trend "${trend}".${
+        scrapedTweets
+          ? ` Use these tweets for context and inspiration: ${scrapedTweets
+              .slice(0, 3)
+              .join(" ")}.`
+          : ""
+      } The image should be highly shareable, visually striking, and resonate with Twitter culture. Focus on humor, relevance, and maximum engagement potential. Make it memorable and meme-worthy while maintaining a professional quality.`,
       height: 1080,
       width: 1080,
       safe_mode: true,

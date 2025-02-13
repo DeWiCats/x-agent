@@ -1,11 +1,11 @@
 import { SearchMode } from "@dewicats/agent-twitter-client";
-import { getScraper } from "../utils/scraper.api";
-import { supabase } from "../utils/supabase.api";
+import { getScraper } from "../../src/utils/scraper.api";
+import { supabase } from "../../src/utils/supabase.api";
 import {
   generateMemeWorthyTweet,
   scrapeContentOffOfTweet,
-} from "../utils/twitter.api";
-import { createImage } from "../utils/venice.api";
+} from "../../src/utils/twitter.api";
+import { createImage } from "../../src/utils/venice.api";
 import { ImageStyle } from "@/lib/types";
 
 const DRY_RUN = process.env.DRY_RUN === "true";
@@ -70,7 +70,7 @@ const agentSchedulePosts = async () => {
 
       const response = await generateMemeWorthyTweet({
         agent,
-        randomTrend,
+        tweetContext: randomTrend,
         scrapedTweets,
       });
 

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/utils/supabase/server";
-import { getScraper } from "../../../../tasks/utils/scraper.api";
+import { getScraper } from "../../../utils/scraper.api";
 
 export const revalidate = 0;
 

@@ -3,7 +3,7 @@
 import { AgentFormData } from "@/lib/types";
 import { Database } from "@/types/database.types";
 import { createAdminClient, createClient } from "@/utils/supabase/server";
-import { getScraper } from "../../tasks/utils/scraper.api";
+import { getScraper } from "../utils/scraper.api";
 
 export async function createAgent(formData: AgentFormData) {
   // console.log(formData);
@@ -89,7 +89,7 @@ export async function createAgent(formData: AgentFormData) {
     return response;
   }
 
-  console.log('ID',data?.id);
+  console.log("ID", data?.id);
   const agent = await supabaseAdmin
     .from("agents")
     .select("*, accounts!inner(*)")
@@ -116,22 +116,28 @@ export async function createAgent(formData: AgentFormData) {
 
   let res;
   try {
-    console.log('IMAGE',formData.image);
+    console.log("IMAGE", formData.image);
     res = await scraper.uploadImage({
       imageFile: formData.image as File,
     });
-    console.log('RES',res);
+    console.log("RES", res);
   } catch (error) {
     console.log("error: ", error);
   }
 
-  await supabase.from("agents").update({
-    avatar: res?.avatar,
-  }).eq("id", data.id);
+  await supabase
+    .from("agents")
+    .update({
+      avatar: res?.avatar,
+    })
+    .eq("id", data.id);
 
-  await supabaseAdmin.from("accounts").update({
-    active: true,
-  }).eq("id", openAccountData.id);
+  await supabaseAdmin
+    .from("accounts")
+    .update({
+      active: true,
+    })
+    .eq("id", openAccountData.id);
 
   response.success = true;
   return response;

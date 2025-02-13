@@ -6,21 +6,25 @@ import { Database } from "@/types/database.types";
 export const generateMemeWorthyTweet = async ({
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   agent,
-  randomTrend,
+  tweetContext,
   scrapedTweets,
 }: {
   agent: Database["public"]["Tables"]["agents"]["Row"];
-  randomTrend: string;
-  scrapedTweets: string[];
+  tweetContext: string;
+  scrapedTweets?: string[];
 }) => {
   // TODO: FOR Agnel what do we do with Agent parameters
   let bestResponse = "";
   let bestScore = 0;
   let attempts = 0;
-  const prompt = `You are a social media expert crafting viral tweets. Create an engaging tweet about: ${randomTrend}
+  const prompt = `You are a social media expert crafting viral tweets. Create an engaging tweet about: ${tweetContext}
 
-Here are some recent popular tweets about this trend for context:
-${scrapedTweets.slice(0, 3).join("\n")}
+${
+  scrapedTweets
+    ? `Here are some recent popular tweets about this trend for context:
+${scrapedTweets.slice(0, 3).join("\n")}`
+    : ""
+}
 
 Requirements:
 - Maximum 280 characters

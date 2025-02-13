@@ -1,5 +1,5 @@
-import { getScraper } from "../utils/scraper.api";
-import { supabase } from "../utils/supabase.api";
+import { getScraper } from "../../src/utils/scraper.api";
+import { supabase } from "../../src/utils/supabase.api";
 
 const agentPublishPosts = async () => {
   try {

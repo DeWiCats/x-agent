@@ -1,6 +1,6 @@
-import { supabase } from "../utils/supabase.api";
-import { getScraper } from "../utils/scraper.api";
-import { getTweetScore } from "../utils/twitter.api";
+import { supabase } from "../../src/utils/supabase.api";
+import { getScraper } from "../../src/utils/scraper.api";
+import { getTweetScore } from "../../src/utils/twitter.api";
 
 const getPosts = async () => {
   const agents = await supabase.from("agents").select("*, accounts!inner(*)");
