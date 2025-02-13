@@ -1,11 +1,10 @@
 import { Database } from "@/types/database.types";
 import { createClient } from "../server";
 
-const supabase = await createClient();
-
 export async function getUserData(): Promise<
   Database["public"]["Tables"]["users"]["Row"]
 > {
+  const supabase = await createClient();
   const { data: user } = await supabase.auth.getUser();
 
   const { data: userData } = await supabase
@@ -24,6 +23,7 @@ export async function getUserData(): Promise<
 export async function updateUser(
   user: Database["public"]["Tables"]["users"]["Row"]
 ) {
+  const supabase = await createClient();
   const { data, error } = await supabase
     .from("users")
     .update(user)
