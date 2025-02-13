@@ -7,7 +7,7 @@ export async function GET() {
   const { data, error } = await supabase
     .from("accounts")
     .select("*")
-    .eq("active", true);
+    .eq("active", false);
 
   if (error) {
     return NextResponse.json(
