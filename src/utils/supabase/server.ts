@@ -35,8 +35,9 @@ export async function createAdminClient() {
     process.env.SUPABASE_KEY!,
     {
       cookies: {
-        // @ts-expect-error @ts-ignore
-        getAll() {},
+        getAll() {
+          return [];
+        },
         setAll() {},
       },
     }

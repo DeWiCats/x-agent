@@ -11,19 +11,25 @@ export type Database = {
     Tables: {
       accounts: {
         Row: {
+          active: boolean | null
           created_at: string
+          email: string
           id: string
           password: string
           username: string
         }
         Insert: {
+          active?: boolean | null
           created_at?: string
+          email: string
           id?: string
           password: string
           username: string
         }
         Update: {
+          active?: boolean | null
           created_at?: string
+          email?: string
           id?: string
           password?: string
           username?: string
@@ -33,7 +39,7 @@ export type Database = {
       agents: {
         Row: {
           account_id: string
-          avatar: string
+          avatar: string | null
           context: string | null
           cookies: string | null
           created_at: string
@@ -57,7 +63,7 @@ export type Database = {
         }
         Insert: {
           account_id: string
-          avatar: string
+          avatar?: string | null
           context?: string | null
           cookies?: string | null
           created_at?: string
@@ -81,7 +87,7 @@ export type Database = {
         }
         Update: {
           account_id?: string
-          avatar?: string
+          avatar?: string | null
           context?: string | null
           cookies?: string | null
           created_at?: string
