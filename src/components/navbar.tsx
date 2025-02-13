@@ -29,7 +29,7 @@ export function Navbar() {
 
   async function signOut(): Promise<void> {
     await supabase.auth.signOut();
-    router.push("/login");
+    router.push("/sign-in");
   }
 
   return (
