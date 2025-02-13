@@ -1,5 +1,6 @@
 import OpenAI from "openai";
 import { config } from "./config";
+import { ImageStyle } from "@/lib/types";
 
 const BASE_URL = "https://api.venice.ai/api/v1";
 
@@ -11,24 +12,17 @@ export const openai = new OpenAI({
 export const generateVeniceText = async ({
   model = "llama-3.3-70b",
   prompt,
-  characterSlug,
   maxTokens,
   temperature,
 }: {
   model?: "deepseek-r1-llama-70b" | "llama-3.3-70b" | "deepseek-r1-671b";
   prompt: string;
-  characterSlug?: string | null;
   maxTokens?: number;
   temperature?: number;
 }) => {
   const veniceParameters = {
     include_venice_system_prompt: false,
   } as Record<string, string | boolean>;
-
-  console.log("characterSlug: ", characterSlug);
-  if (characterSlug) {
-    // veniceParameters["character_slug"] = characterSlug;
-  }
 
   const completionStream = await openai.chat.completions.create({
     model,
@@ -51,7 +45,15 @@ export const generateVeniceText = async ({
   return actualResponse.choices[0].message.content;
 };
 
-export const createImage = async (trend: string, scrapedTweets: string[]) => {
+export const createImage = async ({
+  trend,
+  scrapedTweets,
+  stylePreset,
+}: {
+  trend: string;
+  scrapedTweets: string[];
+  stylePreset: ImageStyle;
+}) => {
   const options = {
     method: "POST",
     headers: {
@@ -69,7 +71,7 @@ export const createImage = async (trend: string, scrapedTweets: string[]) => {
       width: 1080,
       safe_mode: true,
       hide_watermark: true,
-      style_preset: "Anime",
+      style_preset: stylePreset,
     }),
   };
 

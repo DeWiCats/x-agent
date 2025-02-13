@@ -21,7 +21,6 @@ export const useUsersHook = () => {
         const { data: userData } = await supabase
           .from("users")
           .select("*")
-          // @ts-expect-error - id is a string
           .eq("id", data.user.id)
           .single();
         setUser(userData);

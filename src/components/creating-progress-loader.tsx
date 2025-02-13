@@ -11,6 +11,7 @@ import {
   DialogTrigger,
 } from "./ui/dialog";
 import PostCard from "./post-card";
+import { ImageStyle } from "@/lib/types";
 
 const iconplaceholder = (
   <svg
@@ -146,15 +147,27 @@ const steps = [
           }}
           agent={{
             id: 1,
-            avatar: null,
-            character_slug: null,
+            avatar: "",
+            account_id: "1",
+            context: "",
             cookies: null,
             created_at: "2024-06-13T12:00:00Z",
+            description: "",
+            engagement_hooks: "",
+            engagement_rules: "",
+            image_style: ImageStyle.Anime,
             last_posted_date: null,
-            password: "",
-            team: null,
+            team: 1,
             time_to_post: null,
+            ethical_boundaries: "",
+            fact_check_threshold: 0,
+            model: "llama-3.3-70b",
+            public: false,
+            stance: 1,
+            tags: [],
+            tone: 1,
             username: "test",
+            style: 1,
           }}
         />
       </div>

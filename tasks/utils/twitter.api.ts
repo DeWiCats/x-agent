@@ -1,12 +1,19 @@
 import { AxiosError } from "axios";
 import { generateVeniceText } from "./venice.api";
 import { Tweet } from "@dewicats/agent-twitter-client";
+import { Database } from "@/types/database.types";
 
-export const generateMemeWorthyTweet = async (
-  characterSlug: string,
-  randomTrend: string,
-  scrapedTweets: string[]
-) => {
+export const generateMemeWorthyTweet = async ({
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  agent,
+  randomTrend,
+  scrapedTweets,
+}: {
+  agent: Database["public"]["Tables"]["agents"]["Row"];
+  randomTrend: string;
+  scrapedTweets: string[];
+}) => {
+  // TODO: FOR Agnel what do we do with Agent parameters
   let bestResponse = "";
   let bestScore = 0;
   let attempts = 0;
@@ -52,7 +59,6 @@ Output the tweet text only, no explanations.`;
     const veniceResponse = await generateVeniceText({
       model: "llama-3.3-70b",
       prompt,
-      characterSlug,
     });
 
     if (!veniceResponse) {

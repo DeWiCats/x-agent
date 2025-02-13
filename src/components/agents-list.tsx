@@ -2,35 +2,13 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card } from "@/components/ui/card";
 import { Clock } from "lucide-react";
 import Image from "next/image";
-import { Tables } from "@/types/database.types";
+import { Database } from "@/types/database.types";
 
-// const agents = [
-//   {
-//     id: 1,
-//     name: "Degen Intern",
-//     status: "Public",
-//     avatar: "/SlineLogo.svg",
-//     creator: "Agnel Nieves",
-//     createdAt: "Dec 24",
-//     users: 50,
-//     revenue: "1k",
-//     isDraft: false,
-//   },
-//   // Duplicate the agent 8 more times for the grid
-//   ...Array(8).fill({
-//     id: 2,
-//     name: "Degen Intern",
-//     status: "Draft",
-//     avatar: "/SlineLogo.svg",
-//     creator: "Agnel Nieves",
-//     createdAt: "Dec 24",
-//     users: 50,
-//     revenue: "1k",
-//     isDraft: true,
-//   }),
-// ]
-
-export default function AgentsPage({ agents }: { agents: Tables<"agents">[] }) {
+export default function AgentsPage({
+  agents,
+}: {
+  agents: Database["public"]["Tables"]["agents"]["Row"][];
+}) {
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold text-white mb-6">Agents</h1>

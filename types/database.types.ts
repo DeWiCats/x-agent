@@ -32,39 +32,75 @@ export type Database = {
       }
       agents: {
         Row: {
-          account_id: string | null
-          avatar: string | null
-          character_slug: string | null
+          account_id: string
+          avatar: string
+          context: string | null
           cookies: string | null
           created_at: string
+          description: string
+          engagement_hooks: string | null
+          engagement_rules: string | null
+          ethical_boundaries: string | null
+          fact_check_threshold: number
           id: number
+          image_style: string
           last_posted_date: string | null
-          team: number | null
+          model: Database["public"]["Enums"]["model"]
+          public: boolean
+          stance: number
+          style: number
+          tags: string[] | null
+          team: number
           time_to_post: string | null
+          tone: number
           username: string
         }
         Insert: {
-          account_id?: string | null
-          avatar?: string | null
-          character_slug?: string | null
+          account_id: string
+          avatar: string
+          context?: string | null
           cookies?: string | null
           created_at?: string
+          description: string
+          engagement_hooks?: string | null
+          engagement_rules?: string | null
+          ethical_boundaries?: string | null
+          fact_check_threshold: number
           id?: number
+          image_style: string
           last_posted_date?: string | null
-          team?: number | null
+          model: Database["public"]["Enums"]["model"]
+          public: boolean
+          stance: number
+          style: number
+          tags?: string[] | null
+          team: number
           time_to_post?: string | null
+          tone: number
           username: string
         }
         Update: {
-          account_id?: string | null
-          avatar?: string | null
-          character_slug?: string | null
+          account_id?: string
+          avatar?: string
+          context?: string | null
           cookies?: string | null
           created_at?: string
+          description?: string
+          engagement_hooks?: string | null
+          engagement_rules?: string | null
+          ethical_boundaries?: string | null
+          fact_check_threshold?: number
           id?: number
+          image_style?: string
           last_posted_date?: string | null
-          team?: number | null
+          model?: Database["public"]["Enums"]["model"]
+          public?: boolean
+          stance?: number
+          style?: number
+          tags?: string[] | null
+          team?: number
           time_to_post?: string | null
+          tone?: number
           username?: string
         }
         Relationships: [
@@ -207,6 +243,14 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
+      model:
+        | "llama-3.3-70b"
+        | "llama-3.2-3b"
+        | "llama-3.1-405b"
+        | "qwen32b"
+        | "deepseek-r1-llama-70b"
+        | "deepseek-r1-671b"
+        | "dolphin-2.9.2-qwen2-72b"
       post_status: "draft" | "scheduled" | "published"
       role: "owner" | "admin" | "user"
     }

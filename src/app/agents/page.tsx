@@ -6,7 +6,7 @@ export default async function AgentsPage() {
   const { data: agents } = await supabase.from("agents").select("*");
   return (
     <>
-      <AgentsList agents={agents} />
+      <AgentsList agents={agents || []} />
     </>
   );
 }

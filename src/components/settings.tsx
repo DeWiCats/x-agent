@@ -147,7 +147,7 @@ export default function Settings() {
                           if (e.target?.result) {
                             setUserData((prev) => ({
                               ...prev,
-                              avatar_url: e.target.result as string,
+                              avatar_url: e?.target?.result as string,
                             }));
                           }
                         };

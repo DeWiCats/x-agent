@@ -6,6 +6,7 @@ import {
   scrapeContentOffOfTweet,
 } from "../utils/twitter.api";
 import { createImage } from "../utils/venice.api";
+import { ImageStyle } from "@/lib/types";
 
 const DRY_RUN = process.env.DRY_RUN === "true";
 
@@ -61,21 +62,17 @@ const agentSchedulePosts = async () => {
 
       const scrapedTweets = await scrapeContentOffOfTweet(top10Tweets.tweets);
 
-      const imageResponse = await createImage(randomTrend, scrapedTweets);
+      const imageResponse = await createImage({
+        trend: randomTrend,
+        scrapedTweets,
+        stylePreset: agent.image_style as ImageStyle,
+      });
 
-      if (!agent.character_slug) {
-        console.log("No character slug found for agent");
-        // TODO: Add a log to sentry or some other logger
-        continue;
-      }
-
-      console.log("agent.character_slug: ", agent.character_slug);
-
-      const response = await generateMemeWorthyTweet(
-        agent.character_slug,
+      const response = await generateMemeWorthyTweet({
+        agent,
         randomTrend,
-        scrapedTweets
-      );
+        scrapedTweets,
+      });
 
       console.log("response: ", response);
 

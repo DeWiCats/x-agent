@@ -11,6 +11,8 @@ export async function POST(req: NextRequest) {
   const profileImage = formData.get("profileImage") as File;
   const agentId = formData.get("agentId") as string;
 
+  console.log(profileName, profileImage, agentId);
+
   if (!profileName || !profileImage) {
     return NextResponse.json(
       {
@@ -41,13 +43,21 @@ export async function POST(req: NextRequest) {
   // @ts-ignore
   const scraper = await getScraper(agent.data);
 
-  await scraper.updateProfile({
-    name: profileName,
-  });
+  try {
+    await scraper.updateProfile({
+      name: profileName,
+    });
+  } catch (error) {
+    console.log("error: ", error);
+  }
 
-  await scraper.uploadImage({
-    imageFile: profileImage as File,
-  });
+  try {
+    await scraper.uploadImage({
+      imageFile: profileImage as File,
+    });
+  } catch (error) {
+    console.log("error: ", error);
+  }
 
   const response = NextResponse.json({
     message: "Profile Updated Successfully! 🚀",
