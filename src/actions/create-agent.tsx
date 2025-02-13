@@ -6,7 +6,7 @@ import { createAdminClient, createClient } from "@/utils/supabase/server";
 import { getScraper } from "../utils/scraper.api";
 
 export async function createAgent(formData: AgentFormData) {
-  // console.log(formData);
+  console.log(formData);
   const response: {
     success: boolean;
     error: string | null;
@@ -123,6 +123,8 @@ export async function createAgent(formData: AgentFormData) {
     console.log("RES", res);
   } catch (error) {
     console.log("error: ", error);
+    response.error = "Error uploading image";
+    return response;
   }
 
   await supabase

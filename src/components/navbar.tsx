@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ChevronDown } from "lucide-react";
+// import { ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -15,13 +15,32 @@ import { CreateAgentDrawer } from "@/components/create-agent-drawer";
 import { useUsers } from "@/hooks/useUsers";
 import { createClient } from "@/utils/supabase/client";
 import { useRouter, usePathname } from "next/navigation";
-import CreatingProgressLoader from "./creating-progress-loader";
+import { useAsync } from "react-use";
+import { useState } from "react";
 
 export function Navbar() {
   const { user } = useUsers();
   const supabase = createClient();
   const router = useRouter();
   const pathname = usePathname();
+  const [team, setTeam] = useState<string | null>(null);
+
+  useAsync(async () => {
+    if (!user?.team) {
+      return;
+    }
+
+    const { data, error } = await supabase.from("teams").select("*").eq("id", user?.team);
+    if (error) {
+      console.error(error);
+    }
+
+    console.log(data);
+    if (data) {
+      setTeam(data[0].name);
+    }
+    
+  }, [user?.team]);
 
   if (!user) {
     return null;
@@ -40,16 +59,16 @@ export function Navbar() {
         </Button>
         <Image src="/line.svg" alt="line" width={16} height={16} />
         <DropdownMenu>
-          <DropdownMenuTrigger asChild>
+          {/* <DropdownMenuTrigger asChild> */}
             <Button
               variant="ghost"
               className="text-sline-text-dark-secondary hover:text-sline-text-dark-primary hover:bg-sline-alpha-dark-050 rounded-xl"
             >
-              <span className="font-semibold">DeWiCats</span>
-              <ChevronDown className="h-4 w-4" />
+              <span className="font-semibold">{team}</span>
+              {/* <ChevronDown className="h-4 w-4" /> */}
             </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent className="bg-sline-alpha-dark-050 border-border text-sline-text-dark-primary rounded-xl">
+          {/* </DropdownMenuTrigger> */}
+          {/* <DropdownMenuContent className="bg-sline-alpha-dark-050 border-border text-sline-text-dark-primary rounded-xl">
             <DropdownMenuItem
               onClick={() => router.push("/settings")}
               className="hover:bg-sline-alpha-dark-050 cursor-pointer rounded-lg"
@@ -62,7 +81,7 @@ export function Navbar() {
             >
               Sign Out
             </DropdownMenuItem>
-          </DropdownMenuContent>
+          </DropdownMenuContent> */}
         </DropdownMenu>
       </div>
 
@@ -129,7 +148,6 @@ export function Navbar() {
 
       <div className="flex items-center gap-2">
         <CreateAgentDrawer></CreateAgentDrawer>
-        <CreatingProgressLoader />
         {/* <Button
           variant="ghost"
           size="icon"

@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation";
 import { createClient } from "@/utils/supabase/server";
+import { Navbar } from "@/components/navbar";
 
 export default async function ProtectedLayout({
   children,
@@ -16,5 +17,11 @@ export default async function ProtectedLayout({
     redirect("/sign-in");
   }
 
-  return <>{children}</>;
+  return (
+    <>
+      {" "}
+      <Navbar />
+      {children}
+    </>
+  );
 }

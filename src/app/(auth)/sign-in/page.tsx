@@ -1,4 +1,5 @@
 import { signInAction } from "@/actions/auth";
+import { DemoSignIn } from "@/components/forms/demo-sign-in";
 import { FormMessage, Message } from "@/components/forms/form-message";
 import { SubmitButton } from "@/components/forms/submit-button";
 import { Input } from "@/components/ui/input";
@@ -24,6 +25,7 @@ export default async function Login(props: { searchParams: Promise<Message> }) {
             <p className="text-gray-400 text-sm">
               Enter your email below to create your account
             </p>
+            <DemoSignIn />
           </div>
 
           <div className="space-y-4">

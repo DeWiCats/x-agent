@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { Button } from "./ui/button";
 import { AnimatePresence, motion } from "motion/react";
 
 import {
@@ -8,7 +7,6 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "./ui/dialog";
 import PostCard from "./post-card";
 import { ImageStyle } from "@/lib/types";
@@ -63,7 +61,7 @@ const steps = [
   {
     title: "Creating X account",
     description:
-      "Hold on tight. We’re setting up an X account for your agent to interact under.",
+      "Hold on tight. We're setting up an X account for your agent to interact under.",
     icon: (
       <svg
         width="141"
@@ -119,7 +117,7 @@ const steps = [
   {
     title: "Training your agent",
     description:
-      "Agents need to learn what to do, why and when. We’re showing the way.",
+      "Agents need to learn what to do, why and when. We're showing the way.",
     icon: iconplaceholder,
   },
   {
@@ -186,11 +184,7 @@ export default function CreatingProgressLoader() {
   }, []);
 
   return (
-    // this should be a shadcn dialog with no x button. The dialog should have no background color, the text should be white, only the overlay should have the background color and a filter blur
-    <Dialog>
-      <DialogTrigger asChild>
-        <Button>Create Agent</Button>
-      </DialogTrigger>
+    <Dialog defaultOpen>
       <DialogContent className="bg-transparent border-none shadow-none text-sline-text-dark-primary">
         <DialogHeader className="sr-only">
           <DialogTitle className="text-center">Creating Agent</DialogTitle>
