@@ -1,6 +1,7 @@
 import { createClient } from "@/utils/supabase/server";
 import PostCard from "@/components/post-card";
 import { Database } from "@/types/database.types";
+import { VList } from "virtua";
 
 async function getAgentAndPosts(
   teamId: Database["public"]["Tables"]["teams"]["Row"]["id"],
@@ -54,21 +55,21 @@ export default async function Feed({
   return (
     <div className="h-full max-w-2xl min-w-[672px] mx-auto bg-sline-alpha-dark-050 rounded-t-3xl overflow-hidden relative z-10 border border-border border-b-0">
       <div className="absolute bottom-0 left-0 w-full h-12 z-10 bg-gradient-to-t from-sline-base-surface-1 to-transparent pointer-events-none" />
-      <div className="h-full overflow-auto divide-y divide-border">
-        {!posts ? (
-          <div className="flex justify-center items-center h-full bg-sline-base-surface-1 text-sline-text-dark-primary text-3xl">
-            Loading...
-          </div>
-        ) : posts.length === 0 ? (
-          <div className="flex justify-center items-center h-full bg-sline-base-surface-1 text-sline-text-dark-primary text-3xl">
-            No posts found
-          </div>
-        ) : (
-          posts?.map((post) => (
+      {!posts ? (
+        <div className="flex justify-center items-center h-full bg-sline-base-surface-1 text-sline-text-dark-primary text-3xl">
+          Loading...
+        </div>
+      ) : posts.length === 0 ? (
+        <div className="flex justify-center items-center h-full bg-sline-base-surface-1 text-sline-text-dark-primary text-3xl">
+          No posts found
+        </div>
+      ) : (
+        <VList className="h-full divide-y divide-border">
+          {posts.map((post) => (
             <PostCard key={post.id} post={post} agent={agent} />
-          ))
-        )}
-      </div>
+          ))}
+        </VList>
+      )}
     </div>
   );
 }

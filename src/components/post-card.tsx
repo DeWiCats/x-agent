@@ -2,6 +2,7 @@ import { Tables } from "@/types/database.types";
 import { Badge } from "./ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import Image from "next/image";
+import { imagePlaceholder } from "@/utils/utils";
 
 export default function PostCard({
   post,
@@ -44,25 +45,31 @@ export default function PostCard({
         <p className="text-sline-text-dark-primary">{post.content}</p>
         <div className="text-white space-y-3 flex flex-row gap-4">
           {/* TODO: Get HTML from webscraper */}
-
           {post.media_url && (
             <div className="flex justify-center relative rounded-3xl border border-sline-base-border-alpha aspect-square w-3/4 mx-auto overflow-hidden">
               <Image
                 className="object-cover"
                 src={post.media_url}
                 fill
-                alt={post.media_url || ""}
+                sizes="(max-width: 768px) 100vw, 75vw"
+                loading="lazy"
+                quality={75}
+                alt={`Post image by ${agent.username}`}
+                placeholder={imagePlaceholder}
               />
             </div>
           )}
-
           {post?.media_base64 && !post?.media_url && (
             <div className="flex justify-center relative rounded-3xl border border-sline-base-border-alpha aspect-square w-3/4 mx-auto overflow-hidden">
               <Image
                 className="object-cover"
                 src={`data:image/jpeg;base64,${post.media_base64}`}
-                alt={post.media_base64 || ""}
                 fill
+                sizes="(max-width: 768px) 100vw, 75vw"
+                loading="lazy"
+                quality={75}
+                placeholder={imagePlaceholder}
+                alt={`Post image by ${agent.username}`}
               />
             </div>
           )}
