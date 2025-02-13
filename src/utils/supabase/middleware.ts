@@ -46,8 +46,7 @@ export const updateSession = async (request: NextRequest) => {
     }
 
     return response;
-  } catch (e: any) {
-    /* eslint-disable @typescript-eslint/no-explicit-any */
+  } catch {
     // Supabase client could not be created!
     return NextResponse.next({
       request: {
