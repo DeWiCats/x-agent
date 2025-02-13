@@ -64,9 +64,14 @@ export default async function Feed({
           No posts found
         </div>
       ) : (
-        <VList className="h-full divide-y divide-border">
-          {posts.map((post) => (
-            <PostCard key={post.id} post={post} agent={agent} />
+        <VList className="h-full">
+          {posts.map((post, index) => (
+            <PostCard
+              key={post.id}
+              post={post}
+              agent={agent}
+              className={index === posts.length - 1 ? "" : "border-b border-border"}
+            />
           ))}
         </VList>
       )}

@@ -3,16 +3,19 @@ import { Badge } from "./ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import Image from "next/image";
 import { imagePlaceholder } from "@/utils/utils";
+import { cn } from "@/lib/utils";
 
 export default function PostCard({
   post,
   agent,
+  className,
 }: {
   post: Tables<"posts">;
   agent: Tables<"agents">;
+  className?: string;
 }) {
   return (
-    <article className="p-4 relative">
+    <article className={cn("p-4 relative", className)}>
       <div className="flex flex-col gap-3">
         <div className="flex items-start gap-3">
           <Avatar className="h-10 w-10">
