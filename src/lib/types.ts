@@ -102,3 +102,13 @@ export enum ImageStyle {
   Silhouette = "Silhouette",
   TiltShift = "Tilt-Shift",
 }
+
+export const MODEL_OPTIONS = [
+  "llama-3.3-70b",
+  "llama-3.2-3b",
+  "llama-3.1-405b",
+  "qwen32b",
+  "deepseek-r1-llama-70b",
+  "deepseek-r1-671b",
+  "dolphin-2.9.2-qwen2-72b",
+] as const;

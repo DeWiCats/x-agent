@@ -26,8 +26,8 @@ import { X, Info } from "lucide-react";
 import { useState } from "react";
 import Image from "next/image";
 import { createAgent } from "@/actions/create-agent";
-import { AgentFormData } from "@/lib/types";
 import { useAsync } from "react-use";
+import { AgentFormData, MODEL_OPTIONS } from "@/lib/types";
 
 export function CreateAgentDrawer() {
   const [open, setOpen] = useState(false);
@@ -66,8 +66,8 @@ export function CreateAgentDrawer() {
     field: string,
     value: string | number | boolean | File
   ) => {
-    console.log(field, value);
-    console.log(formData);
+    // console.log(field, value);
+    // console.log(formData);
     setFormData((prev) => ({
       ...prev,
       [field]: value,
@@ -477,22 +477,20 @@ export function CreateAgentDrawer() {
                           <Info className="h-4 w-4 text-zinc-400" />
                         </div>
                         <Select
-                          value={formData.model}
-                          onValueChange={(value) =>
-                            handleInputChange("model", value)
-                          }
-                        >
-                          <SelectTrigger className="bg-zinc-800 border-transparent text-white">
-                            <SelectValue placeholder="Select model" />
-                          </SelectTrigger>
-                          <SelectContent className="bg-zinc-800 border-zinc-700">
-                            {["Llama 3.3", "GPT-4o"].map((model) => (
-                              <SelectItem key={model} value={model}>
-                                {model}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
+                        value={formData.model}
+                        onValueChange={(value) => handleInputChange('model', value)}
+                      >
+                        <SelectTrigger className="bg-zinc-800 border-transparent text-white">
+                          <SelectValue placeholder="Select model" />
+                        </SelectTrigger>
+                        <SelectContent className="bg-zinc-800 border-zinc-700">
+                          {MODEL_OPTIONS.map((model) => (
+                            <SelectItem key={model} value={model}>
+                              {model}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
                       </div>
                     </div>
                   </div>

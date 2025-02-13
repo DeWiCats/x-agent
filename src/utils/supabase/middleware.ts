@@ -31,7 +31,7 @@ export async function updateSession(request: NextRequest) {
   const { data } = await supabase.auth.getUser()
 
   console.log(request.url);
-  console.log(data.user);
+  // console.log(data.user);
 
   if (!data.user && (!request.url.includes('/login') && !request.url.includes('/api/auth/confirm'))) {
     console.log('redirecting to login');
