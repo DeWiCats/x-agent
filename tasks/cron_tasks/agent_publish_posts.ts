@@ -40,14 +40,12 @@ const agentPublishPosts = async () => {
 
       // donwload image from url
       const mediaResponse = await fetch(agent.posts[0].media_url);
-      const media = await mediaResponse.json();
-      const { data, error }: { data: Blob; error: Error } = media;
-
-      if (!data || error) {
-        console.log("Error downloading image");
-        // TODO: Add a log to sentry or some other logger
-        continue;
+      if (!mediaResponse.ok) {
+        throw new Error(
+          `Failed to download image: ${mediaResponse.statusText}`
+        );
       }
+      const imageBlob = await mediaResponse.blob();
 
       if (!agent.posts[0].content) {
         console.log("No content found for post");
@@ -55,7 +53,7 @@ const agentPublishPosts = async () => {
         continue;
       }
 
-      const arrayBuffer = await data.arrayBuffer();
+      const arrayBuffer = await imageBlob.arrayBuffer();
 
       const imageBuffer = Buffer.from(arrayBuffer);
 
@@ -70,12 +68,26 @@ const agentPublishPosts = async () => {
           },
         ]
       );
+      const res = await response.json();
 
-      if (response) {
+      if (res) {
+        const {
+          data: {
+            create_tweet: {
+              tweet_results: { result },
+            },
+          },
+        } = res;
+
+        const { rest_id } = result;
+        const xUrl = `https://x.com/${agent.accounts.username}/status/${rest_id}`;
+
         await supabase
           .from("posts")
           .update({
+            id: rest_id,
             status: "published",
+            x_url: xUrl,
           })
           .eq("id", agent.posts[0].id);
         // update last posted date

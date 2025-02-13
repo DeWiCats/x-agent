@@ -148,6 +148,7 @@ export async function POST(req: NextRequest) {
   } = res;
 
   const { rest_id } = result;
+
   const xUrl = `https://x.com/${agent.data.accounts.username}/status/${rest_id}`;
 
   await supabase.from("posts").insert({

@@ -79,7 +79,7 @@ const agentSchedulePosts = async () => {
       });
 
       const { error } = await supabase.storage
-        .from("avatars")
+        .from("images")
         .upload(uploadPath, imageFile, {
           cacheControl: "3600",
           upsert: false,
@@ -93,15 +93,13 @@ const agentSchedulePosts = async () => {
 
       const {
         data: { publicUrl },
-      } = supabase.storage.from("avatars").getPublicUrl(uploadPath);
+      } = supabase.storage.from("images").getPublicUrl(uploadPath);
 
       const response = await generateMemeWorthyTweet({
         agent,
         tweetContext: randomTrend,
         scrapedTweets,
       });
-
-      console.log("response: ", response);
 
       if (response) {
         // We need to schedule the post
@@ -112,6 +110,7 @@ const agentSchedulePosts = async () => {
             media_url: publicUrl,
             status: "scheduled",
             score: response.score,
+            timestamp: new Date().getTime(),
           });
         }
         console.log("Tweet Scheduled 📝");
