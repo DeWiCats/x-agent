@@ -91,10 +91,6 @@ export function Navbar() {
     }
   }, [user?.team]);
 
-  if (!user) {
-    return null;
-  }
-
   async function signOut(): Promise<void> {
     await supabase.auth.signOut();
     router.push("/sign-in");
@@ -227,7 +223,7 @@ export function Navbar() {
           <DropdownMenuTrigger>
             <Avatar className="h-8 w-8">
               <AvatarImage
-                src={user.avatar_url || "/default-avatar.png"}
+                src={user?.avatar_url || "/default-avatar.png"}
                 alt="User avatar"
               />
               <AvatarFallback>U</AvatarFallback>

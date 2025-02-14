@@ -49,10 +49,10 @@ export default async function Login(props: { searchParams: Promise<Message> }) {
               >
                 Send Magic Link
               </SubmitButton>
-              <DemoSignIn />
 
               <FormMessage message={searchParams} />
             </form>
+            <DemoSignIn />
           </div>
 
           {/* <div className="relative">
