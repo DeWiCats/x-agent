@@ -6,6 +6,7 @@ import { Clock } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function AgentCard({ agent }: { agent: any }) {
   const [isOpen, setIsOpen] = useState(false);
 
