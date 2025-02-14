@@ -18,11 +18,27 @@ export const generateMemeWorthyTweet = async ({
   let attempts = 0;
   const prompt = `You are a social media expert crafting viral tweets. Create an engaging tweet about: ${tweetContext}
 
-  ${agent.context ? `Personality Context (only use if it exists): "${agent.context}"` : ""}
-  ${agent.fact_check_threshold ? `Fact check threshold: ${agent.fact_check_threshold}%` : ""}
+  ${
+    agent.context
+      ? `Personality Context (only use if it exists): "${agent.context}"`
+      : ""
+  }
+  ${
+    agent.fact_check_threshold
+      ? `Fact check threshold: ${agent.fact_check_threshold}%`
+      : ""
+  }
   ${agent.tone ? `Tone - Casual (100%) to Formal (0%): ${agent.tone}%` : ""}
-  ${agent.style ? `Style - Shitposting (100%) to Analytical (0%): ${agent.style}%` : ""}
-  ${agent.stance ? `Stance - Controversial (100%) to Neutral (0%): ${agent.stance}%` : ""}
+  ${
+    agent.style
+      ? `Style - Shitposting (100%) to Analytical (0%): ${agent.style}%`
+      : ""
+  }
+  ${
+    agent.stance
+      ? `Stance - Controversial (100%) to Neutral (0%): ${agent.stance}%`
+      : ""
+  }
 
 ${
   scrapedTweets

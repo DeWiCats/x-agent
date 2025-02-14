@@ -1,36 +1,154 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# SlineAI 🤖
 
-## Getting Started
+SlineAI is an intelligent social media management platform that lets you create and manage AI-powered Twitter agents. Each agent can be customized with unique personalities, posting styles, and engagement patterns to maintain an authentic and engaging social media presence.
 
-First, run the development server:
+![SlineAI Banner](public/banner.png)
+
+## ✨ Features
+
+- 🤖 **AI Agents**: Create multiple agents with distinct personalities and posting styles
+- 📊 **Smart Scheduling**: Automated post scheduling based on optimal engagement times
+- 🎯 **Content Generation**: AI-powered content creation using advanced language models
+- 🖼️ **Image Generation**: Create engaging visual content with AI image generation
+- 📈 **Performance Analytics**: Track your agents' engagement and growth
+- 🔄 **Multi-Account Management**: Manage multiple Twitter accounts from one dashboard
+- 🎭 **Character Customization**: Define your agent's tone, style, and ethical boundaries
+- 🚀 **Coming Soon**: Agent Marketplace for discovering and sharing successful agents
+
+## 🏗️ Architecture
+
+### Tech Stack
+
+- **Frontend**: Next.js 14 (App Router), React, TypeScript
+- **Backend**: Supabase (PostgreSQL, Authentication, Storage)
+- **AI Services**: Venice.ai (LLM & Image Generation)
+- **Styling**: Tailwind CSS, Shadcn/ui
+- **State Management**: React Context
+- **Deployment**: Vercel
+
+### System Components
+
+```mermaid
+graph TD
+    A[Web Interface] --> B[Next.js App Router]
+    B --> C[Supabase Backend]
+    B --> D[Venice.ai API]
+    C --> E[(PostgreSQL Database)]
+    C --> F[File Storage]
+    D --> G[LLM Models]
+    D --> H[Image Generation]
+
+    %% Cron Tasks
+    I[Schedule Posts Cron] --> C
+    I --> D
+    I --> F
+    J[Publish Posts Cron] --> C
+    J --> K[Twitter API]
+
+    %% Additional relationships
+    F --> J
+    E --> I
+    E --> J
+```
+
+### Database Schema
+
+- **agents**: Stores agent configurations and personalities
+- **accounts**: Manages Twitter account credentials
+- **posts**: Tracks all posts and their performance metrics
+- **teams**: Organizes agents into team groupings
+- **users**: Manages platform users and their preferences
+
+### How creating a Post works
+
+- When an agent is ready to schedule a post, the scheduling cron job:
+  - Generates content using Venice.ai's LLM models with cross-model synergy:
+    - Uses `llama-3.3-70b` to generate initial tweet content based on trend context
+    - Passes initial content through `deepseek-r1-671b` for refinement and optimization
+      - This second model enhances the content while maintaining the original intent
+      - Creates a more nuanced and engaging final tweet through combined model strengths
+    - Scores the refined tweet quality (0-100) based on:
+      - Engagement potential (40 points): likes, retweets, replies, view times
+      - Content quality (30 points): authenticity, cultural fit, media usage
+      - Risk factors (30 points): platform safety, algorithmic penalties
+    - Retries the entire dual-model generation process up to 3 times if score is below 75
+      - Keeps the highest-scoring version across all attempts
+
+## 🚀 Getting Started
+
+1. Clone the repository:
+
+```bash
+git clone https://github.com/yourusername/sline-ai.git
+cd sline-ai
+```
+
+2. Install dependencies:
+
+```bash
+npm install
+```
+
+3. Set up environment variables:
+
+```bash
+cp .env.example .env.local
+```
+
+4. Configure your environment variables:
+
+```bash
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+VENICE_TOKEN=your_venice_token
+```
+
+5. Run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+6. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 📦 Project Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
+sline-ai/
+├── src/
+│   ├── app/              # Next.js app router pages
+│   ├── components/       # React components
+│   ├── hooks/           # Custom React hooks
+│   ├── lib/             # Utility functions and types
+│   └── utils/           # Helper functions
+├── tasks/               # Cron tasks for agent operations
+│   ├── cron_tasks/      # Scheduled task definitions
+│   └── utils/           # Task utility functions
+├── public/             # Static assets
+└── types/              # TypeScript type definitions
+```
 
-## Learn More
+## 🤝 Contributing
 
-To learn more about Next.js, take a look at the following resources:
+We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 📄 License
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## Deploy on Vercel
+## 🔮 Roadmap
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- [ ] Agent Marketplace
+- [ ] Advanced Analytics Dashboard
+- [ ] AI-Powered Engagement Optimization
+- [ ] Cross-Platform Support
+- [ ] Custom Agent Training
+- [ ] Community Features
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🙋‍♂️ Support
+
+For support, please open an issue in the GitHub repository or contact our support team at support@sline.ai.
+
+---
+
+Built with ❤️ by the SlineAI Team
