@@ -23,12 +23,15 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Switch } from "@/components/ui/switch";
 import { Slider } from "@/components/ui/slider";
 import { X, Info } from "lucide-react";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Image from "next/image";
 import { createAgent } from "@/actions/create-agent";
 import { useAsync } from "react-use";
 import { AgentFormData, MODEL_OPTIONS } from "@/lib/types";
 import CreatingProgressLoader from "./creating-progress-loader";
+import GenerativeLoader from "./generative-loader";
+import { AnimatePresence, motion } from "motion/react";
+import { cn } from "@/lib/utils";
 
 export function CreateAgentDrawer() {
   const [open, setOpen] = useState(false);
@@ -36,6 +39,7 @@ export function CreateAgentDrawer() {
   const [showProgressLoader, setShowProgressLoader] = useState(false);
   const [isAdvancedMode, setIsAdvancedMode] = useState(false);
   const [activeTab, setActiveTab] = useState("general");
+  const [generatingAgentImage, setGeneratingAgentImage] = useState(false);
 
   const [formData, setFormData] = useState<AgentFormData>({
     // General tab
@@ -159,6 +163,46 @@ export function CreateAgentDrawer() {
     }
   };
 
+  const handleGenerateImage = async () => {
+    const enhancements = process.env.NEXT_PUBLIC_IMAGE_ENHANCEMENT_P;
+    setGeneratingAgentImage(true);
+    try {
+      // Generate image
+      const response = await fetch("/api/venice/images/generate", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          "model": "flux-dev",
+          prompt: `\nA professional profile picture for an AI agent named ${formData.name}. Description\n${formData.description}`,
+        }),
+      });
+
+      const data = await response.json();
+      if (!response.ok)
+        throw new Error(data.error || "Failed to generate image");
+
+      console.log("GENERATED IMAGE - ", data.images[0]);
+
+      if (previewImageRef.current) {
+        // base 64 image
+        previewImageRef.current.src = `data:image/png;base64,${data.images[0]}`;
+        previewImageRef.current.style.display = "block";
+      }
+      if (placeholderRef.current) {
+        placeholderRef.current.style.display = "none";
+      }
+    } catch (error) {
+      console.error("Failed to generate image:", error);
+    } finally {
+      setGeneratingAgentImage(false);
+    }
+  };
+
+  const previewImageRef = useRef<HTMLImageElement>(null);
+  const placeholderRef = useRef<SVGSVGElement>(null);
+
   return (
     <>
       <Sheet open={open} onOpenChange={setOpen}>
@@ -270,46 +314,88 @@ export function CreateAgentDrawer() {
                     className="mt-4 focus-visible:outline-none focus-visible:ring-0"
                   >
                     <div className="space-y-6 px-4">
-                      <div className="mx-auto w-32 h-32 bg-sline-alpha-dark-050 border border-border rounded-lg flex items-center justify-center relative">
+                      <div
+                        className={cn(
+                          !generatingAgentImage && "bg-sline-alpha-dark-050",
+                          generatingAgentImage && "animate-pulse",
+                          "mx-auto w-32 h-32 border  border-border rounded-xl flex items-center justify-center relative"
+                        )}
+                      >
                         <input
                           type="file"
                           accept="image/*"
                           className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
                           onChange={handleImageChange}
                         />
-                        <Image
-                          id="preview"
-                          className="w-full h-full object-cover rounded-lg"
-                          style={{ display: "none" }}
-                          alt="Preview"
-                          src="/SlineLogo.svg"
-                          width={128}
-                          height={128}
-                        />
-                        <svg
-                          id="placeholder"
-                          className="text-zinc-600"
-                          width="48"
-                          height="48"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        >
-                          <rect
-                            width="18"
-                            height="18"
-                            x="3"
-                            y="3"
-                            rx="2"
-                            ry="2"
-                          />
-                          <circle cx="9" cy="9" r="2" />
-                          <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21" />
-                        </svg>
+                        <AnimatePresence mode="wait">
+                          {generatingAgentImage ? (
+                            <motion.div
+                              key="loader"
+                              initial={{ opacity: 0, scale: 0.95, y: 10 }}
+                              animate={{ opacity: 1, scale: 1, y: 0 }}
+                              exit={{ opacity: 0, scale: 0.95, y: -10 }}
+                              className="absolute inset-0 flex items-center justify-center"
+                            >
+                              <GenerativeLoader />
+                              <div className="absolute inset-0 flex items-center justify-center scale-110">
+                                <GenerativeLoader />
+                              </div>
+                              <div className="absolute inset-0 flex items-center justify-center scale-[.95]">
+                                <GenerativeLoader />
+                              </div>
+                            </motion.div>
+                          ) : (
+                            <motion.div
+                              key="preview"
+                              initial={{ opacity: 0, scale: 0.95, y: 10 }}
+                              animate={{ opacity: 1, scale: 1, y: 0 }}
+                              exit={{ opacity: 0, scale: 0.95, y: -10 }}
+                              className="w-full h-full flex items-center justify-center"
+                            >
+                              <Image
+                                ref={previewImageRef}
+                                style={{ display: "none" }}
+                                className="w-full h-full object-cover rounded-lg"
+                                alt="Preview"
+                                src="/SlineLogo.svg"
+                                width={200}
+                                height={200}
+                              />
+                              <svg
+                                ref={placeholderRef}
+                                id="placeholder"
+                                className="text-zinc-600"
+                                width="48"
+                                height="48"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                              >
+                                <rect
+                                  width="18"
+                                  height="18"
+                                  x="3"
+                                  y="3"
+                                  rx="2"
+                                  ry="2"
+                                />
+                                <circle cx="9" cy="9" r="2" />
+                                <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21" />
+                              </svg>
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
                       </div>
+                      <Button
+                        variant="outline"
+                        className="bg-sline-alpha-dark-050 border-transparent rounded-xl text-sline-text-dark-secondary hover:bg-sline-alpha-dark-100"
+                        onClick={handleGenerateImage}
+                      >
+                        Generate image
+                      </Button>
                       <div className="space-y-4">
                         {["name"].map((field) => (
                           <div key={field} className="space-y-2">

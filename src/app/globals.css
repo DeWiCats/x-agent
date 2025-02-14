@@ -558,3 +558,130 @@ body::after {
   scrollbar-width: thin;
   scrollbar-color: hsla(var(--sline-colors-alpha-dark-200)) transparent;
 }
+
+/* Loading Animation */
+
+.loading-container {
+  position: relative;
+  width: 42px;
+  height: 42px;
+}
+
+.ring {
+  width: 100%;
+  height: 100%;
+  /* All rings stack on top of each other at 0,0 */
+  position: absolute;
+  inset: 0;
+
+  border-radius: 50%;
+  background: conic-gradient(
+    #7b89ff 0%,
+    #89b9ff 25%,
+    #7b89ff 50%,
+    #9f89ff 75%,
+    #7b89ff 100%
+  );
+
+  /*
+ * The mask “carves out” a hole in the middle,
+ * leaving only a border of <X> px visible.
+ * (Safari/Chrome use `-webkit-mask`; Firefox/others just `mask`.)
+ */
+  -webkit-mask: radial-gradient(
+    farthest-side,
+    transparent calc(100% - 10px),
+    black calc(100% - 10px)
+  );
+  mask: radial-gradient(
+    farthest-side,
+    transparent calc(100% - 10px),
+    black calc(100% - 10px)
+  );
+}
+
+/* XL ring: largest border & biggest blur */
+.ring-xl {
+  /* We carve out 10px in the mask. Feel free to adjust “calc(100% - 10px)” above too */
+  -webkit-mask: radial-gradient(
+    farthest-side,
+    transparent calc(100% - 10px),
+    black calc(100% - 10px)
+  );
+  mask: radial-gradient(
+    farthest-side,
+    transparent calc(100% - 10px),
+    black calc(100% - 10px)
+  );
+  z-index: 4;
+}
+
+/* L ring: 7px border, a bit less blur */
+.ring-l {
+  -webkit-mask: radial-gradient(
+    farthest-side,
+    transparent calc(100% - 7px),
+    black calc(100% - 7px)
+  );
+  mask: radial-gradient(
+    farthest-side,
+    transparent calc(100% - 7px),
+    black calc(100% - 7px)
+  );
+  z-index: 3;
+}
+
+/* M ring: 5px border, smaller blur */
+.ring-m {
+  -webkit-mask: radial-gradient(
+    farthest-side,
+    transparent calc(100% - 5px),
+    black calc(100% - 5px)
+  );
+  mask: radial-gradient(
+    farthest-side,
+    transparent calc(100% - 5px),
+    black calc(100% - 5px)
+  );
+  z-index: 2;
+}
+
+/* S ring: 2px border, minimal blur */
+.ring-s {
+  -webkit-mask: radial-gradient(
+    farthest-side,
+    transparent calc(100% - 2px),
+    black calc(100% - 2px)
+  );
+  mask: radial-gradient(
+    farthest-side,
+    transparent calc(100% - 2px),
+    black calc(100% - 2px)
+  );
+  z-index: 1;
+}
+
+.ring-xl-container {
+  position: absolute;
+  inset: 0;
+  filter: blur(20px);
+}
+.ring-l-container {
+  position: absolute;
+  inset: 0;
+  filter: blur(10px);
+}
+.ring-m-container {
+  position: absolute;
+  inset: 0;
+  filter: blur(4px);
+}
+.ring-s-container {
+  position: absolute;
+  inset: 0;
+  filter: blur(2px);
+}
+
+body {
+  background: black;
+}
