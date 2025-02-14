@@ -73,7 +73,7 @@ export const createImage = async ({
       width: 1080,
       safe_mode: true,
       hide_watermark: true,
-      style_preset: stylePreset,
+      ...(stylePreset ? { style_preset: stylePreset } : {}),
     }),
   };
 

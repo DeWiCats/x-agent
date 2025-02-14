@@ -14,11 +14,18 @@ export default function Settings() {
   const supabase = createClient();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
-  const [userData, setUserData] = useState({
+  const [userData, setUserData] = useState<{
+    username: string;
+    email: string;
+    about: string;
+    avatar_url: string;
+    file: File | null;
+  }>({
     username: "",
     email: "",
     about: "",
     avatar_url: "",
+    file: null,
   });
 
   useEffect(() => {
@@ -42,6 +49,7 @@ export default function Settings() {
             email: data.email || "",
             about: data.about || "",
             avatar_url: data.avatar_url || "",
+            file: null,
           });
         }
       } catch (error) {
@@ -60,12 +68,35 @@ export default function Settings() {
       } = await supabase.auth.getUser();
       if (!user) throw new Error("No user found");
 
+      if (!userData.file) throw new Error("No file found");
+
+      const uploadPath = `users/${user.id}/avatar.png`;
+
+      const { error: uploadError } = await supabase.storage
+        .from("images")
+        .upload(uploadPath, userData.file, {
+          cacheControl: "3600",
+          upsert: true,
+        });
+
+      if (uploadError) {
+        console.log("Error uploading image: ", uploadError);
+        // TODO: Add a log to sentry or some other logger
+        throw uploadError;
+      }
+
+      console.log("Got publicUrl");
+
+      const {
+        data: { publicUrl },
+      } = supabase.storage.from("images").getPublicUrl(uploadPath);
+
       const { error } = await supabase
         .from("users")
         .update({
-          username: userData.username,
-          about: userData.about,
-          avatar_url: userData.avatar_url,
+          ...(userData.username ? { username: userData.username } : {}),
+          ...(userData.about ? { about: userData.about } : {}),
+          ...(userData.avatar_url ? { avatar_url: publicUrl } : {}),
         })
         .eq("id", user.id);
 
@@ -122,6 +153,7 @@ export default function Settings() {
                         setUserData((prev) => ({
                           ...prev,
                           avatar_url: e?.target?.result as string,
+                          file,
                         }));
                       }
                     };

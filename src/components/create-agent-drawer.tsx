@@ -164,7 +164,7 @@ export function CreateAgentDrawer() {
       <Sheet open={open} onOpenChange={setOpen}>
         <SheetTrigger asChild>
           <Button
-            variant={window?.innerWidth >= 768 ? "ghost" : "default"}
+            variant={"ghost"}
             className="text-sline-text-dark-secondary hover:text-sline-text-dark-primary hover:bg-sline-alpha-dark-050 rounded-xl md:text-base text-lg md:font-normal font-medium m-0 p-0 md:p-3"
           >
             Create an agent
