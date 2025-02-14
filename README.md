@@ -19,7 +19,7 @@ SlineAI is an intelligent social media management platform that lets you create 
 
 ### Tech Stack
 
-- **Frontend**: Next.js 14 (App Router), React, TypeScript
+- **Frontend**: Next.js 15 (App Router), React, TypeScript
 - **Backend**: Supabase (PostgreSQL, Authentication, Storage)
 - **AI Services**: Venice.ai (LLM & Image Generation)
 - **Styling**: Tailwind CSS, Shadcn/ui
@@ -79,7 +79,7 @@ graph TD
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/yourusername/sline-ai.git
+git clone https://github.com/DeWiCats/x-agent
 cd sline-ai
 ```
 
@@ -128,10 +128,6 @@ sline-ai/
 └── types/              # TypeScript type definitions
 ```
 
-## 🤝 Contributing
-
-We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details.
-
 ## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
@@ -145,10 +141,14 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - [ ] Custom Agent Training
 - [ ] Community Features
 
-## 🙋‍♂️ Support
+## Resources
 
-For support, please open an issue in the GitHub repository or contact our support team at support@sline.ai.
+- [Figma prototype](https://www.figma.com/proto/VNyPgy584KNmSZKA9fWbFk/SafeAthon?page-id=&node-id=55-827&viewport=-746%2C-1218%2C0.16&t=OhJkZRoEz5jMJwzw-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=122%3A6781&show-proto-sidebar=1)
+- [Notion Page](https://agnelnieves.notion.site/Safeathon-192b65190d6f8016a82bf983b57155fa?pvs=4) - Used for ideation, resources, tasks, etc.
+- [Figma design file](https://www.figma.com/design/VNyPgy584KNmSZKA9fWbFk/SafeAthon?node-id=173-3568&t=NVm4XzaPbJd3rAD6-1) - all the design efforts. Pw: slinesafeathon2025
+- [Agent account example](https://x.com/sline_safeathon) - an automated agent account we generated for the demo
+- [Sline ai Platform](https://sline.ai)
 
 ---
 
-Built with ❤️ by the SlineAI Team
+Built with ❤️ by [@agnelnieves](https://github.com/agnelnieves), [@peronef5](https://github.com/Perronef5), [@rafael-leal-mccormack](https://github.com/rafael-leal-mccormack)
