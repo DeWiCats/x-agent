@@ -11,54 +11,58 @@ export default async function Login(props: { searchParams: Promise<Message> }) {
   const searchParams = await props.searchParams;
   return (
     <>
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="w-full max-w-[400px] space-y-6">
-          <div className="text-center space-y-2">
+      <div className="min-h-screen flex items-center justify-center p-4">
+        <div className="w-full max-w-[400px] space-y-8 md:space-y-6">
+          <div className="text-center space-y-3 md:space-y-2">
             <Image
-              src="/Slinelogo.svg"
+              src="/SlineLogo.svg"
               alt="Logo"
               width={48}
               height={48}
               className="mx-auto"
             />
             <h1 className="text-2xl font-semibold text-white">Welcome</h1>
-            <p className="text-gray-400 text-sm">
+            <p className="text-gray-400 text-sm px-4 md:px-0">
               Enter your email below to create your account
             </p>
-            <DemoSignIn />
           </div>
 
-          <div className="space-y-4">
-            <form className="flex flex-col gap-4" action={signInAction}>
+          <div className="space-y-6 md:space-y-4">
+            <form
+              className="flex flex-col gap-6 md:gap-4"
+              action={signInAction}
+            >
               <div className="flex flex-col gap-2">
-                <Label htmlFor="email">Email</Label>
+                <Label className="text-white opacity-75" htmlFor="email">
+                  Email
+                </Label>
                 <Input
-                  className="bg-gray-800/50 border-gray-700 text-white placeholder:text-gray-500"
+                  className="bg-gray-800/50 border-gray-700 text-white placeholder:text-gray-500 h-12 md:h-10"
                   name="email"
                   placeholder="you@example.com"
                   required
                 />
               </div>
               <SubmitButton
-                className="w-full bg-blue-500 hover:bg-blue-600 text-white"
+                className="w-full bg-blue-500 hover:bg-blue-600 text-white h-12 md:h-10 text-base md:text-sm"
                 pendingText="Sending magic link..."
               >
                 Send Magic Link
               </SubmitButton>
+              <DemoSignIn />
+
               <FormMessage message={searchParams} />
             </form>
           </div>
 
-          <div className="relative">
+          {/* <div className="relative">
             <div className="absolute inset-0 flex items-center">
               <div className="w-full border-t border-gray-700"></div>
             </div>
             <div className="relative flex justify-center text-xs uppercase">
-              <span className="bg-black px-2 text-gray-400">
-                Or continue with
-              </span>
+              <span className="px-2 text-gray-400">Or continue with</span>
             </div>
-          </div>
+          </div> */}
 
           <div className="space-y-3">
             {/* <Button
@@ -112,7 +116,7 @@ export default async function Login(props: { searchParams: Promise<Message> }) {
             </Button> */}
           </div>
 
-          <div className="text-center text-xs text-gray-400">
+          <div className="text-center text-xs text-gray-400 px-4 md:px-0">
             By clicking continue, you agree to our{" "}
             <Link href="#" className="hover:text-gray-300 underline">
               Terms of Service

@@ -47,8 +47,7 @@ export function CreateAgentDrawer() {
     tags: "",
 
     // Instructions tab
-    engagementHooks:
-      `- Must feel authentic and conversational, like a real person tweeting
+    engagementHooks: `- Must feel authentic and conversational, like a real person tweeting
 - Include one or more: humor, wit, relatable content, hot takes, or thought-provoking insights
 - Optimize for high engagement metrics (likes, retweets, replies)
 - Consider using emojis strategically (optional)
@@ -58,16 +57,14 @@ export function CreateAgentDrawer() {
 - Should spark emotion or discussion
 - Must pass Twitter's quality filters and avoid spam patterns
 - Your tweet should fit naturally with the context of the example tweets above`,
-    engagementRules:
-      `- Write in a casual, natural voice
+    engagementRules: `- Write in a casual, natural voice
 - Use short, punchy sentences
 - Create intrigue or curiosity
 - Consider adding a hook or unexpected twist
 - Make it easily shareable/relatable
 - Avoid corporate or formal language
 - Match the tone and style of the example tweets where appropriate`,
-    ethicalBoundaries:
-      `DO NOT:
+    ethicalBoundaries: `DO NOT:
 - Use obvious clickbait
 - Include links
 - Mention tokens/tickers
@@ -81,8 +78,7 @@ export function CreateAgentDrawer() {
     stance: 50,
 
     // Context tab
-    context:
-      "",
+    context: "",
 
     // Settings tab
     isPublic: true,
@@ -168,8 +164,8 @@ export function CreateAgentDrawer() {
       <Sheet open={open} onOpenChange={setOpen}>
         <SheetTrigger asChild>
           <Button
-            variant="ghost"
-            className="text-sline-text-dark-secondary hover:text-sline-text-dark-primary hover:bg-sline-alpha-dark-050 rounded-xl"
+            variant={window?.innerWidth >= 768 ? "ghost" : "default"}
+            className="text-sline-text-dark-secondary hover:text-sline-text-dark-primary hover:bg-sline-alpha-dark-050 rounded-xl md:text-base text-lg md:font-normal font-medium m-0 p-0 md:p-3"
           >
             Create an agent
           </Button>
@@ -246,7 +242,11 @@ export function CreateAgentDrawer() {
                     <X className="h-4 w-4 text-sline-text-dark-secondary" />
                   </SheetClose>
                 </div>
-                <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+                <Tabs
+                  value={activeTab}
+                  onValueChange={setActiveTab}
+                  className="w-full"
+                >
                   <TabsList className="w-full justify-start gap-6 h-auto p-0 rounded-none border-b border-sline-base-border-alpha">
                     {[
                       "general",

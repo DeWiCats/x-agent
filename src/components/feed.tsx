@@ -70,7 +70,9 @@ export default async function Feed({
               key={post.id}
               post={post}
               agent={agent}
-              className={index === posts.length - 1 ? "" : "border-b border-border"}
+              className={
+                index === posts.length - 1 ? "" : "border-b border-border"
+              }
             />
           ))}
         </VList>

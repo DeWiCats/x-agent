@@ -1,11 +1,11 @@
-"use client"
+"use client";
 
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
-import Image from "next/image"
-import Link from "next/link"
-import { createClient } from "@/utils/supabase/client"
-import { useRef, useState } from "react"
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import Image from "next/image";
+import Link from "next/link";
+import { createClient } from "@/utils/supabase/client";
+import { useRef, useState } from "react";
 
 export default function AuthPage() {
   const supabase = createClient();
@@ -16,14 +16,16 @@ export default function AuthPage() {
       <div className="w-full max-w-[400px] space-y-6">
         <div className="text-center space-y-2">
           <Image
-            src="/Slinelogo.svg"
+            src="/SlineLogo.svg"
             alt="Logo"
             width={48}
             height={48}
             className="mx-auto"
           />
           <h1 className="text-2xl font-semibold text-white">Welcome</h1>
-          <p className="text-gray-400 text-sm">Enter your email below to create your account</p>
+          <p className="text-gray-400 text-sm">
+            Enter your email below to create your account
+          </p>
         </div>
 
         <div className="space-y-4">
@@ -33,21 +35,27 @@ export default function AuthPage() {
             ref={inputEl}
             className="bg-gray-800/50 border-gray-700 text-white placeholder:text-gray-500"
           />
-          <Button disabled={loading} className="w-full bg-blue-500 hover:bg-blue-600 text-white" onClick={async () => {
-            const { error } = await supabase.auth.signInWithOtp({
-              email: inputEl.current?.value ?? "",
-              options: {
-                emailRedirectTo: `${window.location.origin}/feed`,
-              },
-            });
+          <Button
+            disabled={loading}
+            className="w-full bg-blue-500 hover:bg-blue-600 text-white"
+            onClick={async () => {
+              const { error } = await supabase.auth.signInWithOtp({
+                email: inputEl.current?.value ?? "",
+                options: {
+                  emailRedirectTo: `${window.location.origin}/feed`,
+                },
+              });
 
-            // add a loading state
-            setLoading(true);
+              // add a loading state
+              setLoading(true);
 
-            if (error) {
-              console.error(error);
-            }
-          }}>Sign In with Email</Button>
+              if (error) {
+                console.error(error);
+              }
+            }}
+          >
+            Sign In with Email
+          </Button>
         </div>
 
         <div className="relative">
@@ -55,7 +63,9 @@ export default function AuthPage() {
             <div className="w-full border-t border-gray-700"></div>
           </div>
           <div className="relative flex justify-center text-xs uppercase">
-            <span className="bg-black px-2 text-gray-400">Or continue with</span>
+            <span className="bg-black px-2 text-gray-400">
+              Or continue with
+            </span>
           </div>
         </div>
 
@@ -124,6 +134,5 @@ export default function AuthPage() {
         </div>
       </div>
     </div>
-  )
+  );
 }
-

@@ -78,16 +78,47 @@ export default function CustomPostButton({
     <>
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogTrigger asChild>
-          <Button
-            className="fixed bottom-4 right-4 rounded-2xl w-12 h-12 bg-sline-alpha-dark-050 hover:bg-sline-alpha-dark-100 text-sline-text-dark-primary shadow-lg"
-            onClick={() => setIsOpen(true)}
-          >
-            <PlusCircle className="size-6" />
-          </Button>
+          <div className="group fixed bottom-4 right-4 z-50">
+            <Button
+              className="rounded-2xl w-12 h-12 
+                bg-sline-alpha-dark-100 hover:bg-sline-alpha-dark-200 
+                text-sline-text-dark-primary shadow-lg
+                hover:scale-105 transition-transform duration-200
+                md:bg-sline-alpha-dark-050 md:hover:bg-sline-alpha-dark-100"
+              onClick={() => setIsOpen(true)}
+            >
+              <PlusCircle className="size-6 animate-pulse" />
+            </Button>
+            <div
+              className="absolute bottom-full right-0 mb-2 
+              opacity-0 group-hover:opacity-100 transition-opacity duration-200
+              pointer-events-none"
+            >
+              <div
+                className="bg-sline-base-surface-1 text-sline-text-dark-primary 
+                px-3 py-1.5 rounded-lg shadow-lg text-sm whitespace-nowrap
+                border border-sline-base-border-alpha"
+              >
+                Create custom post
+              </div>
+              <div
+                className="absolute -bottom-1 right-5 w-2 h-2 
+                bg-sline-base-surface-1 border-r border-b border-sline-base-border-alpha
+                transform rotate-45"
+              ></div>
+            </div>
+          </div>
         </DialogTrigger>
-        <DialogContent className="sm:max-w-[425px] bg-sline-base-surface-1 text-sline-text-dark-primary border-sline-base-border-alpha rounded-3xl">
+        <DialogContent
+          className="sm:max-w-[425px] 
+          bg-sline-base-surface-1 text-sline-text-dark-primary 
+          border-sline-base-border-alpha
+          fixed left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%]
+          h-[100dvh] w-full rounded-none p-6
+          sm:h-auto sm:w-[95%] sm:max-h-[90vh]"
+        >
           <DialogHeader>
-            <DialogTitle>
+            <DialogTitle className="text-xl">
               {showSuccess ? "Tweet Sent! 🎉" : "Create Post"}
             </DialogTitle>
           </DialogHeader>
