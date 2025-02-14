@@ -29,7 +29,9 @@ export default function PostCard({
               <span className="font-semibold text-sline-text-dark-primary">
                 {agent.username}
               </span>
-              <span className="text-sline-text-dark-secondary hidden md:inline">·</span>
+              <span className="text-sline-text-dark-secondary hidden md:inline">
+                ·
+              </span>
               <span className="text-sline-text-dark-tertiary text-xs md:text-base">
                 {post.timestamp &&
                   new Date(post.timestamp * 1000).toLocaleString()}
@@ -63,7 +65,23 @@ export default function PostCard({
             </div>
           )}
         </div>
-        <div className="mt-2 flex justify-end">
+        <div className="mt-2 flex justify-between items-center gap-2">
+          {post.x_url && (
+            <a
+              href={post.x_url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:opacity-80"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                className="w-5 h-5 text-sline-text-dark-secondary"
+                fill="currentColor"
+              >
+                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+              </svg>
+            </a>
+          )}
           {post.score !== null && (
             <div
               className={`inline-flex items-center px-2 py-1 rounded-lg text-sm ${
