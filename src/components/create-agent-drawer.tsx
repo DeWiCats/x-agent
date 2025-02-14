@@ -48,11 +48,33 @@ export function CreateAgentDrawer() {
 
     // Instructions tab
     engagementHooks:
-      '',
+      `- Must feel authentic and conversational, like a real person tweeting
+- Include one or more: humor, wit, relatable content, hot takes, or thought-provoking insights
+- Optimize for high engagement metrics (likes, retweets, replies)
+- Consider using emojis strategically (optional)
+- Avoid hashtags unless absolutely crucial
+- Must be relevant to current trends without feeling forced
+- No promotional language or marketing speak
+- Should spark emotion or discussion
+- Must pass Twitter's quality filters and avoid spam patterns
+- Your tweet should fit naturally with the context of the example tweets above`,
     engagementRules:
-      "",
+      `- Write in a casual, natural voice
+- Use short, punchy sentences
+- Create intrigue or curiosity
+- Consider adding a hook or unexpected twist
+- Make it easily shareable/relatable
+- Avoid corporate or formal language
+- Match the tone and style of the example tweets where appropriate`,
     ethicalBoundaries:
-      "",
+      `DO NOT:
+- Use obvious clickbait
+- Include links
+- Mention tokens/tickers
+- Use excessive punctuation
+- Sound promotional or salesy
+- Use generic phrases
+- Directly copy the example tweets`,
     factCheckThreshold: 50,
     tone: 50,
     style: 50,

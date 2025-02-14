@@ -4,7 +4,6 @@ import { Tweet } from "@dewicats/agent-twitter-client";
 import { Database } from "@/types/database.types";
 
 export const generateMemeWorthyTweet = async ({
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   agent,
   tweetContext,
   scrapedTweets,
@@ -20,6 +19,10 @@ export const generateMemeWorthyTweet = async ({
   const prompt = `You are a social media expert crafting viral tweets. Create an engaging tweet about: ${tweetContext}
 
   ${agent.context ? `Personality Context (only use if it exists): "${agent.context}"` : ""}
+  ${agent.fact_check_threshold ? `Fact check threshold: ${agent.fact_check_threshold}%` : ""}
+  ${agent.tone ? `Tone - Casual (100%) to Formal (0%): ${agent.tone}%` : ""}
+  ${agent.style ? `Style - Shitposting (100%) to Analytical (0%): ${agent.style}%` : ""}
+  ${agent.stance ? `Stance - Controversial (100%) to Neutral (0%): ${agent.stance}%` : ""}
 
 ${
   scrapedTweets
@@ -30,34 +33,13 @@ ${scrapedTweets.slice(0, 3).join("\n")}`
 
 Requirements:
 - Maximum 280 characters
-- Must feel authentic and conversational, like a real person tweeting
-- Include one or more: humor, wit, relatable content, hot takes, or thought-provoking insights
-- Optimize for high engagement metrics (likes, retweets, replies)
-- Consider using emojis strategically (optional)
-- Avoid hashtags unless absolutely crucial
-- Must be relevant to current trends without feeling forced
-- No promotional language or marketing speak
-- Should spark emotion or discussion
-- Must pass Twitter's quality filters and avoid spam patterns
-- Your tweet should fit naturally with the context of the example tweets above
+${agent.engagement_hooks ? `${agent.engagement_hooks}` : ""}
 
 Style Guidelines:
-- Write in a casual, natural voice
-- Use short, punchy sentences
-- Create intrigue or curiosity
-- Consider adding a hook or unexpected twist
-- Make it easily shareable/relatable
-- Avoid corporate or formal language
-- Match the tone and style of the example tweets where appropriate
+${agent.engagement_rules ? `${agent.engagement_rules}` : ""}
 
-DO NOT:
-- Use obvious clickbait
-- Include links
-- Mention tokens/tickers
-- Use excessive punctuation
-- Sound promotional or salesy
-- Use generic phrases
-- Directly copy the example tweets
+Ethical Boundaries:
+${agent.ethical_boundaries ? `${agent.ethical_boundaries}` : ""}
 
 Output the tweet text only, no explanations.`;
 
