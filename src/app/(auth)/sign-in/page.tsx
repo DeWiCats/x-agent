@@ -117,13 +117,11 @@ export default async function Login(props: { searchParams: Promise<Message> }) {
           </div>
 
           <div className="text-center text-xs text-gray-400 px-4 md:px-0">
-            By clicking continue, you agree to our{" "}
-            <Link href="#" className="hover:text-gray-300 underline">
-              Terms of Service
-            </Link>{" "}
-            and{" "}
-            <Link href="#" className="hover:text-gray-300 underline">
-              Privacy Policy
+            This project came out of{" "}
+            <Link href="https://safe.global/ai">Safeathon</Link> a hackathon
+            about agentic flows.{" "}
+            <Link href="https://github.com/DeWiCats/x-agent/blob/main/README.md">
+              More details here
             </Link>
             .
           </div>

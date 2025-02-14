@@ -14,8 +14,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Intern AI",
-  description: "AI-powered platform",
+  title: "SlineAI",
+  description:
+    "SlineAI is an intelligent social media management platform that lets you create and manage AI-powered Twitter agents.",
 };
 
 export default function RootLayout({
@@ -28,9 +29,7 @@ export default function RootLayout({
       <body
         className={`flex flex-col h-screen ${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <UsersProvider>
-          {children}
-        </UsersProvider>
+        <UsersProvider>{children}</UsersProvider>
       </body>
     </html>
   );
