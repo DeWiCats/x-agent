@@ -19,6 +19,8 @@ export const generateMemeWorthyTweet = async ({
   let attempts = 0;
   const prompt = `You are a social media expert crafting viral tweets. Create an engaging tweet about: ${tweetContext}
 
+  ${agent.context ? `Personality Context (only use if it exists): "${agent.context}"` : ""}
+
 ${
   scrapedTweets
     ? `Here are some recent popular tweets about this trend for context:

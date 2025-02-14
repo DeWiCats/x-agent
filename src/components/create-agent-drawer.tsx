@@ -34,6 +34,8 @@ export function CreateAgentDrawer() {
   const [open, setOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showProgressLoader, setShowProgressLoader] = useState(false);
+  const [isAdvancedMode, setIsAdvancedMode] = useState(false);
+  const [activeTab, setActiveTab] = useState("general");
 
   const [formData, setFormData] = useState<AgentFormData>({
     // General tab
@@ -46,11 +48,11 @@ export function CreateAgentDrawer() {
 
     // Instructions tab
     engagementHooks:
-      '• Always pair charts with cat memes\n• End threads with "GM or GN?" question\n• Use 🐈 emoji every 42 words',
+      '',
     engagementRules:
-      "Replies:\n• Clapback with cat puns to FUD comments\n\nConflict Protocol:\n• Delete replies with harmful language\n• Block accounts spreading scam token links",
+      "",
     ethicalBoundaries:
-      "Never discuss dog-themed coins\nAlways tag @CryptoCatsDaily in cat-related alpha",
+      "",
     factCheckThreshold: 50,
     tone: 50,
     style: 50,
@@ -58,11 +60,11 @@ export function CreateAgentDrawer() {
 
     // Context tab
     context:
-      "Enter any extra information you want to include in the context of replies for the agent",
+      "",
 
     // Settings tab
-    isPublic: false,
-    model: "Llama 3.3",
+    isPublic: true,
+    model: MODEL_OPTIONS[0],
   });
 
   const handleInputChange = (
@@ -132,6 +134,13 @@ export function CreateAgentDrawer() {
     }
   };
 
+  const handleAdvancedModeChange = (checked: boolean) => {
+    setIsAdvancedMode(checked);
+    if (!checked) {
+      setActiveTab("general");
+    }
+  };
+
   return (
     <>
       <Sheet open={open} onOpenChange={setOpen}>
@@ -175,9 +184,9 @@ export function CreateAgentDrawer() {
                 🤖 Preparing More Agents!
               </SheetTitle>
               <p className="text-sline-text-dark-secondary max-w-[280px]">
-                Our AI agents are currently taking a short break while we prepare
-                more capacity. They&apos;ll be back soon, ready to engage with
-                even more memes and witty responses.
+                Our AI agents are currently taking a short break while we
+                prepare more capacity. They&apos;ll be back soon, ready to
+                engage with even more memes and witty responses.
               </p>
               <div className="p-4 bg-sline-alpha-dark-050 rounded-xl">
                 <p className="text-sm text-sline-text-dark-secondary">
@@ -198,23 +207,39 @@ export function CreateAgentDrawer() {
                   <SheetTitle className="text-lg font-semibold text-sline-text-dark-primary">
                     Create agent
                   </SheetTitle>
+                  <div className="flex items-center gap-2">
+                    <Label
+                      htmlFor="advanced-mode"
+                      className="text-sm text-sline-text-dark-secondary"
+                    >
+                      Advanced
+                    </Label>
+                    <Switch
+                      id="advanced-mode"
+                      checked={isAdvancedMode}
+                      onCheckedChange={handleAdvancedModeChange}
+                    />
+                  </div>
                   <SheetClose className="rounded-full p-2 hover:bg-sline-alpha-dark-050">
                     <X className="h-4 w-4 text-sline-text-dark-secondary" />
                   </SheetClose>
                 </div>
-                <Tabs defaultValue="general" className="w-full">
+                <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
                   <TabsList className="w-full justify-start gap-6 h-auto p-0 rounded-none border-b border-sline-base-border-alpha">
-                    {["general", "instructions", "context", "settings"].map(
-                      (tab) => (
-                        <TabsTrigger
-                          key={tab}
-                          value={tab}
-                          className="bg-transparent relative pb-4 text-sline-text-dark-secondary data-[state=active]:text-sline-text-dark-primary data-[state=active]:bg-transparent data-[state=active]:shadow-none px-0 rounded-none capitalize data-[state=active]:after:absolute data-[state=active]:after:bottom-0 data-[state=active]:after:left-0 data-[state=active]:after:right-0 data-[state=active]:after:h-0.5 data-[state=active]:after:bg-sline-state-brand-active"
-                        >
-                          {tab}
-                        </TabsTrigger>
-                      )
-                    )}
+                    {[
+                      "general",
+                      ...(isAdvancedMode
+                        ? ["instructions", "context", "settings"]
+                        : ["context"]),
+                    ].map((tab) => (
+                      <TabsTrigger
+                        key={tab}
+                        value={tab}
+                        className="bg-transparent relative pb-4 text-sline-text-dark-secondary data-[state=active]:text-sline-text-dark-primary data-[state=active]:bg-transparent data-[state=active]:shadow-none px-0 rounded-none capitalize data-[state=active]:after:absolute data-[state=active]:after:bottom-0 data-[state=active]:after:left-0 data-[state=active]:after:right-0 data-[state=active]:after:h-0.5 data-[state=active]:after:bg-sline-state-brand-active"
+                      >
+                        {tab}
+                      </TabsTrigger>
+                    ))}
                   </TabsList>
 
                   {/* General Tab */}
@@ -275,7 +300,9 @@ export function CreateAgentDrawer() {
                             <Input
                               id={field}
                               value={
-                                formData[field as keyof typeof formData] as string
+                                formData[
+                                  field as keyof typeof formData
+                                ] as string
                               }
                               onChange={(e) =>
                                 handleInputChange(field, e.target.value)
@@ -286,7 +313,10 @@ export function CreateAgentDrawer() {
                           </div>
                         ))}
                         <div className="space-y-2">
-                          <Label htmlFor="description" className="text-zinc-400">
+                          <Label
+                            htmlFor="description"
+                            className="text-zinc-400"
+                          >
                             Description
                           </Label>
                           <Textarea
@@ -348,7 +378,10 @@ export function CreateAgentDrawer() {
                             className="bg-zinc-800 border-transparent text-white placeholder:text-zinc-600 min-h-[100px]"
                             value={formData.engagementHooks}
                             onChange={(e) =>
-                              handleInputChange("engagementHooks", e.target.value)
+                              handleInputChange(
+                                "engagementHooks",
+                                e.target.value
+                              )
                             }
                             placeholder="Enter engagement hooks..."
                           />
@@ -359,12 +392,17 @@ export function CreateAgentDrawer() {
                             className="bg-zinc-800 border-transparent text-white placeholder:text-zinc-600 min-h-[100px]"
                             value={formData.engagementRules}
                             onChange={(e) =>
-                              handleInputChange("engagementRules", e.target.value)
+                              handleInputChange(
+                                "engagementRules",
+                                e.target.value
+                              )
                             }
                           />
                         </div>
                         <div className="space-y-2">
-                          <Label className="text-white">Ethical Boundaries</Label>
+                          <Label className="text-white">
+                            Ethical Boundaries
+                          </Label>
                           <Textarea
                             className="bg-zinc-800 border-transparent text-white placeholder:text-zinc-600 min-h-[100px]"
                             value={formData.ethicalBoundaries}
@@ -427,7 +465,9 @@ export function CreateAgentDrawer() {
                                 className="flex-1"
                                 value={[
                                   Number(
-                                    formData[slider.key as keyof typeof formData]
+                                    formData[
+                                      slider.key as keyof typeof formData
+                                    ]
                                   ),
                                 ]}
                                 onValueChange={(value) =>
@@ -455,16 +495,19 @@ export function CreateAgentDrawer() {
                         understand and write content.
                       </p>
                       <div className="flex items-center gap-2">
-                        <span className="text-sm text-zinc-400">Max context</span>
+                        <span className="text-sm text-zinc-400">
+                          Max context
+                        </span>
                         <Info className="h-4 w-4 text-zinc-400" />
                         <span className="ml-auto text-sm text-zinc-400">
                           55,708 words
                         </span>
                       </div>
                       <div className="space-y-2">
-                        <Label className="text-white">Engagement rules</Label>
+                        <Label className="text-white">Additional context</Label>
                         <Textarea
                           className="bg-zinc-800 border-transparent text-white placeholder:text-zinc-600 min-h-[100px]"
+                          placeholder="Enter any extra information you want to include in the context of replies for the agent"
                           value={formData.context}
                           onChange={(e) =>
                             handleInputChange("context", e.target.value)
@@ -507,21 +550,22 @@ export function CreateAgentDrawer() {
                             <Info className="h-4 w-4 text-zinc-400" />
                           </div>
                           <Select
-                          value={formData.model}
-                          defaultValue={MODEL_OPTIONS[0]}
-                          onValueChange={(value) => handleInputChange('model', value)}
-                        >
-                          <SelectTrigger className="bg-zinc-800 border-transparent text-white">
-                            <SelectValue placeholder="Select model" />
-                          </SelectTrigger>
-                          <SelectContent className="bg-zinc-800 border-zinc-700">
-                            {MODEL_OPTIONS.map((model) => (
-                              <SelectItem key={model} value={model}>
-                                {model}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
+                            value={formData.model}
+                            onValueChange={(value) =>
+                              handleInputChange("model", value)
+                            }
+                          >
+                            <SelectTrigger className="bg-zinc-800 border-transparent text-white">
+                              <SelectValue placeholder="Select model" />
+                            </SelectTrigger>
+                            <SelectContent className="bg-zinc-800 border-zinc-700">
+                              {MODEL_OPTIONS.map((model) => (
+                                <SelectItem key={model} value={model}>
+                                  {model}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
                         </div>
                       </div>
                     </div>
