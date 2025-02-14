@@ -159,6 +159,7 @@ export async function POST(req: NextRequest) {
     status: "published",
     score: tweet.score,
     x_url: xUrl,
+    timestamp: Math.floor(Date.now() / 1000),
   });
   // update last posted date
   await supabase

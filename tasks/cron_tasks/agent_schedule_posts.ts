@@ -110,7 +110,7 @@ const agentSchedulePosts = async () => {
             media_url: publicUrl,
             status: "scheduled",
             score: response.score,
-            timestamp: new Date().getTime(),
+            timestamp: Math.floor(Date.now() / 1000),
           });
         }
         console.log("Tweet Scheduled 📝");

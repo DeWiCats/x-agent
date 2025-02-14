@@ -88,6 +88,7 @@ const agentPublishPosts = async () => {
             id: rest_id,
             status: "published",
             x_url: xUrl,
+            timestamp: Math.floor(Date.now() / 1000),
           })
           .eq("id", agent.posts[0].id);
         // update last posted date
