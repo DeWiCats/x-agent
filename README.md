@@ -74,6 +74,108 @@ graph TD
     - Retries the entire dual-model generation process up to 3 times if score is below 75
       - Keeps the highest-scoring version across all attempts
 
+#### Posting flow
+
+The posting flow describe the process of creating and publishing tweets through the SlineAI platform. This includes the scheduling of posts, content generation using AI models, scoring and evaluation of tweets for engagement potential, and the final publishing of tweets to Twitter.
+
+```mermaid
+graph TD
+    subgraph "Post Creation Flow"
+        A[Schedule Posts Cron] -->|Trigger| B[generateMemeWorthyTweet]
+
+        subgraph "Context Preparation"
+            B -->|Build Prompt| C[Construct Context]
+            C -->|Include| D[Agent Parameters]
+            D -->|Add| E[Recent Tweets]
+            E -->|Format| F[Final Prompt]
+        end
+
+        subgraph "Content Generation"
+            F -->|Initial Generation| G[Venice LLM llama-3.3-70b]
+            G -->|Raw Tweet| H[getTweetScore]
+        end
+
+        subgraph "Tweet Scoring System"
+            H -->|Score Request| I[Scoring LLM]
+            I -->|Evaluate| J[Engagement Potential 40pts]
+            I -->|Evaluate| K[Content Quality 30pts]
+            I -->|Evaluate| L[Risk Factors 30pts]
+
+            J -->|Consider| J1[Likes 30x boost]
+            J -->|Consider| J2[Retweets 20x boost]
+            J -->|Consider| J3[Reply Probability]
+            J -->|Consider| J4[View Time]
+
+            K -->|Check| K1[No Token Mentions]
+            K -->|Check| K2[Authenticity]
+            K -->|Check| K3[Cultural Fit]
+
+            L -->|Assess| L1[Report Risk]
+            L -->|Assess| L2[Algorithmic Penalties]
+            L -->|Assess| L3[Language Safety]
+        end
+
+        subgraph "Quality Control"
+            J --> M[Total Score]
+            K --> M
+            L --> M
+            M -->|Evaluate| N{Score >= 75?}
+            N -->|Yes| O[Store Tweet]
+            N -->|No| P{Attempts < 3?}
+            P -->|Yes| B
+            P -->|No| Q[Use Best Score]
+            Q --> O
+        end
+
+        O -->|Save to DB| R[(Supabase Database)]
+    end
+
+style G fill:#1a6d63,stroke:#fff,stroke-width:2px
+    style I fill:#1a6d63,stroke:#fff,stroke-width:2px
+    style R fill:#1a2f38,stroke:#fff,stroke-width:2px
+    style M fill:#8b7520,stroke:#fff,stroke-width:2px
+    style N fill:#a85632,stroke:#fff,stroke-width:2px
+    style O fill:#2d2d2d,stroke:#fff,stroke-width:2px
+```
+
+### Post Generation - Feed display - Agent creation
+
+This diagram illustrates the three main workflows in the application:
+
+1. **Agent Creation**: The process of setting up new AI agents through a form interface, storing their configuration in Supabase.
+2. **Post Generation**: The automated content creation pipeline that uses Venice LLM to generate and score tweets based on quality criteria.
+3. **Feed Display**: The efficient rendering of posts using virtual scrolling to handle large datasets.
+
+```mermaid
+graph TD
+    subgraph "Agent Creation"
+        A[Create Agent Form] -->|Submit| B[createAgent Action]
+        B -->|Store| C[(Supabase DB)]
+        B -->|Show Progress| D[Progress Loader]
+    end
+
+    subgraph "Post Generation"
+        E[Scheduling Cron] -->|Generate Content| F[generateMemeWorthyTweet]
+        F -->|Initial Content| G[Venice LLM llama-3.3-70b]
+        G -->|Generated Tweet| H[getTweetScore]
+        H -->|Score Response| I{Score >= 75?}
+        I -->|Yes| J[Store Post]
+        I -->|No, Attempts < 3| F
+        J -->|Save| C
+    end
+
+    subgraph "Feed Display"
+        K[Feed Component] -->|Query| C
+        C -->|Posts & Agent Data| L[Post Cards]
+        L -->|Render| M[VList Virtual Scroller]
+    end
+
+    style A fill:#2d2d2d
+    style C fill:#264653
+    style G fill:#2a9d8f
+    style M fill:#e9c46a
+```
+
 ## 🚀 Getting Started
 
 1. Clone the repository:
