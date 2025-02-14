@@ -100,7 +100,13 @@ export function Navbar() {
     <nav className="flex h-14 items-center justify-between px-4 relative z-50">
       <div className="flex items-center gap-2">
         <Button variant="ghost" size="icon">
-          <Image src={"/icon.svg"} alt="logo" width={24} height={24} />
+          <Image
+            src="/SlineLogo.svg"
+            alt="Logo"
+            width={48}
+            height={48}
+            className="mx-auto"
+          />
         </Button>
         <Image src="/line.svg" alt="line" width={16} height={16} />
         <DropdownMenu>
