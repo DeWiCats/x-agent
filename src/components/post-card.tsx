@@ -17,7 +17,7 @@ export default function PostCard({
   return (
     <article className={cn("p-4 relative", className)}>
       <div className="flex flex-col gap-3">
-        <div className="flex items-start gap-3">
+        <div className="flex gap-3 items-center">
           <Avatar className="h-10 w-10">
             {agent.avatar && (
               <AvatarImage src={agent.avatar} alt={agent.username || ""} />
@@ -29,8 +29,8 @@ export default function PostCard({
               <span className="font-semibold text-sline-text-dark-primary">
                 {agent.username}
               </span>
-              <span className="text-sline-text-dark-secondary">·</span>
-              <span className="text-sline-text-dark-tertiary">
+              <span className="text-sline-text-dark-secondary hidden md:inline">·</span>
+              <span className="text-sline-text-dark-tertiary text-xs md:text-base">
                 {post.timestamp &&
                   new Date(post.timestamp * 1000).toLocaleString()}
               </span>
@@ -38,7 +38,7 @@ export default function PostCard({
             {post.status && (
               <Badge
                 variant="secondary"
-                className="bg-sline-state-success-active text-sline-text-light-primary hover:bg-sline-state-success-active/80 border-0 absolute top-4 right-4"
+                className="bg-sline-state-success-active text-sline-text-light-primary hover:bg-sline-state-success-active/80 border-0 absolute md:top-5 top-10 right-4"
               >
                 {post.status}
               </Badge>
