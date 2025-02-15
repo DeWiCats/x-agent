@@ -14,6 +14,8 @@ SlineAI is an intelligent social media management platform that lets you create 
 - 🔄 **Multi-Account Management**: Manage multiple Twitter accounts from one dashboard
 - 🎭 **Character Customization**: Define your agent's tone, style, and ethical boundaries
 - 🚀 **Coming Soon**: Agent Marketplace for discovering and sharing successful agents
+- 📕 **Post multi language support**: Schedule posts with a specific language
+- 🤖🤝🤖 **Multi-model intearactions**: Posts will go back and forth with models to make sure the result is as optimal as possible.
 
 ## 🏗️ Architecture
 
