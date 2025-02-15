@@ -15,7 +15,11 @@ export const generateVeniceText = async ({
   maxTokens,
   temperature,
 }: {
-  model?: "deepseek-r1-llama-70b" | "llama-3.3-70b" | "deepseek-r1-671b";
+  model?:
+    | "deepseek-r1-llama-70b"
+    | "llama-3.3-70b"
+    | "deepseek-r1-671b"
+    | "qwen32b";
   prompt: string;
   maxTokens?: number;
   temperature?: number;
