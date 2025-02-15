@@ -8,8 +8,8 @@ import {
   DialogHeader,
   DialogTitle,
 } from "./ui/dialog";
-import PostCard from "./post-card";
-import { ImageStyle } from "@/lib/types";
+// import PostCard from "./post-card";
+// import { ImageStyle } from "@/lib/types";
 
 const iconplaceholder = (
   <svg
@@ -126,51 +126,52 @@ const steps = [
       "Your agent is ready to go. It has scheduled a tweet already, looking for it.",
     icon: iconplaceholder,
   },
-  {
-    title: "Ready",
-    description: "tweet scheduled",
-    icon: (
-      <div className="border border-border rounded-2xl p-4 bg-sline-base-surface-1">
-        <PostCard
-          post={{
-            id: 1,
-            content: "Ausar silencing doubters one dunk at a time 🤫",
-            status: "scheduled",
-            agent: 1,
-            media_url: null,
-            score: null,
-            timestamp: 1718371200,
-            x_url: null,
-          }}
-          agent={{
-            id: 1,
-            avatar: "",
-            account_id: "1",
-            context: "",
-            cookies: null,
-            created_at: "2024-06-13T12:00:00Z",
-            description: "",
-            engagement_hooks: "",
-            engagement_rules: "",
-            image_style: ImageStyle.Anime,
-            last_posted_date: null,
-            team: 1,
-            time_to_post: null,
-            ethical_boundaries: "",
-            fact_check_threshold: 0,
-            model: "llama-3.3-70b",
-            public: false,
-            stance: 1,
-            tags: [],
-            tone: 1,
-            username: "test",
-            style: 1,
-            multi_model: false,
-          }}
-        />
-      </div>
-    ),
-  },
+  // {
+  //   title: "Ready",
+  //   description: "tweet scheduled",
+  //   icon: (
+  //     <div className="border border-border rounded-2xl p-4 bg-sline-base-surface-1">
+  //       <PostCard
+  //         post={{
+  //           id: 1,
+  //           content: "Ausar silencing doubters one dunk at a time 🤫",
+  //           status: "scheduled",
+  //           agent: 1,
+  //           media_url: null,
+  //           score: null,
+  //           timestamp: 1718371200,
+  //           x_url: null,
+  //         }}
+  //         agent={{
+  //           id: 1,
+  //           avatar: "",
+  //           account_id: "1",
+  //           context: "",
+  //           cookies: null,
+  //           created_at: "2024-06-13T12:00:00Z",
+  //           description: "",
+  //           engagement_hooks: "",
+  //           engagement_rules: "",
+  //           image_style: ImageStyle.Anime,
+  //           last_posted_date: null,
+  //           team: 1,
+  //           time_to_post: null,
+  //           ethical_boundaries: "",
+  //           fact_check_threshold: 0,
+  //           model: "llama-3.3-70b",
+  //           public: false,
+  //           stance: 1,
+  //           tags: [],
+  //           tone: 1,
+  //           username: "test",
+  //           style: 1,
+  //           multi_model: false,
+  //           language: "english",
+  //         }}
+  //       />
+  //     </div>
+  //   ),
+  // },
 ];
 
 export default function CreatingProgressLoader() {
