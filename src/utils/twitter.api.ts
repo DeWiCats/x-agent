@@ -2,7 +2,6 @@ import { AxiosError } from "axios";
 import { generateVeniceText } from "./venice.api";
 import { Tweet } from "@dewicats/agent-twitter-client";
 import { Database } from "@/types/database.types";
-import { Models } from "openai/resources";
 
 export const generateMemeWorthyTweet = async ({
   agent,
