@@ -50,6 +50,7 @@ export type Database = {
           fact_check_threshold: number
           id: number
           image_style: string
+          language: string | null
           last_posted_date: string | null
           model: Database["public"]["Enums"]["model"]
           multi_model: boolean | null
@@ -75,6 +76,7 @@ export type Database = {
           fact_check_threshold: number
           id?: number
           image_style: string
+          language?: string | null
           last_posted_date?: string | null
           model: Database["public"]["Enums"]["model"]
           multi_model?: boolean | null
@@ -100,6 +102,7 @@ export type Database = {
           fact_check_threshold?: number
           id?: number
           image_style?: string
+          language?: string | null
           last_posted_date?: string | null
           model?: Database["public"]["Enums"]["model"]
           multi_model?: boolean | null

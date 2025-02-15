@@ -14,12 +14,14 @@ export async function POST(req: NextRequest) {
     imagePrompt,
     tweetId,
     imageStyle,
+    language = "english",
   }: {
     agentId: number;
     tweetPrompt: string;
     imagePrompt: string;
     tweetId: string;
     imageStyle: ImageStyle;
+    language?: string;
   } = await req.json();
 
   if (!agentId || !tweetPrompt) {
@@ -105,6 +107,7 @@ export async function POST(req: NextRequest) {
     agent: agent.data,
     tweetContext: tweetPrompt,
     scrapedTweets: [],
+    language,
   });
 
   if (!tweet) {

@@ -23,6 +23,13 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
+// Add enum for supported languages
+enum PostLanguage {
+  English = "english",
+  Spanish = "spanish",
+  French = "french",
+}
+
 export default function CustomPostButton({
   agents,
 }: {
@@ -36,6 +43,7 @@ export default function CustomPostButton({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const [imageStyle, setImageStyle] = useState<ImageStyle>(ImageStyle.Anime);
+  const [language, setLanguage] = useState<PostLanguage>(PostLanguage.English);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -52,6 +60,7 @@ export default function CustomPostButton({
           imageStyle: includeImage ? imageStyle : undefined,
           tweetId: tweetId || undefined,
           agentId: agents[0].id,
+          language,
         }),
       });
 
@@ -145,6 +154,32 @@ export default function CustomPostButton({
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-4">
+              <div className="space-y-2">
+                <Label
+                  htmlFor="language"
+                  className="text-sm font-medium text-sline-text-dark-secondary"
+                >
+                  Post Language
+                </Label>
+                <Select
+                  value={language}
+                  onValueChange={(value) => setLanguage(value as PostLanguage)}
+                >
+                  <SelectTrigger
+                    id="language"
+                    className="w-full bg-sline-alpha-dark-050 border-sline-alpha-dark-050 text-sline-text-dark-primary"
+                  >
+                    <SelectValue placeholder="Select a language" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-sline-base-surface-1 border-sline-base-border-alpha">
+                    {Object.values(PostLanguage).map((lang) => (
+                      <SelectItem key={lang} value={lang}>
+                        {lang.charAt(0).toUpperCase() + lang.slice(1)}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
               <div className="space-y-2">
                 <Label
                   htmlFor="text-prompt"

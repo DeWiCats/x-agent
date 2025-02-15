@@ -7,16 +7,18 @@ export const generateMemeWorthyTweet = async ({
   agent,
   tweetContext,
   scrapedTweets,
+  language = "english",
 }: {
   agent: Database["public"]["Tables"]["agents"]["Row"];
   tweetContext: string;
   scrapedTweets?: string[];
+  language?: string;
 }) => {
   // TODO: FOR Agnel what do we do with Agent parameters
   let bestResponse = "";
   let bestScore = 0;
   let attempts = 0;
-  const prompt = `You are a social media expert crafting viral tweets. Create an engaging tweet about: ${tweetContext}
+  const prompt = `You are a social media expert crafting viral tweets. Create an engaging tweet about: ${tweetContext} ${language !== "english" ? `in ${language}` : ""}.
 
   ${
     agent.context
@@ -146,6 +148,7 @@ Tweet to improve:`,
       trimmedResponse = actualResponse.trim().replace(/^["']|["']$/g, "");
     }
 
+    console.log("Getting tweet score");
     // Score the content using the Twitter algorithm criteria
     const score = await getTweetScore(actualResponse);
 
