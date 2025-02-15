@@ -52,6 +52,7 @@ export type Database = {
           image_style: string
           last_posted_date: string | null
           model: Database["public"]["Enums"]["model"]
+          multi_model: boolean | null
           public: boolean
           stance: number
           style: number
@@ -76,6 +77,7 @@ export type Database = {
           image_style: string
           last_posted_date?: string | null
           model: Database["public"]["Enums"]["model"]
+          multi_model?: boolean | null
           public: boolean
           stance: number
           style: number
@@ -100,6 +102,7 @@ export type Database = {
           image_style?: string
           last_posted_date?: string | null
           model?: Database["public"]["Enums"]["model"]
+          multi_model?: boolean | null
           public?: boolean
           stance?: number
           style?: number

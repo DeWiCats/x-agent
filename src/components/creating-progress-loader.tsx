@@ -165,6 +165,7 @@ const steps = [
             tone: 1,
             username: "test",
             style: 1,
+            multi_model: false,
           }}
         />
       </div>
