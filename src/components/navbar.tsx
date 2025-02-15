@@ -231,7 +231,7 @@ export function Navbar() {
       {/* Desktop profile section */}
       <div className="hidden md:flex items-center gap-2">
         <CreateAgentDrawer />
-        <ConnectButton />
+        <ConnectButton disableMagicLink />
         <DropdownMenu>
           <DropdownMenuTrigger>
             <Avatar className="h-8 w-8">
@@ -327,7 +327,7 @@ export function Navbar() {
             }`}
             style={{ transitionDelay: "400ms" }}
           >
-            <ConnectButton />
+            <ConnectButton disableMagicLink />
           </div>
 
           <button
