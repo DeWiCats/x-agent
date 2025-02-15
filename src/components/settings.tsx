@@ -10,6 +10,13 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/utils/supabase/client";
 
+import dynamic from "next/dynamic";
+
+const ConnectButton = dynamic(
+  async () => await import("@dewicats/connect-button"),
+  { ssr: false }
+);
+
 export default function Settings() {
   const supabase = createClient();
   const router = useRouter();
@@ -223,3 +230,12 @@ export default function Settings() {
     </section>
   );
 }
+
+export const WalletsSettings = () => {
+  return (
+    <div className="flex flex-col gap-4">
+      <h2 className="text-xl font-semibold text-white">Connected Wallets</h2>
+      <ConnectButton disableMagicLink />
+    </div>
+  );
+};

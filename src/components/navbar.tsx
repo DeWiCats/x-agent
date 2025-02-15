@@ -17,12 +17,6 @@ import { createClient } from "@/utils/supabase/client";
 import { useRouter, usePathname } from "next/navigation";
 import { useAsync } from "react-use";
 import { useState } from "react";
-import dynamic from "next/dynamic";
-
-const ConnectButton = dynamic(
-  async () => await import("@dewicats/connect-button"),
-  { ssr: false }
-);
 
 const navItems = [
   {
@@ -231,7 +225,6 @@ export function Navbar() {
       {/* Desktop profile section */}
       <div className="hidden md:flex items-center gap-2">
         <CreateAgentDrawer />
-        <ConnectButton disableMagicLink />
         <DropdownMenu>
           <DropdownMenuTrigger>
             <Avatar className="h-8 w-8">
@@ -317,17 +310,6 @@ export function Navbar() {
               </svg>
               <CreateAgentDrawer />
             </div>
-          </div>
-
-          <div
-            className={`transition-all duration-500 transform ${
-              mobileMenuOpen
-                ? "translate-x-0 opacity-100"
-                : "translate-x-10 opacity-0"
-            }`}
-            style={{ transitionDelay: "400ms" }}
-          >
-            <ConnectButton disableMagicLink />
           </div>
 
           <button

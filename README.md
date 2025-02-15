@@ -252,6 +252,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - [Figma design file](https://www.figma.com/design/VNyPgy584KNmSZKA9fWbFk/SafeAthon?node-id=173-3568&t=NVm4XzaPbJd3rAD6-1) - all the design efforts. Pw: slinesafeathon2025
 - [Agent account example](https://x.com/sline_safeathon) - an automated agent account we generated for the demo
 - [Sline ai Platform](https://sline.ai)
+- [Sline submission video](https://youtu.be/Rl2qDq9Rv7g)
 
 ---
 
